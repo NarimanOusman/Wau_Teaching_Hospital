@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Wau Teaching Hospital Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.symbols.outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A2540", // Deep Navy Blue
+                        "accent": "#0055D4",  // Modern Medical Blue
+                        "emergency": "#E11D48", // Vibrant Medical Red
+                        "surface": "#FFFFFF",
+                        "background": "#F8FAFC",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'premium': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 12px -2px rgba(0, 0, 0, 0.03)',
+                        'card': '0 2px 8px rgba(10, 37, 64, 0.04)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            background-color: theme('colors.background');
+        }
+        .ios-bottom-nav {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .emergency-gradient {
+            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+        }
+        .premium-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col pb-24 text-primary">
+    <div class="sticky top-0 z-50 emergency-gradient px-4 py-3.5 shadow-lg border-b border-white/10">
+        <button
+            class="flex w-full items-center justify-between bg-white text-emergency rounded-2xl h-14 px-5 font-extrabold text-base tracking-tight active:scale-[0.98] transition-all shadow-sm">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-3xl fill-1">emergency</span>
+                <span class="uppercase">Call Ambulance Now</span>
+            </div>
+            <span class="material-symbols-outlined text-2xl font-bold">arrow_forward_ios</span>
+        </button>
+    </div>
+    <div class="flex items-center bg-white p-4 justify-between border-b border-slate-100">
+        <div class="flex items-center gap-3">
+            <div class="bg-primary size-10 rounded-xl flex items-center justify-center text-white shadow-card">
+                <span class="material-symbols-outlined text-2xl fill-1">local_hospital</span>
+            </div>
+            <div>
+                <h2 class="text-primary text-base font-extrabold leading-none tracking-tight">Wau Teaching Hospital</h2>
+                <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mt-0.5">South Sudan
+                    Healthcare</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1">
+            <button class="p-2 text-primary/70 hover:bg-slate-50 rounded-full transition-colors">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
+            <button class="p-2 text-primary/70 hover:bg-slate-50 rounded-full transition-colors">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+        </div>
+    </div>
+    <div class="p-4">
+        <div class="group relative flex min-h-[340px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-[2rem] items-start justify-end p-8 overflow-hidden shadow-premium"
+            style='background-image: linear-gradient(to top, rgba(10, 37, 64, 0.95) 0%, rgba(10, 37, 64, 0.4) 50%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuChjA1wFqyW8wQdMDdTfz-T8DvNv0asQBdmr7zb5KsVbZarv8-DnkXTMssd73GTaA2BC5C6JfJKrIi3TihfYAHF8hLIk2HsLVhIdxXSD3LdFy4sQzun5nMWfh50hoZne5L2zZZ5VzkDv94YybzS3apzI_qQbS1TMyemhFvsEgudG964eQVzIXsxY7LBIGhZDuhM9OwpaG-xb8l7KF7tUu-R1V-MGZJ7vkgZ3bx51-UiDkBRGEUK7kC2VpXklEFllYpukcshBr8v6X8");'>
+            <div class="flex flex-col gap-3 relative z-10">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-1 bg-accent rounded-full"></span>
+                    <span class="text-white/80 text-[10px] font-bold uppercase tracking-widest">Excellence in
+                        Care</span>
+                </div>
+                <h1 class="text-white text-3xl font-extrabold leading-[1.1] tracking-tight">
+                    Serving South Sudan with Compassion
+                </h1>
+                <p class="text-slate-200 text-sm font-medium leading-relaxed max-w-[260px]">
+                    Quality medical services dedicated to the community of Wau.
+                </p>
+            </div>
+            <button
+                class="relative z-10 flex items-center justify-center rounded-xl h-11 px-6 bg-accent text-white text-sm font-bold shadow-lg shadow-accent/20 active:scale-95 transition-transform">
+                Our Services
+            </button>
+        </div>
+    </div>
+    <div class="px-6 pt-4">
+        <div class="flex items-center justify-between mb-5">
+            <h3 class="text-primary text-lg font-extrabold tracking-tight">Quick Access</h3>
+            <button class="text-accent text-xs font-bold">See All</button>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div
+                class="bg-white border border-slate-100 flex flex-col gap-4 rounded-3xl p-5 shadow-card active:bg-slate-50 transition-all">
+                <div class="size-12 rounded-2xl bg-blue-50 flex items-center justify-center text-accent">
+                    <span class="material-symbols-outlined text-3xl font-light">calendar_add_on</span>
+                </div>
+                <p class="text-primary text-sm font-bold leading-tight">Book<br />Appointment</p>
+            </div>
+            <div
+                class="bg-white border border-slate-100 flex flex-col gap-4 rounded-3xl p-5 shadow-card active:bg-slate-50 transition-all">
+                <div class="size-12 rounded-2xl bg-slate-50 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-3xl font-light">medical_information</span>
+                </div>
+                <p class="text-primary text-sm font-bold leading-tight">Find a<br />Doctor</p>
+            </div>
+            <div
+                class="bg-white border border-slate-100 flex flex-col gap-4 rounded-3xl p-5 shadow-card active:bg-slate-50 transition-all col-span-2 flex-row items-center">
+                <div class="size-12 rounded-2xl bg-rose-50 flex items-center justify-center text-emergency">
+                    <span class="material-symbols-outlined text-3xl font-light">monitor_heart</span>
+                </div>
+                <div class="flex-1">
+                    <p class="text-primary text-sm font-bold leading-tight">Diagnostic Services</p>
+                    <p class="text-slate-400 text-[10px] mt-0.5">Lab, X-Ray &amp; More</p>
+                </div>
+                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+            </div>
+        </div>
+    </div>
+    <div class="p-4 mt-4">
+        <div class="bg-primary rounded-[2rem] p-8 shadow-premium text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-10">
+                <span class="material-symbols-outlined text-[80px]">schedule</span>
+            </div>
+            <div class="flex items-center gap-3 mb-6 relative z-10">
+                <h3 class="text-xl font-extrabold">Hospital Hours</h3>
+            </div>
+            <div class="space-y-4 mb-8 relative z-10">
+                <div class="flex justify-between items-center py-3 border-b border-white/10">
+                    <span class="text-white/60 text-sm">Emergency Room</span>
+                    <div class="flex items-center gap-2">
+                        <span class="size-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="font-bold text-sm">Open 24/7</span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center py-2">
+                    <span class="text-white/60 text-sm">Outpatient Clinic</span>
+                    <span class="font-bold text-sm">08:00 - 18:00</span>
+                </div>
+            </div>
+            <div class="space-y-3 relative z-10">
+                <a class="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/5 active:bg-white/20 transition-all"
+                    href="tel:+211924753381">
+                    <div class="size-10 rounded-xl bg-white flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined text-xl">call</span>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-white/50 uppercase font-bold tracking-widest">WhatsApp / Call</p>
+                        <p class="font-bold text-base">+211 924 753 381</p>
+                    </div>
+                </a>
+                <a class="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/5 active:bg-white/20 transition-all"
+                    href="mailto:info@wauteachinghospital.org">
+                    <div class="size-10 rounded-xl bg-white/20 flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined text-xl">mail</span>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-white/50 uppercase font-bold tracking-widest">Official Email</p>
+                        <p class="font-bold text-sm truncate max-w-[180px]">info@wauteachinghospital.org</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="px-4 pb-12">
+        <div class="bg-white p-2 rounded-[2rem] shadow-card border border-slate-100">
+            <div
+                class="bg-slate-100 h-44 rounded-[1.6rem] w-full flex items-center justify-center overflow-hidden relative">
+                <img alt="Map Location" class="w-full h-full object-cover opacity-80"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU9jC-rtpQJl698N5r19hQH-FVkf4jYZum3wClKDsYyILciWH2DJgAN-2cf3DNdyz9fBGmTX_cwivOtTECIS2__wFFXHuTPAyTBnG17NMeoxAHT-_5MTnhwnfghmLB-Jy0PgC2QeJHtPIhd88HPyFJBXZJUJDsO6rv7GfyQIBnvWNSXTND79dlcTgrR5No84wIdKl_RUIe6wPk9Z9SzmIUJiQEHUVDAROXgpWtbU0wt2mhHKtApp1lY4Yei85h7sS7t3QUrLgNQKQ" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent flex items-end justify-between p-6">
+                    <div>
+                        <p class="text-primary font-extrabold text-base">Wau, South Sudan</p>
+                        <p class="text-slate-500 text-xs font-medium">Jau Road, Central Wau District</p>
+                    </div>
+                    <div
+                        class="bg-white size-10 rounded-full shadow-lg flex items-center justify-center text-emergency">
+                        <span class="material-symbols-outlined fill-1">location_on</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button
+        class="fixed right-6 bottom-28 size-16 emergency-gradient text-white rounded-2xl shadow-2xl flex items-center justify-center active:scale-90 transition-all z-40 ring-4 ring-white">
+        <span class="material-symbols-outlined text-3xl fill-1">emergency</span>
+    </button>
+    <nav
+        class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-slate-100 ios-bottom-nav z-50">
+        <div class="flex justify-around items-center h-20 px-4">
+            <a class="flex flex-col items-center gap-1.5 text-accent" href="#">
+                <div class="p-1 rounded-xl">
+                    <span class="material-symbols-outlined text-2xl fill-1">home</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+            </a>
+            <a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
+                <div class="p-1 rounded-xl">
+                    <span class="material-symbols-outlined text-2xl">book_online</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Bookings</span>
+            </a>
+            <a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
+                <div class="p-1 rounded-xl">
+                    <span class="material-symbols-outlined text-2xl">history_edu</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Health</span>
+            </a>
+            <a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
+                <div class="p-1 rounded-xl">
+                    <span class="material-symbols-outlined text-2xl">person</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Account</span>
+            </a>
+        </div>
+    </nav>
+
+</body>
+
+</html>
