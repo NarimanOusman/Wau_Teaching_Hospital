@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}Urgent Care & Emergency Hub | Wau Teaching Hospital{% endblock %}
+
+{% block body_class %}theme-dark bg-[#0A0F14] text-white{% endblock %}
+
+{% block logo_text_class %}text-white{% endblock %}
+{% block logo_sub_class %}text-emergency{% endblock %}
+
+{% block extra_css %}
+.elite-emergency-card {
+@apply bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 transition-all duration-500
+hover:border-emergency/30 hover:bg-white/[0.07] shadow-glass-surface;
+}
+
+.glow-sphere {
+@apply absolute pointer-events-none rounded-full blur-[140px] opacity-[0.15];
+}
+
+.glossy-effect {
+@apply rounded-[2.5rem] relative overflow-hidden shadow-hazard-glow;
+background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+}
+
+.pulse-hazard {
+animation: hazard-pulse 3s infinite;
+}
+@keyframes hazard-pulse {
+0%, 100% { opacity: 0.1; }
+50% { opacity: 0.25; }
+}
+
+.input-elite {
+@apply w-full rounded-2xl border-white/5 bg-white/5 h-16 px-6 font-bold text-white focus:ring-emergency
+focus:border-emergency transition-all placeholder:text-white/20 outline-none border;
+}
+
+::-webkit-scrollbar-thumb { background: #E11D48 !important; }
+{% endblock %}
+
+{% block nav_accident_active %}text-emergency{% endblock %}
+
+{% block background_glows %}
+<!-- Emergency Ambient Glows -->
+<div class="glow-sphere size-[600px] bg-emergency -top-40 -left-60 animate-pulse"></div>
+<div class="glow-sphere size-[500px] bg-emergency bottom-0 right-[-10%] opacity-[0.1]"></div>
+<div class="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none">
+</div>
+{% endblock %}
+
+{% block content %}
+<main class="flex-grow pt-24 lg:pt-36 max-w-[540px] mx-auto px-6 pb-20 relative z-10">
+    <!-- World Accident Header -->
+    <div class="mb-12">
+        <div
+            class="inline-flex items-center gap-3 px-5 py-2.5 bg-emergency rounded-full mb-6 shadow-hazard-glow border border-white/20">
+            <span class="size-2.5 bg-white rounded-full animate-ping"></span>
+            <span class="text-white text-[10px] font-black uppercase tracking-[0.4em]">Live Incident Support</span>
+        </div>
+        <h1 class="text-white text-5xl md:text-6xl font-[900] tracking-tighter leading-none mb-6">Dispatch <br /><span
+                class="text-emergency">Terminal</span></h1>
+        <p class="text-white/40 text-base font-bold leading-relaxed">
+            Integrated emergency coordination for Greater Wau. Follow mission protocols below.
+        </p>
+    </div>
+
+    <!-- Emergency Alert UI -->
+    <div class="mb-10">
+        <div
+            class="bg-emergency/20 border border-emergency/30 rounded-3xl p-6 flex gap-5 items-center relative overflow-hidden group">
+            <div class="absolute inset-x-0 top-0 h-1 bg-emergency pulse-hazard"></div>
+            <div class="bg-emergency p-3 rounded-2xl shadow-lg relative z-10">
+                <span class="material-symbols-outlined text-white !text-2xl !fill-1">campaign</span>
+            </div>
+            <div class="relative z-10">
+                <h3 class="text-emergency font-black text-sm uppercase tracking-wider">Protocol Alpha</h3>
+                <p class="text-white/80 text-xs font-bold leading-snug">
+                    Submission triggers immediate coordination with hospital trauma units.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Urgent Action Button -->
+    <div class="mb-16">
+        <button
+            class="glossy-effect group flex flex-col w-full h-64 md:h-72 items-center justify-center p-8 transition-all active:scale-[0.98] outline-none border border-white/10">
+            <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="bg-black/20 p-6 rounded-full mb-5 group-hover:scale-110 transition-transform shadow-2xl">
+                <span
+                    class="material-symbols-outlined !text-7xl text-white !fill-1 animate-pulse">medical_services</span>
+            </div>
+            <span class="text-4xl md:text-5xl font-[950] tracking-[-0.05em] text-white leading-none">CALL 999</span>
+            <span
+                class="text-[10px] font-black text-white/60 mt-4 uppercase tracking-[0.4em] bg-black/40 px-6 py-2 rounded-full border border-white/10">Wau
+                Emergency Dispatch</span>
+        </button>
+    </div>
+
+    <!-- Reporting Interface -->
+    <div class="grid grid-cols-1 gap-8">
+        <section class="elite-emergency-card">
+            <div class="flex items-center gap-3 mb-10 text-emergency">
+                <span class="material-symbols-outlined !text-2xl !fill-1">sensor_occupied</span>
+                <h4 class="text-[11px] font-[900] uppercase tracking-[0.5em]">Reporter Payload</h4>
+            </div>
+            <div class="space-y-6">
+                <div class="flex flex-col gap-3">
+                    <span class="text-white/30 text-[10px] font-black tracking-[0.2em] uppercase">Identity
+                        Confirmation</span>
+                    <input class="input-elite" placeholder="OPERATOR NAME / BYSTANDER" type="text" />
+                </div>
+                <div class="flex flex-col gap-3">
+                    <span class="text-white/30 text-[10px] font-black tracking-[0.2em] uppercase">Return Signal
+                        Number</span>
+                    <input class="input-elite" placeholder="+211 924 753 381" type="tel" />
+                </div>
+            </div>
+        </section>
+
+        <section class="elite-emergency-card">
+            <div class="flex items-center gap-3 mb-10 text-emergency">
+                <span class="material-symbols-outlined !text-2xl !fill-1">analytics</span>
+                <h4 class="text-[11px] font-[900] uppercase tracking-[0.5em]">Incident Data</h4>
+            </div>
+            <div class="space-y-6">
+                <div class="flex flex-col gap-3">
+                    <span class="text-white/30 text-[10px] font-black tracking-[0.2em] uppercase">Situation Brief</span>
+                    <textarea class="input-elite !h-40 p-6 resize-none"
+                        placeholder="DESCRIBE TRAUMA / ACCIDENT SCENE..."></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-3">
+                        <span class="text-white/30 text-[10px] font-black tracking-[0.2em] uppercase">Victim Qty</span>
+                        <select class="input-elite font-black">
+                            <option>0 PERSONS</option>
+                            <option selected>1 PERSON</option>
+                            <option>2 PERSONS</option>
+                            <option>3 PERSONS</option>
+                            <option>4+ PERSONS</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <span class="text-white/30 text-[10px] font-black tracking-[0.2em] uppercase">Visual Link</span>
+                        <div
+                            class="flex h-16 w-full items-center justify-center border border-white/10 rounded-2xl bg-white/5 text-white/40 transition-all active:scale-95 cursor-pointer hover:bg-white/10 hover:text-white">
+                            <span class="material-symbols-outlined text-2xl mr-2">add_a_photo</span>
+                            <span class="text-[10px] font-black uppercase tracking-widest">ATTACH</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="elite-emergency-card">
+            <div class="flex items-center gap-3 mb-10 text-emergency">
+                <span class="material-symbols-outlined !text-2xl !fill-1">location_searching</span>
+                <h4 class="text-[11px] font-[900] uppercase tracking-[0.5em]">Coordinate Signal</h4>
+            </div>
+            <div class="relative w-full h-64 rounded-[2rem] overflow-hidden border border-white/5 group shadow-inner">
+                <img alt="Map"
+                    class="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-110 grayscale brightness-75"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhJT9478WorYqyqziSgwyFk0auGyLDNyNyFyYY34aup5k4foahb3YoO5sfrpEDfp7upnaHROSVTRon4yujQ0SxVD1MFgiy-5pymXxNUJhNcMgmQUgUCU0NuReBhN55naysNjX9KEW9GHpQAoQWvMP3DhOUD7dtndT7sjm1yI4KDGfNdJ86Q9BSBWD3aP79yoR1BTKobRTT3nPA5EfFLOFHgS-JHvAvFeFjOhSjDYW5UUL9mfot7zA_d7f-aI7CS4AeIn8EHthJfdI" />
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black to-transparent p-10 text-center">
+                    <span
+                        class="text-white text-[11px] font-black uppercase tracking-[0.4em] bg-emergency shadow-hazard-glow px-10 py-3 rounded-full border border-white/20 active:scale-90 transition-all inline-block cursor-pointer">Lock
+                        GPS Signal</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="mt-8 flex flex-col items-center">
+            <button
+                class="flex w-full items-center justify-center rounded-[2.5rem] h-20 px-8 bg-emergency text-white gap-4 text-sm font-black transition-all shadow-hazard-glow active:scale-95 uppercase tracking-[0.3em] border border-white/20">
+                <span class="material-symbols-outlined text-2xl !fill-1">send</span>
+                Submit Dispatch Call
+            </button>
+        </div>
+    </div>
+</main>
+{% endblock %}
