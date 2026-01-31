@@ -1,250 +1,328 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Wau Teaching Hospital Home</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.symbols.outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#0A2540", // Deep Navy Blue
-                        "accent": "#0055D4",  // Modern Medical Blue
-                        "emergency": "#E11D48", // Vibrant Medical Red
-                        "surface": "#FFFFFF",
-                        "background": "#F8FAFC",
-                    },
-                    fontFamily: {
-                        "sans": ["Plus Jakarta Sans", "sans-serif"]
-                    },
-                    boxShadow: {
-                        'premium': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 12px -2px rgba(0, 0, 0, 0.03)',
-                        'card': '0 2px 8px rgba(10, 37, 64, 0.04)',
-                    }
-                },
-            },
-        }
-    </script>
-    <style type="text/tailwindcss">
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            background-color: theme('colors.background');
-        }
-        .ios-bottom-nav {
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .emergency-gradient {
-            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
-        }
-        .premium-blur {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Lines Shader</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
         body {
-            min-height: max(884px, 100dvh);
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col pb-24 text-primary">
-    <div class="sticky top-0 z-50 emergency-gradient px-4 py-3.5 shadow-lg border-b border-white/10">
-        <button
-            class="flex w-full items-center justify-between bg-white text-emergency rounded-2xl h-14 px-5 font-extrabold text-base tracking-tight active:scale-[0.98] transition-all shadow-sm">
-            <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-3xl fill-1">emergency</span>
-                <span class="uppercase">Call Ambulance Now</span>
-            </div>
-            <span class="material-symbols-outlined text-2xl font-bold">arrow_forward_ios</span>
-        </button>
-    </div>
-    <div class="flex items-center bg-white p-4 justify-between border-b border-slate-100">
-        <div class="flex items-center gap-3">
-            <div class="bg-primary size-10 rounded-xl flex items-center justify-center text-white shadow-card">
-                <span class="material-symbols-outlined text-2xl fill-1">local_hospital</span>
-            </div>
-            <div>
-                <h2 class="text-primary text-base font-extrabold leading-none tracking-tight">Wau Teaching Hospital</h2>
-                <p class="text-[10px] text-slate-400 font-semibold uppercase tracking-widest mt-0.5">South Sudan
-                    Healthcare</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-1">
-            <button class="p-2 text-primary/70 hover:bg-slate-50 rounded-full transition-colors">
-                <span class="material-symbols-outlined">notifications</span>
-            </button>
-            <button class="p-2 text-primary/70 hover:bg-slate-50 rounded-full transition-colors">
-                <span class="material-symbols-outlined">search</span>
-            </button>
-        </div>
-    </div>
-    <div class="p-4">
-        <div class="group relative flex min-h-[340px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-[2rem] items-start justify-end p-8 overflow-hidden shadow-premium"
-            style='background-image: linear-gradient(to top, rgba(10, 37, 64, 0.95) 0%, rgba(10, 37, 64, 0.4) 50%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuChjA1wFqyW8wQdMDdTfz-T8DvNv0asQBdmr7zb5KsVbZarv8-DnkXTMssd73GTaA2BC5C6JfJKrIi3TihfYAHF8hLIk2HsLVhIdxXSD3LdFy4sQzun5nMWfh50hoZne5L2zZZ5VzkDv94YybzS3apzI_qQbS1TMyemhFvsEgudG964eQVzIXsxY7LBIGhZDuhM9OwpaG-xb8l7KF7tUu-R1V-MGZJ7vkgZ3bx51-UiDkBRGEUK7kC2VpXklEFllYpukcshBr8v6X8");'>
-            <div class="flex flex-col gap-3 relative z-10">
-                <div class="flex items-center gap-2">
-                    <span class="w-8 h-1 bg-accent rounded-full"></span>
-                    <span class="text-white/80 text-[10px] font-bold uppercase tracking-widest">Excellence in
-                        Care</span>
-                </div>
-                <h1 class="text-white text-3xl font-extrabold leading-[1.1] tracking-tight">
-                    Serving South Sudan with Compassion
-                </h1>
-                <p class="text-slate-200 text-sm font-medium leading-relaxed max-w-[260px]">
-                    Quality medical services dedicated to the community of Wau.
-                </p>
-            </div>
-            <button
-                class="relative z-10 flex items-center justify-center rounded-xl h-11 px-6 bg-accent text-white text-sm font-bold shadow-lg shadow-accent/20 active:scale-95 transition-transform">
-                Our Services
-            </button>
-        </div>
-    </div>
-    <div class="px-6 pt-4">
-        <div class="flex items-center justify-between mb-5">
-            <h3 class="text-primary text-lg font-extrabold tracking-tight">Quick Access</h3>
-            <button class="text-accent text-xs font-bold">See All</button>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div
-                class="bg-white border border-slate-100 flex flex-col gap-4 rounded-3xl p-5 shadow-card active:bg-slate-50 transition-all">
-                <div class="size-12 rounded-2xl bg-blue-50 flex items-center justify-center text-accent">
-                    <span class="material-symbols-outlined text-3xl font-light">calendar_add_on</span>
-                </div>
-                <p class="text-primary text-sm font-bold leading-tight">Book<br />Appointment</p>
-            </div>
-            <div
-                class="bg-white border border-slate-100 flex flex-col gap-4 rounded-3xl p-5 shadow-card active:bg-slate-50 transition-all">
-                <div class="size-12 rounded-2xl bg-slate-50 flex items-center justify-center text-primary">
-                    <span class="material-symbols-outlined text-3xl font-light">medical_information</span>
-                </div>
-                <p class="text-primary text-sm font-bold leading-tight">Find a<br />Doctor</p>
-            </div>
-            <div
-                class="bg-white border border-slate-100 flex flex-col gap-4 rounded-3xl p-5 shadow-card active:bg-slate-50 transition-all col-span-2 flex-row items-center">
-                <div class="size-12 rounded-2xl bg-rose-50 flex items-center justify-center text-emergency">
-                    <span class="material-symbols-outlined text-3xl font-light">monitor_heart</span>
-                </div>
-                <div class="flex-1">
-                    <p class="text-primary text-sm font-bold leading-tight">Diagnostic Services</p>
-                    <p class="text-slate-400 text-[10px] mt-0.5">Lab, X-Ray &amp; More</p>
-                </div>
-                <span class="material-symbols-outlined text-slate-300">chevron_right</span>
-            </div>
-        </div>
-    </div>
-    <div class="p-4 mt-4">
-        <div class="bg-primary rounded-[2rem] p-8 shadow-premium text-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-8 opacity-10">
-                <span class="material-symbols-outlined text-[80px]">schedule</span>
-            </div>
-            <div class="flex items-center gap-3 mb-6 relative z-10">
-                <h3 class="text-xl font-extrabold">Hospital Hours</h3>
-            </div>
-            <div class="space-y-4 mb-8 relative z-10">
-                <div class="flex justify-between items-center py-3 border-b border-white/10">
-                    <span class="text-white/60 text-sm">Emergency Room</span>
-                    <div class="flex items-center gap-2">
-                        <span class="size-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span class="font-bold text-sm">Open 24/7</span>
-                    </div>
-                </div>
-                <div class="flex justify-between items-center py-2">
-                    <span class="text-white/60 text-sm">Outpatient Clinic</span>
-                    <span class="font-bold text-sm">08:00 - 18:00</span>
-                </div>
-            </div>
-            <div class="space-y-3 relative z-10">
-                <a class="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/5 active:bg-white/20 transition-all"
-                    href="tel:+211924753381">
-                    <div class="size-10 rounded-xl bg-white flex items-center justify-center text-primary">
-                        <span class="material-symbols-outlined text-xl">call</span>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-white/50 uppercase font-bold tracking-widest">WhatsApp / Call</p>
-                        <p class="font-bold text-base">+211 924 753 381</p>
-                    </div>
-                </a>
-                <a class="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/5 active:bg-white/20 transition-all"
-                    href="mailto:info@wauteachinghospital.org">
-                    <div class="size-10 rounded-xl bg-white/20 flex items-center justify-center text-white">
-                        <span class="material-symbols-outlined text-xl">mail</span>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-white/50 uppercase font-bold tracking-widest">Official Email</p>
-                        <p class="font-bold text-sm truncate max-w-[180px]">info@wauteachinghospital.org</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="px-4 pb-12">
-        <div class="bg-white p-2 rounded-[2rem] shadow-card border border-slate-100">
-            <div
-                class="bg-slate-100 h-44 rounded-[1.6rem] w-full flex items-center justify-center overflow-hidden relative">
-                <img alt="Map Location" class="w-full h-full object-cover opacity-80"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU9jC-rtpQJl698N5r19hQH-FVkf4jYZum3wClKDsYyILciWH2DJgAN-2cf3DNdyz9fBGmTX_cwivOtTECIS2__wFFXHuTPAyTBnG17NMeoxAHT-_5MTnhwnfghmLB-Jy0PgC2QeJHtPIhd88HPyFJBXZJUJDsO6rv7GfyQIBnvWNSXTND79dlcTgrR5No84wIdKl_RUIe6wPk9Z9SzmIUJiQEHUVDAROXgpWtbU0wt2mhHKtApp1lY4Yei85h7sS7t3QUrLgNQKQ" />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent flex items-end justify-between p-6">
-                    <div>
-                        <p class="text-primary font-extrabold text-base">Wau, South Sudan</p>
-                        <p class="text-slate-500 text-xs font-medium">Jau Road, Central Wau District</p>
-                    </div>
-                    <div
-                        class="bg-white size-10 rounded-full shadow-lg flex items-center justify-center text-emergency">
-                        <span class="material-symbols-outlined fill-1">location_on</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <button
-        class="fixed right-6 bottom-28 size-16 emergency-gradient text-white rounded-2xl shadow-2xl flex items-center justify-center active:scale-90 transition-all z-40 ring-4 ring-white">
-        <span class="material-symbols-outlined text-3xl fill-1">emergency</span>
-    </button>
-    <nav
-        class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-slate-100 ios-bottom-nav z-50">
-        <div class="flex justify-around items-center h-20 px-4">
-            <a class="flex flex-col items-center gap-1.5 text-accent" href="#">
-                <div class="p-1 rounded-xl">
-                    <span class="material-symbols-outlined text-2xl fill-1">home</span>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
-            </a>
-            <a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
-                <div class="p-1 rounded-xl">
-                    <span class="material-symbols-outlined text-2xl">book_online</span>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-wider">Bookings</span>
-            </a>
-            <a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
-                <div class="p-1 rounded-xl">
-                    <span class="material-symbols-outlined text-2xl">history_edu</span>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-wider">Health</span>
-            </a>
-            <a class="flex flex-col items-center gap-1.5 text-slate-400" href="#">
-                <div class="p-1 rounded-xl">
-                    <span class="material-symbols-outlined text-2xl">person</span>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-wider">Account</span>
-            </a>
-        </div>
-    </nav>
+<body>
+    <div id="container"></div>
 
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            precision highp float;
+
+            uniform float iTime;
+            uniform vec3  iResolution;
+            uniform float animationSpeed;
+
+            uniform bool enableTop;
+            uniform bool enableMiddle;
+            uniform bool enableBottom;
+
+            uniform int topLineCount;
+            uniform int middleLineCount;
+            uniform int bottomLineCount;
+
+            uniform float topLineDistance;
+            uniform float middleLineDistance;
+            uniform float bottomLineDistance;
+
+            uniform vec3 topWavePosition;
+            uniform vec3 middleWavePosition;
+            uniform vec3 bottomWavePosition;
+
+            uniform vec2 iMouse;
+            uniform bool interactive;
+            uniform float bendRadius;
+            uniform float bendStrength;
+            uniform float bendInfluence;
+
+            uniform bool parallax;
+            uniform float parallaxStrength;
+            uniform vec2 parallaxOffset;
+
+            uniform vec3 lineGradient[8];
+            uniform int lineGradientCount;
+
+            const vec3 BLACK = vec3(0.0);
+            const vec3 PINK  = vec3(233.0, 71.0, 245.0) / 255.0;
+            const vec3 BLUE  = vec3(47.0,  75.0, 162.0) / 255.0;
+
+            mat2 rotate(float r) {
+                return mat2(cos(r), sin(r), -sin(r), cos(r));
+            }
+
+            vec3 background_color(vec2 uv) {
+                vec3 col = vec3(0.0);
+                float y = sin(uv.x - 0.2) * 0.3 - 0.1;
+                float m = uv.y - y;
+                col += mix(BLUE, BLACK, smoothstep(0.0, 1.0, abs(m)));
+                col += mix(PINK, BLACK, smoothstep(0.0, 1.0, abs(m - 0.8)));
+                return col * 0.5;
+            }
+
+            vec3 getLineColor(float t, vec3 baseColor) {
+                if (lineGradientCount <= 0) return baseColor;
+                if (lineGradientCount == 1) return lineGradient[0] * 0.5;
+                
+                float clampedT = clamp(t, 0.0, 0.9999);
+                float scaled = clampedT * float(lineGradientCount - 1);
+                int idx = int(floor(scaled));
+                float f = fract(scaled);
+                
+                vec3 c1 = vec3(0.0);
+                vec3 c2 = vec3(0.0);
+                
+                // Unrolling or manual indexing for GLSL compatibility
+                for(int i=0; i<8; i++) {
+                    if(i == idx) c1 = lineGradient[i];
+                    if(i == idx + 1) c2 = lineGradient[i];
+                }
+                
+                return mix(c1, c2, f) * 0.5;
+            }
+
+            float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) {
+                float time = iTime * animationSpeed;
+                float x_offset   = offset;
+                float x_movement = time * 0.1;
+                float amp        = sin(offset + time * 0.2) * 0.3;
+                float y          = sin(uv.x + x_offset + x_movement) * amp;
+
+                if (shouldBend) {
+                    vec2 d = screenUv - mouseUv;
+                    float influence = exp(-dot(d, d) * bendRadius);
+                    float bendOffset = (mouseUv.y - screenUv.y) * influence * bendStrength * bendInfluence;
+                    y += bendOffset;
+                }
+
+                float m = uv.y - y;
+                return 0.0175 / max(abs(m) + 0.01, 1e-3) + 0.01;
+            }
+
+            void main() {
+                vec2 fragCoord = gl_FragCoord.xy;
+                vec2 baseUv = (2.0 * fragCoord - iResolution.xy) / iResolution.y;
+                baseUv.y *= -1.0;
+                
+                if (parallax) {
+                    baseUv += parallaxOffset;
+                }
+
+                vec3 col = vec3(0.0);
+                vec3 b = lineGradientCount > 0 ? vec3(0.0) : background_color(baseUv);
+
+                vec2 mouseUv = vec2(0.0);
+                if (interactive) {
+                    mouseUv = (2.0 * iMouse - iResolution.xy) / iResolution.y;
+                    mouseUv.y *= -1.0;
+                }
+                
+                if (enableBottom) {
+                    for (int i = 0; i < 50; i++) {
+                        if (i >= bottomLineCount) break;
+                        float fi = float(i);
+                        float t = fi / max(float(bottomLineCount - 1), 1.0);
+                        vec3 lineCol = getLineColor(t, b);
+                        float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
+                        vec2 ruv = baseUv * rotate(angle);
+                        col += lineCol * wave(ruv + vec2(bottomLineDistance * fi + bottomWavePosition.x, bottomWavePosition.y), 1.5 + 0.2 * fi, baseUv, mouseUv, interactive) * 0.2;
+                    }
+                }
+
+                if (enableMiddle) {
+                    for (int i = 0; i < 50; i++) {
+                        if (i >= middleLineCount) break;
+                        float fi = float(i);
+                        float t = fi / max(float(middleLineCount - 1), 1.0);
+                        vec3 lineCol = getLineColor(t, b);
+                        float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
+                        vec2 ruv = baseUv * rotate(angle);
+                        col += lineCol * wave(ruv + vec2(middleLineDistance * fi + middleWavePosition.x, middleWavePosition.y), 2.0 + 0.15 * fi, baseUv, mouseUv, interactive);
+                    }
+                }
+
+                if (enableTop) {
+                    for (int i = 0; i < 50; i++) {
+                        if (i >= topLineCount) break;
+                        float fi = float(i);
+                        float t = fi / max(float(topLineCount - 1), 1.0);
+                        vec3 lineCol = getLineColor(t, b);
+                        float angle = topWavePosition.z * log(length(baseUv) + 1.0);
+                        vec2 ruv = baseUv * rotate(angle);
+                        ruv.x *= -1.0;
+                        col += lineCol * wave(ruv + vec2(topLineDistance * fi + topWavePosition.x, topWavePosition.y), 1.0 + 0.2 * fi, baseUv, mouseUv, interactive) * 0.1;
+                    }
+                }
+
+                gl_FragColor = vec4(col, 1.0);
+            }
+        `;
+
+        const config = {
+            linesGradient: [], // Example: ['#ff0000', '#00ff00']
+            enabledWaves: ['top', 'middle', 'bottom'],
+            lineCount: [6, 6, 6],
+            lineDistance: [5, 5, 5],
+            topWavePosition: { x: 10.0, y: 0.5, rotate: -0.4 },
+            middleWavePosition: { x: 5.0, y: 0.0, rotate: 0.2 },
+            bottomWavePosition: { x: 2.0, y: -0.7, rotate: 0.4 },
+            animationSpeed: 1.0,
+            interactive: true,
+            bendRadius: 5.0,
+            bendStrength: -0.5,
+            mouseDamping: 0.05,
+            parallax: true,
+            parallaxStrength: 0.2
+        };
+
+        function hexToVec3(hex) {
+            let value = hex.trim().replace('#', '');
+            if (value.length === 3) value = value.split('').map(c => c + c).join('');
+            const r = parseInt(value.slice(0, 2), 16) / 255;
+            const g = parseInt(value.slice(2, 4), 16) / 255;
+            const b = parseInt(value.slice(4, 6), 16) / 255;
+            return new THREE.Vector3(r, g, b);
+        }
+
+        const container = document.getElementById('container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const targetMouse = new THREE.Vector2(-1000, -1000);
+        const currentMouse = new THREE.Vector2(-1000, -1000);
+        let targetInfluence = 0;
+        let currentInfluence = 0;
+        const targetParallax = new THREE.Vector2(0, 0);
+        const currentParallax = new THREE.Vector2(0, 0);
+
+        const uniforms = {
+            iTime: { value: 0 },
+            iResolution: { value: new THREE.Vector3() },
+            animationSpeed: { value: config.animationSpeed },
+            enableTop: { value: config.enabledWaves.includes('top') },
+            enableMiddle: { value: config.enabledWaves.includes('middle') },
+            enableBottom: { value: config.enabledWaves.includes('bottom') },
+            topLineCount: { value: config.lineCount[0] || 6 },
+            middleLineCount: { value: config.lineCount[1] || 6 },
+            bottomLineCount: { value: config.lineCount[2] || 6 },
+            topLineDistance: { value: (config.lineDistance[0] || 5) * 0.01 },
+            middleLineDistance: { value: (config.lineDistance[1] || 5) * 0.01 },
+            bottomLineDistance: { value: (config.lineDistance[2] || 5) * 0.01 },
+            topWavePosition: { value: new THREE.Vector3(config.topWavePosition.x, config.topWavePosition.y, config.topWavePosition.rotate) },
+            middleWavePosition: { value: new THREE.Vector3(config.middleWavePosition.x, config.middleWavePosition.y, config.middleWavePosition.rotate) },
+            bottomWavePosition: { value: new THREE.Vector3(config.bottomWavePosition.x, config.bottomWavePosition.y, config.bottomWavePosition.rotate) },
+            iMouse: { value: new THREE.Vector2(-1000, -1000) },
+            interactive: { value: config.interactive },
+            bendRadius: { value: config.bendRadius },
+            bendStrength: { value: config.bendStrength },
+            bendInfluence: { value: 0 },
+            parallax: { value: config.parallax },
+            parallaxStrength: { value: config.parallaxStrength },
+            parallaxOffset: { value: new THREE.Vector2(0, 0) },
+            lineGradient: { value: Array.from({ length: 8 }, () => new THREE.Vector3(1, 1, 1)) },
+            lineGradientCount: { value: 0 }
+        };
+
+        if (config.linesGradient.length > 0) {
+            const stops = config.linesGradient.slice(0, 8);
+            uniforms.lineGradientCount.value = stops.length;
+            stops.forEach((hex, i) => {
+                const vec = hexToVec3(hex);
+                uniforms.lineGradient.value[i].copy(vec);
+            });
+        }
+
+        const material = new THREE.ShaderMaterial({
+            uniforms,
+            vertexShader,
+            fragmentShader
+        });
+
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+        scene.add(mesh);
+
+        const clock = new THREE.Clock();
+
+        function resize() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            renderer.setSize(w, h);
+            uniforms.iResolution.value.set(renderer.domElement.width, renderer.domElement.height, 1);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        if (config.interactive) {
+            window.addEventListener('pointermove', e => {
+                targetMouse.set(e.clientX * window.devicePixelRatio, (window.innerHeight - e.clientY) * window.devicePixelRatio);
+                targetInfluence = 1.0;
+                if (config.parallax) {
+                    targetParallax.set(((e.clientX - window.innerWidth / 2) / window.innerWidth) * config.parallaxStrength, -((e.clientY - window.innerHeight / 2) / window.innerHeight) * config.parallaxStrength);
+                }
+            });
+            window.addEventListener('pointerleave', () => targetInfluence = 0);
+        }
+
+        function animate() {
+            uniforms.iTime.value = clock.getElapsedTime();
+
+            if (config.interactive) {
+                currentMouse.lerp(targetMouse, config.mouseDamping);
+                uniforms.iMouse.value.copy(currentMouse);
+                currentInfluence += (targetInfluence - currentInfluence) * config.mouseDamping;
+                uniforms.bendInfluence.value = currentInfluence;
+            }
+
+            if (config.parallax) {
+                currentParallax.lerp(targetParallax, config.mouseDamping);
+                uniforms.parallaxOffset.value.copy(currentParallax);
+            }
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 </body>
 
 </html>
