@@ -5,13 +5,17 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>{% block title %}Wau Teaching Hospital | Elite Healthcare{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Standard Tailwind CDN (Ensure internet is active for this to load) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -21,189 +25,123 @@
                         "primary": "#0A2540",
                         "accent": "#0055D4",
                         "emergency": "#E11D48",
-                        "emergency-dark": "#1A0A0E",
-                        "surface": "#FFFFFF",
-                        "background": "#F8FAFC",
-                        "muted": "#64748B"
-                    },
-                    fontFamily: {
-                        "sans": ["Plus Jakarta Sans", "sans-serif"]
-                    },
-                    boxShadow: {
-                        'premium': '0 25px 50px -12px rgba(10, 37, 64, 0.15)',
-                        'glass-surface': '0 12px 40px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.3)',
-                        'hazard-glow': '0 0 50px -10px rgba(225, 29, 72, 0.4)',
-                    },
-                    borderRadius: {
-                        'elite': '3.5rem',
-                        'elite-sm': '2rem',
+                        "smoke-white": "#F8F9FA",
+                        "navy-deep": "#0A2540"
                     }
                 },
             },
         }
     </script>
+
     <style type="text/tailwindcss">
         @layer base {
-            body {
-                @apply font-sans antialiased scroll-smooth overflow-x-hidden transition-colors duration-500;
-                -webkit-tap-highlight-color: transparent;
-            }
+            body { @apply font-sans antialiased scroll-smooth overflow-x-hidden; }
         }
 
         .glass-navbar {
-            @apply fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 md:px-8 md:py-5;
-            backdrop-filter: blur(24px) saturate(180%);
+            @apply fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 md:px-12 md:py-6;
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        /* Theme specific Navbar styles managed by blocks or body classes */
-        .theme-light .glass-navbar { background: rgba(255, 255, 255, 0.65); }
+        .theme-light .glass-navbar { background: rgba(255, 255, 255, 0.8); }
         .theme-dark .glass-navbar { 
-            background: rgba(10, 15, 20, 0.7); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10, 15, 20, 0.8); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-link {
-            @apply font-[800] text-[12px] tracking-[0.05em] uppercase transition-all duration-500 relative;
+            @apply font-bold text-[11px] tracking-widest uppercase transition-all duration-300;
         }
         
         .theme-light .nav-link { @apply text-primary/60 hover:text-accent; }
-        .theme-dark .nav-link { @apply text-white/60 hover:text-emergency; }
-        
-        .nav-link::after {
-            content: '';
-            @apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-[3px] transition-all duration-500 rounded-full opacity-0;
-        }
-        .theme-light .nav-link::after { @apply bg-accent; }
-        .theme-dark .nav-link::after { @apply bg-emergency; }
-        
-        .nav-link:hover::after { @apply w-4 opacity-100; }
+        .theme-dark .nav-link { @apply text-white/60 hover:text-white; }
 
-        .emergency-gradient {
-            background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
-        }
-
-        /* Mobile Menu Solid Background when active */
-        .glass-navbar:has(#menu-toggle:checked) {
-            @apply shadow-2xl;
-            background: #0A2540 !important;
-            backdrop-filter: none;
-        }
-
-        #menu-toggle:checked ~ #mobile-menu { 
-            transform: translateX(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #menu-toggle:checked ~ #menu-overlay { 
-            @apply opacity-100 pointer-events-auto;
-            background: rgba(10, 37, 64, 0.95);
-        }
-
-        /* Mobile Menu Content Transition */
+        /* Pure Mobile Nav - Smoke White & No Borders */
         #mobile-menu {
-            @apply opacity-0 pointer-events-none;
-            background-color: #0A2540 !important;
+            @apply shadow-2xl transition-all duration-700 bg-smoke-white fixed top-0 right-0 h-[50dvh] w-[70vw] z-[120] translate-x-full rounded-bl-[3rem] p-10 flex flex-col;
+            border: none !important;
         }
         
-        #mobile-menu > * {
-            @apply transition-all duration-500 delay-75 translate-y-4 opacity-0;
-        }
-        
-        #menu-toggle:checked ~ #mobile-menu > * {
-            @apply translate-y-0 opacity-100;
+        #menu-toggle:checked ~ #mobile-menu { transform: translateX(0); }
+        #menu-toggle:checked ~ #menu-overlay { @apply opacity-100 pointer-events-auto; }
+
+        #mobile-menu a {
+            @apply text-navy-deep font-black text-xs uppercase tracking-widest py-5 flex items-center justify-between;
+            border: none !important;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb {
-            @apply rounded-full;
-            background: #0A2540;
+        .mobile-trigger {
+            @apply size-8 flex items-center justify-center bg-primary/5 text-primary rounded-lg transition-transform active:scale-90;
         }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { @apply bg-primary rounded-full; }
 
         {% block extra_css %}{% endblock %}
     </style>
 </head>
 
-<body class="{% block body_class %}theme-light bg-background{% endblock %} min-h-screen relative">
-    {% block background_glows %}{% endblock %}
-
-    <!-- Shared Elite Navbar -->
+<body class="{% block body_class %}theme-light bg-slate-50{% endblock %}">
     <nav class="glass-navbar">
-        <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex flex-col">
-                <span
-                    class="{% block logo_text_class %}text-primary{% endblock %} text-xl md:text-2xl font-[900] leading-none tracking-tight uppercase">Wau
+                <span class="text-primary text-xl font-black uppercase tracking-tighter leading-none">Wau
                     Teaching</span>
-                <span
-                    class="text-[9px] {% block logo_sub_class %}text-accent{% endblock %} font-black uppercase tracking-[0.3em] mt-1.5 opacity-80">Center
-                    of Excellence</span>
+                <span class="text-[8px] font-black uppercase tracking-[0.4em] text-accent mt-1 opacity-80">Center of
+                    Excellence</span>
             </div>
 
-            <!-- Desktop Menu -->
+            <!-- Desktop -->
             <div class="hidden lg:flex items-center gap-10">
-                <a href="/home/" class="nav-link {% block nav_home_active %}{% endblock %}">Home</a>
-                <a href="/appointment/" class="nav-link {% block nav_appointment_active %}{% endblock %}">Book
-                    Appointment</a>
-                <a href="/services/" class="nav-link {% block nav_services_active %}{% endblock %}">Our Services</a>
-                <a href="/doctors/" class="nav-link {% block nav_doctors_active %}{% endblock %}">Our Doctors</a>
-                <a href="/accident_report/" class="nav-link {% block nav_accident_active %}{% endblock %}">Accident
-                    Report</a>
-                <a href="/about/" class="nav-link {% block nav_about_active %}{% endblock %}">About Us</a>
-                <a href="/contact/" class="nav-link {% block nav_contact_active %}{% endblock %}">Contact</a>
+                <a href="/home/" class="nav-link">Home</a>
+                <a href="/appointment/" class="nav-link">Appointment</a>
+                <a href="/services/" class="nav-link">Services</a>
+                <a href="/doctors/" class="nav-link">Doctors</a>
+                <a href="/about/" class="nav-link">About Us</a>
+                <a href="/contact/" class="nav-link">Contact</a>
+                <a href="tel:+211924753381"
+                    class="bg-red-600 text-white px-7 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest shadow-xl shadow-red-600/20 active:scale-95 transition-all">Emergency</a>
             </div>
 
-            <div class="flex items-center gap-4">
-                <a href="tel:+211924753381"
-                    class="hidden md:flex items-center gap-2.5 emergency-gradient text-white px-6 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl active:scale-95 transition-all">
-                    <span class="material-symbols-outlined text-lg !fill-1">emergency</span>
-                    Rescue Unit
-                </a>
-
+            <!-- Mobile Trigger -->
+            <div class="lg:hidden flex items-center">
                 <input class="hidden" id="menu-toggle" type="checkbox" />
-                <label for="menu-toggle"
-                    class="lg:hidden size-12 flex items-center justify-center bg-white border border-slate-200 text-primary rounded-2xl cursor-pointer active:scale-90 transition-all shadow-sm">
-                    <span class="material-symbols-outlined text-2xl font-bold">menu_open</span>
+                <label for="menu-toggle" class="mobile-trigger">
+                    <span class="material-symbols-outlined !text-xl">menu</span>
                 </label>
 
-                <!-- Mobile Menu Drawer -->
-                <div class="fixed inset-0 bg-primary/20 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-700 z-[110]"
+                <!-- Overlay -->
+                <div class="fixed inset-0 bg-primary/40 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500 z-[110]"
                     id="menu-overlay"></div>
-                <div class="fixed top-0 right-0 bottom-0 w-[85%] max-w-[360px] bg-primary z-[120] shadow-2xl transition-transform duration-700 translate-x-full flex flex-col p-10 border-l border-white/10"
-                    id="mobile-menu">
-                    <div class="flex items-center justify-between mb-12">
-                        <span class="font-[900] text-white text-2xl tracking-tighter uppercase">Wau Teaching</span>
-                        <label for="menu-toggle"
-                            class="size-11 flex items-center justify-center rounded-2xl bg-white/10 text-white active:scale-90 transition-all cursor-pointer">
-                            <span class="material-symbols-outlined text-2xl">close</span>
+
+                <!-- Mobile Drawer -->
+                <div id="mobile-menu">
+                    <div class="flex justify-between items-center mb-10">
+                        <span class="font-black text-[10px] uppercase tracking-[0.3em] opacity-40">Navigation</span>
+                        <label for="menu-toggle">
+                            <span class="material-symbols-outlined text-navy-deep text-xl font-bold">close</span>
                         </label>
                     </div>
-                    <div class="flex flex-col gap-4">
-                        <a href="/home/"
-                            class="flex items-center gap-5 p-5 text-white/60 font-[800] hover:bg-white/10 hover:text-white rounded-[2rem] text-sm transition-all">
-                            <span class="material-symbols-outlined !fill-1">home</span> Home
-                        </a>
-                        <a href="/appointment/"
-                            class="flex items-center gap-5 p-5 text-white/60 font-[800] hover:bg-white/10 hover:text-white rounded-[2rem] text-sm transition-all">
-                            <span class="material-symbols-outlined !fill-1">calendar_month</span> Book Appointment
-                        </a>
-                        <a href="/services/"
-                            class="flex items-center gap-5 p-5 text-white/60 font-[800] hover:bg-white/10 hover:text-white rounded-[2rem] text-sm transition-all">
-                            <span class="material-symbols-outlined !fill-1">medical_services</span> Our Services
-                        </a>
-                        <a href="/doctors/"
-                            class="flex items-center gap-5 p-5 text-white/60 font-[800] hover:bg-white/10 hover:text-white rounded-[2rem] text-sm transition-all">
-                            <span class="material-symbols-outlined !fill-1">stethoscope</span> Our Doctors
-                        </a>
-                        <a href="/accident_report/"
-                            class="flex items-center gap-5 p-5 text-white/60 font-[800] hover:bg-white/10 hover:text-white rounded-[2rem] text-sm transition-all">
-                            <span class="material-symbols-outlined !fill-1">emergency</span> Accident Report
-                        </a>
+
+                    <div class="flex flex-col">
+                        <a href="/home/">Home <span class="material-symbols-outlined text-xs opacity-20">east</span></a>
+                        <a href="/appointment/">Appointment <span
+                                class="material-symbols-outlined text-xs opacity-20">east</span></a>
+                        <a href="/services/">Services <span
+                                class="material-symbols-outlined text-xs opacity-20">east</span></a>
+                        <a href="/doctors/">Doctors <span
+                                class="material-symbols-outlined text-xs opacity-20">east</span></a>
+                        <a href="/about/">About Us <span
+                                class="material-symbols-outlined text-xs opacity-20">east</span></a>
+                        <a href="/contact/">Contact <span
+                                class="material-symbols-outlined text-xs opacity-20">east</span></a>
                     </div>
-                    <div class="mt-auto pt-8 border-t border-white/10">
+
+                    <div class="mt-auto">
                         <a href="tel:+211924753381"
-                            class="flex items-center justify-center gap-4 w-full bg-accent text-white p-6 rounded-[2.5rem] font-black text-[11px] uppercase tracking-widest active:scale-95 transition-all shadow-xl shadow-accent/20">
-                            <span class="material-symbols-outlined !fill-1">headset_mic</span> Support Desk
+                            class="flex items-center justify-center bg-navy-deep text-white py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest">
+                            Rescue Unit
                         </a>
                     </div>
                 </div>
@@ -212,9 +150,7 @@
     </nav>
 
     {% block content %}{% endblock %}
-
     {% block footer %}{% endblock %}
-
     {% block extra_js %}{% endblock %}
 </body>
 
