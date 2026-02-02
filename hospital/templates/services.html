@@ -1,13 +1,263 @@
 {% extends 'base.html' %}
 
-{% block title %}Our Services | Wau Teaching Hospital{% endblock %}
+{% block title %}Medical Services | Wau Teaching Hospital{% endblock %}
 
-{% block body_class %}theme-light bg-background{% endblock %}
+{% block body_class %}theme-light bg-background-light text-[#1e293b]{% endblock %}
 
 {% block nav_services_active %}text-accent{% endblock %}
 
+{% block extra_css %}
+/* Premium Background Decorations */
+.bg-decoration-layer {
+@apply fixed inset-0 -z-10 pointer-events-none overflow-hidden;
+}
+.accent-blob {
+@apply absolute rounded-full blur-[120px] mix-blend-multiply filter opacity-20 transition-all duration-[5000ms];
+}
+.medical-pattern {
+background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100'
+xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0v100M0 50h100' stroke='%23137fec' stroke-width='0.5'
+stroke-opacity='0.08' fill='none'/%3E%3C/svg%3E");
+mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+.duo-tone-container {
+@apply flex items-center justify-center rounded-2xl relative overflow-hidden;
+background: linear-gradient(135deg, rgba(19, 127, 236, 0.08) 0%, rgba(19, 127, 236, 0.03) 100%);
+}
+.material-symbols-outlined {
+font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+.premium-card {
+@apply bg-white border border-slate-100/60 transition-all duration-300;
+}
+.premium-card:active {
+@apply scale-[0.97] bg-white/90;
+}
+@media (min-width: 1024px) {
+.services-grid {
+grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+}
+{% endblock %}
+
 {% block content %}
-<main class="flex-grow pt-32 lg:pt-40 max-w-4xl mx-auto px-6">
-    <h1 class="text-primary text-4xl font-[900] tracking-tight">Our Services</h1>
+<!-- Background Decoration Layer -->
+<div class="bg-decoration-layer medical-pattern">
+    <div class="accent-blob bg-medical-blue size-[500px] -top-24 -left-24 animate-pulse"></div>
+    <div class="accent-blob bg-blue-200 size-[400px] bottom-0 right-0 opacity-10"></div>
+    <div class="accent-blob bg-slate-200 size-[300px] top-1/2 left-1/3 opacity-5"></div>
+</div>
+
+<main class="max-w-4xl mx-auto pt-32 pb-24 lg:pt-48 px-6">
+    <section class="mb-12">
+        <div class="mb-8 text-center md:text-left">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-primary tracking-tight">Medical Services</h1>
+            <p class="text-slate-500 text-base md:text-lg mt-2 font-medium">Advanced diagnostic and therapeutic clinical
+                departments.</p>
+        </div>
+        <div class="relative group max-w-2xl">
+            <div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                <span class="material-symbols-outlined text-slate-400 !text-2xl">search</span>
+            </div>
+            <input id="service-search"
+                class="block w-full pl-14 pr-6 py-5 bg-white border-slate-200 rounded-3xl shadow-premium text-base placeholder-slate-400 focus:ring-4 focus:ring-medical-blue/10 focus:border-medical-blue/30 transition-all outline-none"
+                placeholder="Search departments, specialists..." type="text" />
+        </div>
+    </section>
+
+    <section>
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold text-primary tracking-tight">Our Departments <span id="results-count"
+                    class="hidden text-slate-400 text-sm font-medium ml-2"></span></h2>
+            <span
+                class="text-medical-blue text-xs font-black px-4 py-2 bg-accent-blue rounded-full uppercase tracking-widest cursor-pointer hover:bg-medical-blue hover:text-white transition-all">All
+                Specialties</span>
+        </div>
+
+        <div id="services-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Pediatrics -->
+            <div class="premium-card p-8 rounded-[2.5rem] shadow-premium group" data-name="Pediatrics child care kids">
+                <div class="duo-tone-container w-16 h-16 mb-6">
+                    <span class="material-symbols-outlined text-medical-blue !text-4xl">child_care</span>
+                    <div class="absolute inset-0 bg-medical-blue opacity-[0.05]"></div>
+                </div>
+                <h3 class="text-primary text-xl font-bold leading-tight mb-4">Pediatrics</h3>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Specialized care for infants, children, and
+                    adolescents with expert pediatricians.</p>
+                <div
+                    class="flex items-center gap-2 text-medical-blue text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+                    <span>Directory</span>
+                    <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Laboratory -->
+            <div class="premium-card p-8 rounded-[2.5rem] shadow-premium group"
+                data-name="Laboratory biotech research testing">
+                <div class="duo-tone-container w-16 h-16 mb-6">
+                    <span class="material-symbols-outlined text-medical-blue !text-4xl">biotech</span>
+                    <div class="absolute inset-0 bg-medical-blue opacity-[0.05]"></div>
+                </div>
+                <h3 class="text-primary text-xl font-bold leading-tight mb-4">Laboratory</h3>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Advanced diagnostic testing and clinical
+                    pathology for precise medical insights.</p>
+                <div
+                    class="flex items-center gap-2 text-medical-blue text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+                    <span>Directory</span>
+                    <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Maternity -->
+            <div class="premium-card p-8 rounded-[2.5rem] shadow-premium group"
+                data-name="Maternity female pregnancy birth baby">
+                <div class="duo-tone-container w-16 h-16 mb-6">
+                    <span class="material-symbols-outlined text-medical-blue !text-4xl">female</span>
+                    <div class="absolute inset-0 bg-medical-blue opacity-[0.05]"></div>
+                </div>
+                <h3 class="text-primary text-xl font-bold leading-tight mb-4">Maternity</h3>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Comprehensive prenatal and postpartum care in a
+                    supportive environment.</p>
+                <div
+                    class="flex items-center gap-2 text-medical-blue text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+                    <span>Directory</span>
+                    <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Cardiology -->
+            <div class="premium-card p-8 rounded-[2.5rem] shadow-premium group"
+                data-name="Cardiology heart cardiovascular cardiac">
+                <div class="duo-tone-container w-16 h-16 mb-6">
+                    <span class="material-symbols-outlined text-medical-blue !text-4xl">cardiology</span>
+                    <div class="absolute inset-0 bg-medical-blue opacity-[0.05]"></div>
+                </div>
+                <h3 class="text-primary text-xl font-bold leading-tight mb-4">Cardiology</h3>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Expert heart care focusing on prevention,
+                    diagnosis, and treatment of conditions.</p>
+                <div
+                    class="flex items-center gap-2 text-medical-blue text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+                    <span>Directory</span>
+                    <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Radiology -->
+            <div class="premium-card p-8 rounded-[2.5rem] shadow-premium group"
+                data-name="Radiology x-ray mri imaging scanning">
+                <div class="duo-tone-container w-16 h-16 mb-6">
+                    <span class="material-symbols-outlined text-medical-blue !text-4xl">radiology</span>
+                    <div class="absolute inset-0 bg-medical-blue opacity-[0.05]"></div>
+                </div>
+                <h3 class="text-primary text-xl font-bold leading-tight mb-4">Radiology</h3>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Modern medical imaging services including X-rays,
+                    MRI, and CT scans.</p>
+                <div
+                    class="flex items-center gap-2 text-medical-blue text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+                    <span>Directory</span>
+                    <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </div>
+
+            <!-- Surgery -->
+            <div class="premium-card p-8 rounded-[2.5rem] shadow-premium group"
+                data-name="Surgery surgical operation clinic">
+                <div class="duo-tone-container w-16 h-16 mb-6">
+                    <span class="material-symbols-outlined text-medical-blue !text-4xl">surgical</span>
+                    <div class="absolute inset-0 bg-medical-blue opacity-[0.05]"></div>
+                </div>
+                <h3 class="text-primary text-xl font-bold leading-tight mb-4">Surgery</h3>
+                <p class="text-slate-500 text-sm mb-6 leading-relaxed">Precision surgical procedures performed by
+                    world-class specialty surgeons.</p>
+                <div
+                    class="flex items-center gap-2 text-medical-blue text-xs font-black uppercase tracking-widest group-hover:gap-4 transition-all">
+                    <span>Directory</span>
+                    <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-20">
+            <div class="size-20 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-6 text-slate-400">
+                <span class="material-symbols-outlined text-4xl">search_off</span>
+            </div>
+            <h4 class="text-xl font-bold text-primary mb-2">No departments found</h4>
+            <p class="text-slate-500 text-sm font-medium">Try adjusting your search criteria or keywords.</p>
+        </div>
+    </section>
+
+    <!-- Emergency Triage Section -->
+    <section class="mt-24">
+        <div class="relative overflow-hidden rounded-[3.5rem] bg-slate-900 shadow-2xl text-white p-12 md:p-20">
+            <div class="absolute top-0 right-0 w-full md:w-1/2 h-full opacity-40 mix-blend-luminosity">
+                <img alt="Trauma Center" class="h-full w-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_cO6f1pyM5gB2C83QOAM8rKZP6LEB9_sq0YYGQTWhTJfhxWwf6MDzXhdzFu1Om3KZXfApmdqCSd_4LuP6kcsxeAoTJPtxbTAi3zv4sLK4vFGGtI5wJOd0i6G6rFf-RJ5oL0LaMhnS4w9oNTN28zo_3JYCcwpDfi5bbyf1j7R7ABcYNeCxtk7OPHytQZelmrRGZppzmlhMGAGOkjgkXSIzXiNBep5hz1fR07vCGUXW04l81c08rsSNSw_AQl16NGQGVHuGLNNAFI4" />
+                <div class="absolute inset-0 bg-gradient-to-l from-transparent to-slate-900"></div>
+            </div>
+            <div class="relative z-10 max-w-xl">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="flex h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
+                    <span class="text-red-400 text-xs font-black uppercase tracking-[0.3em]">Priority Trauma Unit</span>
+                </div>
+                <h3 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Emergency Triage</h3>
+                <p class="text-slate-400 text-lg leading-relaxed mb-10 font-medium">
+                    State-of-the-art trauma center equipped for immediate life-saving care and critical stabilization
+                    available 24/7.
+                </p>
+                <a href="tel:+211924753381"
+                    class="inline-flex items-center gap-4 bg-medical-blue text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest shadow-xl shadow-medical-blue/30 active:scale-95 transition-all hover:bg-blue-600">
+                    <span class="material-symbols-outlined">call</span>
+                    Immediate Access
+                </a>
+            </div>
+        </div>
+    </section>
 </main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('service-search');
+        const cards = document.querySelectorAll('.premium-card[data-name]');
+        const noResults = document.getElementById('no-results');
+        const resultsCount = document.getElementById('results-count');
+        const servicesContainer = document.getElementById('services-container');
+
+        searchInput.addEventListener('input', function (e) {
+            const query = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const nameMatch = card.dataset.name.toLowerCase().includes(query);
+                if (nameMatch) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Handle UI feedback
+            if (query.length > 0) {
+                resultsCount.classList.remove('hidden');
+                resultsCount.textContent = `(${visibleCount} match${visibleCount !== 1 ? 'es' : ''})`;
+
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                    servicesContainer.classList.add('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                    servicesContainer.classList.remove('hidden');
+                }
+            } else {
+                resultsCount.classList.add('hidden');
+                noResults.classList.add('hidden');
+                servicesContainer.classList.remove('hidden');
+            }
+        });
+    });
+</script>
 {% endblock %}
