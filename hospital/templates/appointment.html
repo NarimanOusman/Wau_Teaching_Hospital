@@ -7,13 +7,26 @@
 {% block nav_appointment_active %}text-accent{% endblock %}
 
 {% block extra_css %}
+/* Typography adjustments for laptop and above */
+@media (min-width: 1024px) {
+html { font-size: 110%; }
+.nav-link { font-size: 13px; }
+.form-input-premium { font-size: 1.1rem; }
+.form-label-premium { font-size: 12px; }
+}
+
 .appointment-card {
 @apply bg-white rounded-elite-sm md:rounded-elite shadow-premium border border-slate-100 overflow-hidden;
 }
 
 .form-input-premium {
-@apply w-full h-14 md:h-16 px-6 bg-slate-50 border-2 border-transparent rounded-2xl text-primary font-bold
+@apply w-full h-14 md:px-6 bg-slate-50 border-2 border-transparent rounded-2xl text-primary font-bold
 transition-all outline-none focus:border-accent focus:bg-white;
+}
+
+/* Height for laptop/desktop */
+@media (min-width: 768px) {
+.form-input-premium { height: 4.5rem; }
 }
 
 .form-label-premium {
@@ -31,6 +44,35 @@ transition-all outline-none focus:border-accent focus:bg-white;
 .step-bubble-inactive {
 @apply bg-slate-100 text-muted;
 }
+
+.step-content { display: none; }
+.step-content.active { display: block; }
+
+/* Success Modal Styles */
+#success-modal {
+@apply fixed inset-0 z-[100] flex items-center justify-center bg-primary/40 backdrop-blur-md opacity-0
+pointer-events-none transition-all duration-500;
+}
+#success-modal.show {
+@apply opacity-100 pointer-events-auto;
+}
+.modal-content {
+@apply bg-white rounded-[3rem] p-12 max-w-lg w-full mx-6 shadow-2xl scale-90 transition-transform duration-500;
+}
+#success-modal.show .modal-content {
+@apply scale-100;
+}
+
+.error-shake {
+animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+25% { transform: translateX(-8px); }
+50% { transform: translateX(8px); }
+75% { transform: translateX(-8px); }
+}
 {% endblock %}
 
 {% block content %}
@@ -39,8 +81,8 @@ transition-all outline-none focus:border-accent focus:bg-white;
         <!-- Header Section -->
         <div class="flex flex-col gap-4 mb-12 text-center md:text-left">
             <p class="text-accent font-[900] text-[10px] uppercase tracking-[0.4em]">Reservation Protocol</p>
-            <h1 class="text-primary text-4xl md:text-7xl font-[900] tracking-tight leading-[0.95]">Book Your Appointment
-            </h1>
+            <h1 class="text-primary text-4xl md:text-7xl font-[900] tracking-tight leading-[0.95]" id="form-title">Book
+                Your Appointment</h1>
             <p class="text-muted text-base md:text-xl font-medium max-w-2xl opacity-80 md:mx-0 mx-auto">
                 Connect with our world-class medical specialists. Immediate confirmation for priority healthcare.
             </p>
@@ -51,102 +93,173 @@ transition-all outline-none focus:border-accent focus:bg-white;
             <div class="flex items-center justify-between max-w-2xl mx-auto relative">
                 <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-100 -translate-y-1/2 -z-1"></div>
 
-                <div class="flex flex-col items-center gap-3 relative z-10">
-                    <div class="step-bubble step-bubble-active">1</div>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-accent">Patient</span>
+                <div class="flex flex-col items-center gap-3 relative z-10 cursor-pointer step-nav" data-target="1">
+                    <div class="step-bubble step-bubble-active" data-step="1">1</div>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-accent step-label"
+                        data-step="1">Patient</span>
                 </div>
 
-                <div class="flex flex-col items-center gap-3 relative z-10">
-                    <div class="step-bubble step-bubble-inactive">2</div>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-muted">Details</span>
+                <div class="flex flex-col items-center gap-3 relative z-10 cursor-pointer step-nav" data-target="2">
+                    <div class="step-bubble step-bubble-inactive" data-step="2">2</div>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-muted step-label"
+                        data-step="2">Details</span>
                 </div>
 
-                <div class="flex flex-col items-center gap-3 relative z-10">
-                    <div class="step-bubble step-bubble-inactive">3</div>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-muted">Review</span>
+                <div class="flex flex-col items-center gap-3 relative z-10 cursor-pointer step-nav" data-target="3">
+                    <div class="step-bubble step-bubble-inactive" data-step="3">3</div>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-muted step-label"
+                        data-step="3">Review</span>
                 </div>
             </div>
         </div>
 
         <!-- Appointment Form -->
-        <form class="appointment-card p-8 md:p-16 space-y-12">
-            <!-- Patient Status Selection -->
-            <div class="space-y-6">
-                <label class="form-label-premium">Patient Status</label>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button type="button"
-                        class="h-20 rounded-2xl border-2 border-accent bg-accent/5 flex items-center px-8 gap-5 group transition-all">
-                        <div class="size-10 rounded-xl bg-accent text-white flex items-center justify-center">
-                            <span class="material-symbols-outlined !fill-1">person_add</span>
+        <form id="multi-step-form" class="appointment-card p-8 md:p-16 space-y-12" novalidate>
+            <!-- STEP 1: Patient Selection -->
+            <div class="step-content active" id="step-1-content">
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <label class="form-label-premium">Patient Status</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button type="button" id="status-new"
+                                class="status-btn h-20 rounded-2xl border-2 border-accent bg-accent/5 flex items-center px-8 gap-5 transition-all">
+                                <div class="size-10 rounded-xl bg-accent text-white flex items-center justify-center">
+                                    <span class="material-symbols-outlined !fill-1">person_add</span>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-primary font-black text-sm">New Patient</p>
+                                    <p class="text-muted text-[10px] font-bold uppercase tracking-wider">Initial Visit
+                                    </p>
+                                </div>
+                            </button>
+                            <button type="button" id="status-returning"
+                                class="status-btn h-20 rounded-2xl border-2 border-slate-100 bg-white hover:border-slate-200 flex items-center px-8 gap-5 transition-all">
+                                <div
+                                    class="icon-box size-10 rounded-xl bg-slate-100 text-muted flex items-center justify-center transition-colors">
+                                    <span class="material-symbols-outlined !fill-1">history</span>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-primary font-black text-sm">Returning</p>
+                                    <p class="text-muted text-[10px] font-bold uppercase tracking-wider">Follow-up Care
+                                    </p>
+                                </div>
+                            </button>
                         </div>
-                        <div class="text-left">
-                            <p class="text-primary font-black text-sm">New Patient</p>
-                            <p class="text-muted text-[10px] font-bold uppercase tracking-wider">Initial Visit</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <!-- New Patient Info -->
+                        <div id="new-patient-fields" class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="space-y-3">
+                                <label class="form-label-premium">Full Name</label>
+                                <input type="text" id="full-name" placeholder="Johnathan Doe" class="form-input-premium"
+                                    required>
+                            </div>
+
+                            <div class="space-y-3">
+                                <label class="form-label-premium">Phone Number</label>
+                                <div class="relative flex items-center">
+                                    <span
+                                        class="absolute left-6 font-black text-primary text-sm border-r border-slate-200 pr-4">+211</span>
+                                    <input type="tel" id="phone-number" placeholder="" class="form-input-premium pl-24"
+                                        required>
+                                </div>
+                            </div>
                         </div>
-                    </button>
-                    <button type="button"
-                        class="h-20 rounded-2xl border-2 border-slate-100 bg-white hover:border-slate-200 flex items-center px-8 gap-5 group transition-all">
-                        <div
-                            class="size-10 rounded-xl bg-slate-100 text-muted flex items-center justify-center group-hover:bg-accent/10 group-hover:text-accent transition-colors">
-                            <span class="material-symbols-outlined !fill-1">history</span>
+
+                        <!-- Returning Patient Info -->
+                        <div id="returning-patient-fields" class="md:col-span-2 hidden">
+                            <div class="space-y-3">
+                                <label class="form-label-premium">Patient ID / File Number</label>
+                                <div class="relative">
+                                    <input type="text" id="file-number" placeholder="WTH-XXXXX"
+                                        class="form-input-premium">
+                                    <span
+                                        class="material-symbols-outlined absolute right-6 top-1/2 -translate-y-1/2 text-muted opacity-50">search</span>
+                                </div>
+                                <p class="text-[10px] text-muted font-bold uppercase tracking-widest ml-4 mt-2">Enter
+                                    your ID card number or registered phone</p>
+                            </div>
                         </div>
-                        <div class="text-left">
-                            <p class="text-primary font-black text-sm">Returning</p>
-                            <p class="text-muted text-[10px] font-bold uppercase tracking-wider">Follow-up Care</p>
-                        </div>
-                    </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Full Name -->
-                <div class="space-y-3">
-                    <label class="form-label-premium">Full Name</label>
-                    <input type="text" placeholder="Johnathan Doe" class="form-input-premium">
-                </div>
+            <!-- STEP 2: Details Section -->
+            <div class="step-content" id="step-2-content">
+                <div class="space-y-10">
+                    <div class="space-y-3">
+                        <label class="form-label-premium">Specialty Department</label>
+                        <div class="relative">
+                            <select id="specialty" class="form-input-premium appearance-none" required>
+                                <option value="">Select Medical Specialty</option>
+                                <option>General Medicine</option>
+                                <option>Pediatrics & Neonatology</option>
+                                <option>Cardiology Unit</option>
+                                <option>Maternity & Gynecology</option>
+                                <option>Surgical Services</option>
+                            </select>
+                            <span
+                                class="material-symbols-outlined absolute right-6 top-1/2 -translate-y-1/2 text-muted pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
 
-                <!-- Phone Number -->
-                <div class="space-y-3">
-                    <label class="form-label-premium">Phone Number</label>
-                    <div class="relative flex items-center">
-                        <span
-                            class="absolute left-6 font-black text-primary text-sm border-r border-slate-200 pr-4">+211</span>
-                        <input type="tel" placeholder="924 753 381" class="form-input-premium pl-24">
+                    <div class="space-y-3">
+                        <label class="form-label-premium">Reason for Visit</label>
+                        <textarea id="reason"
+                            placeholder="Brief description of symptoms or consultation requirements..."
+                            class="form-input-premium h-40 py-6 resize-none" required></textarea>
                     </div>
                 </div>
+            </div>
 
-                <!-- Department -->
-                <div class="space-y-3 md:col-span-2">
-                    <label class="form-label-premium">Specialty Department</label>
-                    <div class="relative">
-                        <select class="form-input-premium appearance-none">
-                            <option>Select Medical Specialty</option>
-                            <option>General Medicine</option>
-                            <option>Pediatrics & Neonatology</option>
-                            <option>Cardiology Unit</option>
-                            <option>Maternity & Gynecology</option>
-                            <option>Surgical Services</option>
-                        </select>
-                        <span
-                            class="material-symbols-outlined absolute right-6 top-1/2 -translate-y-1/2 text-muted pointer-events-none">expand_more</span>
+            <!-- STEP 3: Review Section -->
+            <div class="step-content" id="step-3-content">
+                <div class="bg-slate-50 rounded-[2rem] p-8 md:p-12 space-y-8">
+                    <div class="flex items-center gap-6 pb-8 border-b border-slate-200">
+                        <div class="size-16 rounded-2xl bg-accent text-white flex items-center justify-center">
+                            <span class="material-symbols-outlined text-3xl">fact_check</span>
+                        </div>
+                        <div>
+                            <h4 class="text-primary font-black text-2xl tracking-tight">Review Your Data</h4>
+                            <p class="text-muted font-bold text-xs uppercase tracking-widest mt-1">Please confirm the
+                                provided protocol</p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Reason for Visit -->
-                <div class="space-y-3 md:col-span-2">
-                    <label class="form-label-premium">Reason for Visit</label>
-                    <textarea placeholder="Brief description of symptoms or consultation requirements..."
-                        class="form-input-premium h-40 py-6 resize-none"></textarea>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <p class="text-[9px] font-black text-muted uppercase tracking-widest">Selected Department
+                            </p>
+                            <p class="text-primary font-bold" id="review-dept">General Medicine</p>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-[9px] font-black text-muted uppercase tracking-widest">Consultation Type</p>
+                            <p class="text-primary font-bold" id="review-status">New Patient</p>
+                        </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <p class="text-[9px] font-black text-muted uppercase tracking-widest">Summary/Symptoms</p>
+                            <p class="text-primary font-bold leading-relaxed" id="review-reason">Not specified</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Action Button -->
             <div class="pt-6">
-                <button type="submit"
-                    class="w-full h-18 md:h-22 bg-primary hover:bg-slate-900 text-white font-[900] text-sm uppercase tracking-[0.2em] rounded-2xl md:rounded-3xl shadow-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-4">
-                    Continue to Details
-                    <span class="material-symbols-outlined text-2xl !fill-1">arrow_forward</span>
+                <!-- Larger Button as requested -->
+                <button type="button" id="continue-btn"
+                    class="w-full h-20 md:h-24 bg-primary hover:bg-slate-900 text-white font-[900] text-base md:text-lg uppercase tracking-[0.2em] rounded-2xl md:rounded-[2.5rem] shadow-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-4">
+                    <span id="btn-text">Continue to Details</span>
+                    <span class="material-symbols-outlined text-3xl !fill-1" id="btn-icon">arrow_forward</span>
                 </button>
+
+                <button type="button" id="back-btn"
+                    class="hidden w-full mt-6 text-[11px] font-[900] text-muted uppercase tracking-[0.4em] hover:text-primary transition-all flex items-center justify-center gap-2 py-3 bg-slate-50 rounded-2xl border border-slate-100">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Previous Step
+                </button>
+
                 <div class="flex items-center justify-center gap-3 mt-8">
                     <span class="material-symbols-outlined text-emerald-500 text-sm">verified_user</span>
                     <p class="text-[9px] font-black text-muted uppercase tracking-[0.2em]">Secure encrypted reservation
@@ -176,6 +289,190 @@ transition-all outline-none focus:border-accent focus:bg-white;
         </div>
     </div>
 </main>
+
+<!-- Success Modal -->
+<div id="success-modal">
+    <div class="modal-content text-center space-y-8">
+        <div
+            class="size-24 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
+            <span class="material-symbols-outlined text-5xl font-black">check_circle</span>
+        </div>
+        <div class="space-y-3">
+            <h2 class="text-primary text-3xl md:text-4xl font-[900] tracking-tight">Submission Successful</h2>
+            <p class="text-muted font-bold text-sm uppercase tracking-widest">Your appointment has been logged</p>
+        </div>
+        <p class="text-slate-500 text-base font-medium">
+            Our clinical coordination team will review your protocol and contact you shortly for confirmation.
+        </p>
+        <button onclick="window.location.href='{% url 'home' %}'"
+            class="w-full h-16 bg-primary text-white font-black text-[11px] uppercase tracking-[0.3em] rounded-2xl shadow-xl hover:bg-slate-900 transition-all">
+            Return to Dashboard
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('multi-step-form');
+        const continueBtn = document.getElementById('continue-btn');
+        const backBtn = document.getElementById('back-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnIcon = document.getElementById('btn-icon');
+        const statusNew = document.getElementById('status-new');
+        const statusReturning = document.getElementById('status-returning');
+        const newFields = document.getElementById('new-patient-fields');
+        const returningFields = document.getElementById('returning-patient-fields');
+        const successModal = document.getElementById('success-modal');
+
+        let currentStep = 1;
+        let patientStatus = 'New Patient';
+
+        // Patient Status Switching
+        function setStatus(status) {
+            patientStatus = status;
+            const inputs = form.querySelectorAll('input, select, textarea');
+
+            if (status === 'New Patient') {
+                statusNew.classList.remove('border-slate-100', 'bg-white');
+                statusNew.classList.add('border-accent', 'bg-accent/5');
+                statusReturning.classList.remove('border-accent', 'bg-accent/5');
+                statusReturning.classList.add('border-slate-100', 'bg-white');
+
+                newFields.classList.remove('hidden');
+                returningFields.classList.add('hidden');
+
+                // Update required status
+                document.getElementById('full-name').required = true;
+                document.getElementById('phone-number').required = true;
+                document.getElementById('file-number').required = false;
+            } else {
+                statusReturning.classList.remove('border-slate-100', 'bg-white');
+                statusReturning.classList.add('border-accent', 'bg-accent/5');
+                statusNew.classList.remove('border-accent', 'bg-accent/5');
+                statusNew.classList.add('border-slate-100', 'bg-white');
+
+                returningFields.classList.remove('hidden');
+                newFields.classList.add('hidden');
+
+                // Update required status
+                document.getElementById('full-name').required = false;
+                document.getElementById('phone-number').required = false;
+                document.getElementById('file-number').required = true;
+            }
+        }
+
+        statusNew.addEventListener('click', () => setStatus('New Patient'));
+        statusReturning.addEventListener('click', () => setStatus('Returning'));
+
+        // Validation Function
+        function validateStep(step) {
+            const stepContent = document.getElementById(`step-${step}-content`);
+            const fields = stepContent.querySelectorAll('[required]');
+            let isValid = true;
+
+            fields.forEach(field => {
+                if (!field.value || field.value.trim() === '') {
+                    isValid = false;
+                    field.classList.add('border-red-500', 'bg-red-50', 'error-shake');
+                    setTimeout(() => field.classList.remove('error-shake'), 400);
+                } else {
+                    field.classList.remove('border-red-500', 'bg-red-50');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Step Navigation
+        function updateSteps(step) {
+            currentStep = step;
+
+            // Update bubbles and labels
+            document.querySelectorAll('.step-bubble').forEach(bubble => {
+                const s = parseInt(bubble.dataset.step);
+                bubble.className = 'step-bubble ' + (s === step ? 'step-bubble-active' : 'step-bubble-inactive');
+            });
+
+            document.querySelectorAll('.step-label').forEach(label => {
+                const s = parseInt(label.dataset.step);
+                label.className = 'text-[9px] font-black uppercase tracking-widest ' + (s === step ? 'text-accent' : 'text-muted');
+            });
+
+            // Update content visibility
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`step-${step}-content`).classList.add('active');
+
+            // Update Button State
+            if (step === 1) {
+                btnText.textContent = 'Continue to Details';
+                btnIcon.textContent = 'arrow_forward';
+                backBtn.classList.add('hidden');
+            } else if (step === 2) {
+                btnText.textContent = 'Review Booking';
+                btnIcon.textContent = 'rate_review';
+                backBtn.classList.remove('hidden');
+            } else if (step === 3) {
+                btnText.textContent = 'Confirm Protocol';
+                btnIcon.textContent = 'check_circle';
+                backBtn.classList.remove('hidden');
+
+                // Populate review data
+                document.getElementById('review-status').textContent = patientStatus;
+                document.getElementById('review-dept').textContent = document.getElementById('specialty').value;
+                document.getElementById('review-reason').textContent = document.getElementById('reason').value || 'Not specified';
+            }
+        }
+
+        // Allow navigation by clicking bubbles if validated
+        document.querySelectorAll('.step-nav').forEach(nav => {
+            nav.addEventListener('click', () => {
+                const target = parseInt(nav.dataset.target);
+                if (target < currentStep) {
+                    updateSteps(target);
+                } else if (target > currentStep) {
+                    // Check if current step is valid before going forward
+                    if (validateStep(currentStep)) {
+                        updateSteps(target);
+                    }
+                }
+            });
+        });
+
+        continueBtn.addEventListener('click', () => {
+            if (currentStep < 3) {
+                if (validateStep(currentStep)) {
+                    updateSteps(currentStep + 1);
+                    window.scrollTo({ top: 300, behavior: 'smooth' });
+                }
+            } else {
+                // Final submission
+                continueBtn.innerHTML = '<span class="animate-spin material-symbols-outlined">sync</span> PROCESSING';
+                continueBtn.disabled = true;
+
+                setTimeout(() => {
+                    successModal.classList.add('show');
+                }, 1000);
+            }
+        });
+
+        backBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                updateSteps(currentStep - 1);
+            }
+        });
+
+        // Quick cleanup on input
+        form.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('border-red-500', 'bg-red-50');
+            });
+        });
+    });
+</script>
 {% endblock %}
 
 {% block footer %}
