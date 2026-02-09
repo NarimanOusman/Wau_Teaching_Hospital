@@ -64,24 +64,24 @@ dark:text-white antialiased{% endblock %}
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full lg:w-[80%] mt-12">
-                    <button
+                    <a href="/appointment/"
                         class="flex items-center justify-between p-6 md:p-8 rounded-[2rem] bg-primary text-white hover:shadow-2xl hover:translate-y-[-4px] transition-all group/btn">
                         <span class="text-lg font-black uppercase tracking-widest">Booking</span>
                         <span
                             class="material-symbols-outlined text-3xl group-hover/btn:rotate-12 transition-transform">calendar_month</span>
-                    </button>
-                    <button
+                    </a>
+                    <a href="/doctors/"
                         class="flex items-center justify-between p-6 md:p-8 rounded-[2rem] bg-white text-navy-deep hover:shadow-2xl hover:translate-y-[-4px] transition-all group/btn">
                         <span class="text-lg font-black uppercase tracking-widest">Faculty</span>
                         <span
                             class="material-symbols-outlined text-3xl text-primary group-hover/btn:rotate-12 transition-transform">medical_services</span>
-                    </button>
-                    <button
+                    </a>
+                    <a href="/services/"
                         class="flex items-center justify-between p-6 md:p-8 rounded-[2rem] bg-white/10 backdrop-blur-md text-white border border-white/30 hover:shadow-2xl hover:translate-y-[-4px] transition-all group/btn">
                         <span class="text-lg font-black uppercase tracking-widest">Specialties</span>
                         <span
                             class="material-symbols-outlined text-3xl group-hover/btn:rotate-12 transition-transform">view_list</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>
@@ -99,55 +99,101 @@ dark:text-white antialiased{% endblock %}
                 </a>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div
-                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
-                    <div
-                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-4xl">child_care</span>
+                <!-- Pediatrics -->
+                <a href="/services/"
+                    class="group flex flex-col rounded-[2.5rem] border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark overflow-hidden hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1502740479091-635887520276?q=80&w=2069&auto=format&fit=crop"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Pediatrics">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-3">
-                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">Pediatrics</h4>
-                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">Dedicated child care
-                            services ranging from neonatal support to adolescent health.</p>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined text-2xl">child_care</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-[#181111] dark:text-white text-xl font-extrabold">Pediatrics</h4>
+                            <p class="text-[#886364] dark:text-gray-400 text-sm leading-relaxed">Dedicated child care
+                                from neonatal support to adolescent health.</p>
+                        </div>
                     </div>
-                </div>
-                <div
-                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
-                    <div
-                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-4xl">home_health</span>
+                </a>
+
+                <!-- General Surgery -->
+                <a href="/services/"
+                    class="group flex flex-col rounded-[2.5rem] border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark overflow-hidden hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=2070&auto=format&fit=crop"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Surgery">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-3">
-                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">General Surgery</h4>
-                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">State-of-the-art
-                            operating
-                            theaters equipped for complex surgical procedures.</p>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined text-2xl">home_health</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-[#181111] dark:text-white text-xl font-extrabold">General Surgery</h4>
+                            <p class="text-[#886364] dark:text-gray-400 text-sm leading-relaxed">Modern operating
+                                theaters for complex surgical procedures.</p>
+                        </div>
                     </div>
-                </div>
-                <div
-                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
-                    <div
-                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-4xl">pregnant_woman</span>
+                </a>
+
+                <!-- Maternity -->
+                <a href="/services/"
+                    class="group flex flex-col rounded-[2.5rem] border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark overflow-hidden hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?q=80&w=1974&auto=format&fit=crop"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Maternity">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-3">
-                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">Maternity</h4>
-                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">Providing a safe and
-                            supportive environment for mothers and their newborns.</p>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined text-2xl">pregnant_woman</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-[#181111] dark:text-white text-xl font-extrabold">Maternity</h4>
+                            <p class="text-[#886364] dark:text-gray-400 text-sm leading-relaxed">Supportive environment
+                                for mothers and their newborns.</p>
+                        </div>
                     </div>
-                </div>
-                <div
-                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
-                    <div
-                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
-                        <span class="material-symbols-outlined text-4xl">biotech</span>
+                </a>
+
+                <!-- Diagnostics -->
+                <a href="/services/"
+                    class="group flex flex-col rounded-[2.5rem] border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark overflow-hidden hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?q=80&w=1974&auto=format&fit=crop"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            alt="Diagnostics">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-3">
-                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">Diagnostics</h4>
-                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">Full laboratory and
-                            imaging services including X-ray and ultrasound.</p>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div
+                            class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined text-4xl">biotech</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <h4 class="text-[#181111] dark:text-white text-xl font-extrabold">Diagnostics</h4>
+                            <p class="text-[#886364] dark:text-gray-400 text-sm leading-relaxed">Full laboratory and
+                                imaging services including X-ray and ultrasound.</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
 
@@ -156,55 +202,69 @@ dark:text-white antialiased{% endblock %}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                 <div class="flex flex-col gap-10">
                     <div>
-                        <h2 class="text-4xl font-black mb-6">Wau Teaching Hospital Information</h2>
+                        <h2 class="text-primary text-sm font-black uppercase tracking-[0.2em] mb-3">Hospital
+                            Intelligence</h2>
+                        <h3 class="text-4xl md:text-5xl font-black mb-6 leading-tight">Wau Teaching Hospital Hub</h3>
                         <p class="text-[#886364] dark:text-gray-400 text-xl leading-relaxed">
-                            We are the leading medical facility in Western Bahr el Ghazal, committed to delivering
-                            health
-                            equity and excellence for all citizens.
+                            The nerve center of medical excellence in Western Bahr el Ghazal. Explore our contact
+                            conduits and precise geographical coordinates below.
                         </p>
                     </div>
                     <div class="flex flex-col gap-8">
-                        <div class="flex items-start gap-6">
-                            <div class="bg-primary text-white p-4 rounded-xl shadow-lg">
-                                <span class="material-symbols-outlined text-2xl">call</span>
+                        <!-- Contact -->
+                        <div class="flex items-center gap-6 group">
+                            <div
+                                class="bg-primary/10 text-primary p-5 rounded-2xl shadow-xl border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                                <span class="material-symbols-outlined text-3xl !fill-1">phone_in_talk</span>
                             </div>
                             <div>
-                                <h5 class="text-lg font-bold">Contact Number</h5>
-                                <p class="text-2xl font-black text-primary tracking-wide">+211 924 753 381</p>
+                                <h5 class="text-xs font-black uppercase tracking-widest text-primary mb-1">Secure Line
+                                </h5>
+                                <p class="text-2xl font-[900] tracking-tight text-navy-deep dark:text-white">+211 924
+                                    753 381</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-6">
-                            <div class="bg-primary text-white p-4 rounded-xl shadow-lg">
-                                <span class="material-symbols-outlined text-2xl">location_on</span>
+                        <!-- Location -->
+                        <div class="flex items-center gap-6 group">
+                            <div
+                                class="bg-primary/10 text-primary p-5 rounded-2xl shadow-xl border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                                <span class="material-symbols-outlined text-3xl !fill-1">distance</span>
                             </div>
                             <div>
-                                <h5 class="text-lg font-bold">Location</h5>
-                                <p class="text-[#886364] dark:text-gray-400 text-lg font-medium">Wau City Center,
-                                    Western Bahr el Ghazal, South Sudan</p>
+                                <h5 class="text-xs font-black uppercase tracking-widest text-primary mb-1">Global
+                                    Position</h5>
+                                <p class="text-lg font-bold text-[#886364] dark:text-gray-400 leading-tight">Wau City
+                                    Center, Bahr el Ghazal</p>
                             </div>
                         </div>
-                        <div class="flex items-start gap-6">
-                            <div class="bg-primary text-white p-4 rounded-xl shadow-lg">
-                                <span class="material-symbols-outlined text-2xl">schedule</span>
+                        <!-- Hours -->
+                        <div class="flex items-center gap-6 group">
+                            <div
+                                class="bg-primary/10 text-primary p-5 rounded-2xl shadow-xl border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                                <span class="material-symbols-outlined text-3xl !fill-1">alarm_on</span>
                             </div>
                             <div>
-                                <h5 class="text-lg font-bold">Operating Hours</h5>
-                                <p class="text-[#886364] dark:text-gray-400 text-lg font-medium">Emergency: 24/7 |
-                                    Outpatient: 8:00 AM - 6:00 PM</p>
+                                <h5 class="text-xs font-black uppercase tracking-widest text-primary mb-1">Operational
+                                    Protocol</h5>
+                                <p class="text-lg font-bold text-[#886364] dark:text-gray-400 leading-tight">
+                                    <span class="text-primary">Emergency: 24/7</span> | Outpatient: 8:00 AM - 12:00 PM
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200"
+                <!-- Interactive Map Hub -->
+                <div class="relative w-full h-[500px] md:h-[650px] rounded-[3rem] overflow-hidden shadow-2xl bg-white border border-slate-200 dark:border-white/10"
                     data-location="Wau, South Sudan">
-                    <iframe class="w-full h-full grayscale-[0.2] contrast-[1.1]"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15762.658257053!2d27.9904!3d7.6974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x16dc637a288416ef%3A0xe744e27f6b0f0aef!2sWau%2C%20South%20Sudan!5e0!3m2!1sen!2sus!4v1710123456789!5m2!1sen!2sus"
+                    <iframe
+                        class="w-full h-full grayscale-[0.1] contrast-[1.1] hover:grayscale-0 transition-all duration-700"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31534!2d27.985!3d7.705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x170f7f328f806935%3A0x63346e9ad6098db5!2sWau%2C%20South%20Sudan!5e0!3m2!1sen!2sus!4v1710123456789!5m2!1sen!2sus"
                         style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
-                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+                    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
                         <span
-                            class="text-white text-[9px] font-black uppercase tracking-[0.4em] bg-primary px-8 py-3 rounded-full border border-white/20 shadow-xl">Hospital
-                            Nexus</span>
+                            class="text-white text-[10px] font-black uppercase tracking-[0.5em] bg-primary px-10 py-4 rounded-full border border-white/20 shadow-2xl backdrop-blur-md">Tactical
+                            Map Hub</span>
                     </div>
                 </div>
             </div>

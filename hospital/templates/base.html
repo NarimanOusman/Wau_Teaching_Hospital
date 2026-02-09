@@ -26,7 +26,7 @@
                         "accent": "#0055D4",
                         "emergency": "#E11D48",
                         "smoke-white": "#F8F9FA",
-                        "navy-deep": "#0A2540",
+                        "navy-deep": "#0A0F14",
                         "muted": "#64748b",
                         "background": "#ffffff"
                     },
@@ -119,15 +119,17 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="{% block body_class %}theme-light bg-slate-50{% endblock %}">
+<body class="{% block body_class %}theme-dark bg-[#0A0F14] text-white{% endblock %}">
     <nav class="glass-navbar px-6 py-4 md:px-10 md:py-5" id="main-nav">
         <div class="flex items-center justify-between">
             <!-- Brand -->
             <a href="/home/" class="flex items-center gap-3 group">
                 <div class="flex flex-col">
-                    <span class="text-accent text-lg font-[900] uppercase tracking-tighter leading-none">Wau
+                    <span
+                        class="{% block logo_text_class %}text-white{% endblock %} text-lg font-[900] uppercase tracking-tighter leading-none">Wau
                         Teaching</span>
-                    <span class="text-[7px] font-black uppercase tracking-[0.4em] text-accent mt-1 opacity-80">Elite
+                    <span
+                        class="{% block logo_sub_class %}text-emergency{% endblock %} text-[7px] font-black uppercase tracking-[0.4em] mt-1 opacity-80">Elite
                         Clinical Matrix</span>
                 </div>
             </a>
@@ -167,7 +169,12 @@
                 <div id="mobile-menu">
                     <div class="flex justify-between items-center mb-8">
                         <div class="flex flex-col">
-                            <span class="text-accent text-xs font-black uppercase tracking-tighter">Wau Teaching</span>
+                            <span
+                                class="{% block mobile_logo_class %}text-white{% endblock %} text-xs font-black uppercase tracking-tighter">Wau
+                                Teaching</span>
+                            <span
+                                class="text-[6px] font-black uppercase tracking-[0.4em] text-emergency mt-0.5 opacity-80">Elite
+                                Matrix</span>
                         </div>
                         <label for="menu-toggle"
                             class="size-10 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center cursor-pointer">
