@@ -1,279 +1,269 @@
 {% extends 'base.html' %}
 
-{% block title %}Wau Teaching Hospital | Elite Healthcare{% endblock %}
+{% block title %}Wau Teaching Hospital | Emergency Access & Patient Services{% endblock %}
 
-{% block body_class %}theme-light bg-background{% endblock %}
+{% block body_class %}theme-light bg-background-light dark:bg-background-dark font-display text-[#181111]
+dark:text-white antialiased{% endblock %}
 
 {% block extra_css %}
-.glass-card-premium {
-@apply bg-white/70 backdrop-blur-2xl border border-white/50 shadow-glass-surface;
-position: relative;
-overflow: hidden;
-}
-
-.service-grid-expanded { display: none; }
-#services-toggle:checked ~ .service-grid-expanded { display: grid; }
-#services-toggle:checked ~ .service-grid-summary { display: none; }
-#services-toggle:checked ~ label .see-all-text::before { content: 'VIEW LESS'; }
-.see-all-text::before { content: 'EXPLORE ALL'; }
-
-.glow-sphere {
-@apply absolute pointer-events-none rounded-full blur-[120px] opacity-[0.08];
-}
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+<script>
+    // Local override for this page's specific theme while keeping global utilities
+    window.tailwind.config.theme.extend.colors = {
+        ...window.tailwind.config.theme.extend.colors,
+        "primary": "#ea2a33",
+        "background-light": "#f8f6f6",
+        "background-dark": "#211111",
+    };
+    window.tailwind.config.theme.extend.fontFamily = {
+        "display": ["Lexend", "sans-serif"]
+    };
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
 {% endblock %}
 
-{% block nav_home_active %}text-accent{% endblock %}
-
-{% block background_glows %}
-<div class="glow-sphere size-[600px] bg-accent -top-40 -left-60 animate-pulse"></div>
-{% endblock %}
+{% block nav_home_active %}!text-accent{% endblock %}
 
 {% block content %}
-<main class="flex-grow pt-24 lg:pt-36">
-    <div class="px-6 py-4 md:px-8">
-        <button
-            class="flex w-full items-center justify-between emergency-gradient text-white rounded-elite-sm md:rounded-elite h-16 md:h-20 px-8 md:px-12 font-[900] text-[11px] md:text-[13px] tracking-[0.15em] active:scale-[0.99] transition-all shadow-xl relative overflow-hidden">
-            <div class="flex items-center gap-4 relative z-10">
-                <span class="material-symbols-outlined text-2xl !fill-1">emergency</span>
-                <span class="uppercase">Instant Emergency Rescue</span>
+<div class="layout-container flex h-full grow flex-col">
+    <main class="flex-1">
+        <!-- Hero Section (Full Screen Impact) -->
+        <section class="relative w-full h-[100dvh] md:h-screen overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 group-hover:scale-105"
+                style='background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxWoxdSy0wg5WjnnmxgIZnKCbSu8ULf59Az0gmZdr6gQ83kBXcaKrPLUnvmoEyTOPW4OD2toJ1oGA82PKx5e1gTWS4quQubOzVEfc4FHPE-hYD6pEZgSP6HiROAK--Ol05ZuDo0a641K4PY5g5M1TqDN25VU4tO54r30o0wHYwFr43rnXjJF00FvRX1iEK16w46gyLb0wR-mwPgQq6Ka-2I2n8z71ZlBYos_yNyGspujeP2PVanBK-2UOmRqSY7MMlv67FceyHI5U");'>
             </div>
-            <span class="material-symbols-outlined text-2xl animate-pulse relative z-10">call</span>
-        </button>
-    </div>
 
-    <!-- Hero Section -->
-    <section class="px-6 py-4 md:px-8">
-        <div class="relative min-h-[500px] md:min-h-[650px] flex flex-col gap-10 bg-cover bg-center rounded-[3rem] md:rounded-elite items-start justify-end p-8 md:p-20 overflow-hidden shadow-premium group"
-            style='background-image: linear-gradient(to top, rgba(10, 37, 64, 1) 0%, rgba(10, 37, 64, 0.4) 50%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuChjA1wFqyW8wQdMDdTfz-T8DvNv0asQBdmr7zb5KsVbZarv8-DnkXTMssd73GTaA2BC5C6JfJKrIi3TihfYAHF8hLIk2HsLVhIdxXSD3LdFy4sQzun5nMWfh50hoZne5L2zZZ5VzkDv94YybzS3apzI_qQbS1TMyemhFvsEgudG964eQVzIXsxY7LBIGhZDuhM9OwpaG-xb8l7KF7tUu-R1V-MGZJ7vkgZ3bx51-UiDkBRGEUK7kC2VpXklEFllYpukcshBr8v6X8");'>
-
-            <div class="flex flex-col gap-6 relative z-10 max-w-4xl">
-                <div
-                    class="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-xl rounded-full w-fit border border-white/20">
-                    <span class="size-2 bg-accent rounded-full animate-pulse shadow-[0_0_12px_rgba(0,85,212,1)]"></span>
-                    <span class="text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em]">Southern
-                        Hub Excellence</span>
-                </div>
-                <h1
-                    class="text-white text-4xl sm:text-6xl md:text-7xl lg:text-[88px] font-[900] leading-[1.05] md:leading-[0.95] tracking-tight md:tracking-[-0.05em]">
-                    World-Class Care in Wau
-                </h1>
-                <p class="text-slate-300 text-base md:text-xl font-medium leading-relaxed max-w-xl opacity-90">
-                    Leading clinical excellence through modern aesthetics and dedicated local expertise.
-                </p>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-4 relative z-10 w-full md:w-auto">
-                <button
-                    class="flex items-center justify-center gap-3 rounded-[1.5rem] md:rounded-[2rem] h-14 md:h-18 px-10 md:px-14 bg-white text-primary text-sm font-black shadow-xl active:scale-95 transition-all w-full">
-                    Quick Booking
-                    <span class="material-symbols-outlined text-2xl !fill-1">calendar_add_on</span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Medical Units -->
-    <section class="px-6 py-16 md:px-8 md:py-24">
-        <input class="hidden" id="services-toggle" type="checkbox" />
-        <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 px-2 gap-6">
-            <div class="flex flex-col gap-2">
-                <p class="text-accent font-black text-[10px] uppercase tracking-[0.4em]">Departments</p>
-                <h3 class="text-primary text-4xl md:text-6xl font-[900] tracking-tight">Medical Units</h3>
-            </div>
-            <label
-                class="text-primary text-[9px] md:text-[10px] font-black py-3 px-8 bg-white shadow-lg rounded-full cursor-pointer border border-slate-100 active:scale-90 flex items-center gap-3"
-                for="services-toggle">
-                <span class="see-all-text tracking-[0.2em]"></span>
-                <span class="material-symbols-outlined text-lg">grid_view</span>
-            </label>
-        </div>
-
-        <div class="service-grid-summary grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            <div class="glass-card-premium flex flex-col gap-8 rounded-[2.5rem] md:rounded-elite p-8 md:p-12">
-                <div
-                    class="size-16 md:size-20 rounded-[1.5rem] md:rounded-elite-sm bg-blue-50 flex items-center justify-center text-accent">
-                    <span class="material-symbols-outlined text-3xl md:text-4xl !fill-1">clinical_notes</span>
-                </div>
-                <div>
-                    <p class="text-primary text-2xl md:text-3xl font-[900] tracking-tight">Outpatient Section</p>
-                    <p class="text-muted text-xs md:text-sm mt-4 font-bold opacity-70">Primary clinical consultations
-                        and diagnostics for all age groups.</p>
-                </div>
-            </div>
             <div
-                class="bg-primary flex flex-col gap-8 rounded-[2.5rem] md:rounded-elite p-8 md:p-12 text-white shadow-xl">
-                <div
-                    class="size-16 md:size-20 rounded-[1.5rem] md:rounded-elite-sm bg-white/10 flex items-center justify-center text-accent">
-                    <span class="material-symbols-outlined text-3xl md:text-4xl !fill-0">radiology</span>
-                </div>
-                <div>
-                    <p class="text-white text-2xl md:text-3xl font-[900] tracking-tight">Advanced Imaging</p>
-                    <p class="text-white/40 text-xs md:text-sm mt-4 font-bold">Modern digital radiography and
-                        specialized diagnostic imaging units.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="service-grid-expanded grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 pt-10">
-            <div class="glass-card-premium flex flex-col gap-6 rounded-[2rem] p-8 md:p-10">
-                <div class="size-14 md:size-16 rounded-2xl bg-blue-50 flex items-center justify-center text-accent">
-                    <span class="material-symbols-outlined text-3xl">medical_services</span>
-                </div>
-                <p class="text-primary text-xl font-black">Primary Care</p>
-            </div>
-            <!-- ... other services (keeping original content) ... -->
-            <div class="glass-card-premium flex flex-col gap-6 rounded-[2rem] p-8 md:p-10">
-                <div class="size-14 md:size-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-primary">
-                    <span class="material-symbols-outlined text-3xl">radiology</span>
-                </div>
-                <p class="text-primary text-xl font-black">Radiology</p>
-            </div>
-            <div class="glass-card-premium flex flex-col gap-6 rounded-[2rem] p-8 md:p-10">
-                <div
-                    class="size-14 md:size-16 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                    <span class="material-symbols-outlined text-3xl">biotech</span>
-                </div>
-                <p class="text-primary text-xl font-black">Laboratory</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Availability -->
-    <section class="px-6 py-10 md:px-8">
-        <div
-            class="bg-primary rounded-[3rem] md:rounded-elite p-10 md:p-24 shadow-2xl text-white relative overflow-hidden border border-white/5">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-                <div class="space-y-12">
-                    <div class="flex flex-col gap-3">
-                        <p class="text-accent font-[900] text-[10px] uppercase tracking-[0.5em]">Operations</p>
-                        <h3 class="text-4xl md:text-6xl font-[900] tracking-tight">Service Hours</h3>
-                    </div>
-                    <div class="space-y-10">
-                        <div
-                            class="flex flex-col sm:flex-row justify-between sm:items-center pb-8 border-b border-white/10 gap-4">
-                            <span class="font-black text-2xl tracking-tight">Emergency Unit</span>
-                            <div
-                                class="flex items-center gap-3 bg-emerald-500/10 text-emerald-400 px-6 py-3 rounded-full border border-emerald-500/20">
-                                <span class="size-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span class="font-black text-[11px] uppercase tracking-widest leading-none">Open
-                                    24/7</span>
-                            </div>
+                class="relative h-full flex flex-col items-start justify-center px-6 md:px-20 lg:px-40 pt-48 pb-20 z-10 w-full">
+                <div class="flex flex-col gap-6 max-w-[900px]">
+                    <div class="flex items-center gap-3 text-white mb-2 animate-fade-in">
+                        <div class="size-10 text-primary">
+                            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
+                            </svg>
                         </div>
-                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-                            <span class="font-black text-2xl tracking-tight">Outpatient Clinic</span>
-                            <div class="flex flex-col sm:items-end">
-                                <span
-                                    class="font-black text-xl bg-white/5 px-8 py-3 rounded-2xl border border-white/10 shadow-inner">07:30
-                                    — 14:00</span>
-                                <span class="text-[10px] text-white/40 mt-2 font-black tracking-widest uppercase">Mon —
-                                    Sat</span>
-                            </div>
-                        </div>
+                        <span class="text-lg md:text-xl font-black tracking-tight uppercase">Wau Teaching
+                            Hospital</span>
                     </div>
+                    <span
+                        class="bg-primary/20 text-primary border border-primary/30 w-fit px-5 py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.3em] backdrop-blur-md">
+                        Elite Medical Protocol
+                    </span>
+                    <h1 class="text-white text-4xl sm:text-6xl md:text-8xl font-[900] leading-[0.95] tracking-tighter">
+                        Compassionate Care <br class="hidden md:block" /> for South Sudan
+                    </h1>
+                    <p class="text-white/90 text-lg md:text-2xl font-medium leading-relaxed max-w-[700px] opacity-80">
+                        The Wau Teaching Hospital provides professional healthcare services with international
+                        standards, supporting our community with modern medicine and heart.
+                    </p>
                 </div>
-                <a class="flex items-center gap-6 p-8 md:p-10 rounded-[2.5rem] bg-white text-primary active:scale-95 transition-all shadow-xl"
-                    href="tel:+211924753381">
-                    <div class="size-16 rounded-[1.5rem] bg-slate-50 flex items-center justify-center text-accent">
-                        <span class="material-symbols-outlined text-3xl font-black !fill-1">headset_mic</span>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-muted uppercase font-[900] tracking-[0.3em] mb-1">Reception Desk</p>
-                        <p class="font-black text-2xl tracking-tight text-primary">+211 924 753 381</p>
-                    </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full lg:w-[80%] mt-12">
+                    <button
+                        class="flex items-center justify-between p-6 md:p-8 rounded-[2rem] bg-primary text-white hover:shadow-2xl hover:translate-y-[-4px] transition-all group/btn">
+                        <span class="text-lg font-black uppercase tracking-widest">Booking</span>
+                        <span
+                            class="material-symbols-outlined text-3xl group-hover/btn:rotate-12 transition-transform">calendar_month</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-between p-6 md:p-8 rounded-[2rem] bg-white text-navy-deep hover:shadow-2xl hover:translate-y-[-4px] transition-all group/btn">
+                        <span class="text-lg font-black uppercase tracking-widest">Faculty</span>
+                        <span
+                            class="material-symbols-outlined text-3xl text-primary group-hover/btn:rotate-12 transition-transform">medical_services</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-between p-6 md:p-8 rounded-[2rem] bg-white/10 backdrop-blur-md text-white border border-white/30 hover:shadow-2xl hover:translate-y-[-4px] transition-all group/btn">
+                        <span class="text-lg font-black uppercase tracking-widest">Specialties</span>
+                        <span
+                            class="material-symbols-outlined text-3xl group-hover/btn:rotate-12 transition-transform">view_list</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="px-6 md:px-20 lg:px-40 py-24 bg-white dark:bg-background-dark">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-[600px]">
+                    <h2 class="text-primary text-sm font-black uppercase tracking-[0.2em] mb-3">Our Specializations</h2>
+                    <h3 class="text-[#181111] dark:text-white text-4xl md:text-5xl font-black leading-tight">
+                        Comprehensive Key Medical Services</h3>
+                </div>
+                <a class="text-primary font-bold flex items-center gap-2 hover:gap-4 transition-all" href="/services/">
+                    Explore all services <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
             </div>
-        </div>
-    </section>
-
-    <!-- Campus Location -->
-    <section class="px-6 mt-10 mb-24 md:px-8">
-        <div class="bg-white p-4 rounded-[3.5rem] shadow-premium border border-slate-100">
-            <div
-                class="h-[400px] md:h-[550px] rounded-[3rem] w-full flex items-center justify-center overflow-hidden relative group">
-                <img alt="Map Location"
-                    class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU9jC-rtpQJl698N5r19hQH-FVkf4jYZum3wClKDsYyILciWH2DJgAN-2cf3DNdyz9fBGmTX_cwivOtTECIS2__wFFXHuTPAyTBnG17NMeoxAHT-_5MTnhwnfghmLB-Jy0PgC2QeJHtPIhd88HPyFJBXZJUJDsO6rv7GfyQIBnvWNSXTND79dlcTgrR5No84wIdKl_RUIe6wPk9Z9SzmIUJiQEHUVDAROXgpWtbU0wt2mhHKtApp1lY4Yei85h7sS7t3QUrLgNQKQ" />
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div
-                    class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent flex items-end justify-between p-8 md:p-16">
-                    <div class="flex flex-col gap-2">
-                        <h4 class="text-white font-[900] text-3xl md:text-5xl tracking-tight uppercase leading-none">
-                            Central Wau</h4>
-                        <p
-                            class="text-white font-black text-[10px] md:text-[11px] uppercase tracking-[0.3em] opacity-90">
-                            Jau Road, Wau, South Sudan</p>
-                    </div>
+                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
                     <div
-                        class="bg-accent size-16 md:size-20 rounded-full shadow-2xl flex items-center justify-center text-white active:scale-90 transition-all cursor-pointer">
-                        <span class="material-symbols-outlined text-3xl !fill-1">directions</span>
+                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-4xl">child_care</span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">Pediatrics</h4>
+                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">Dedicated child care
+                            services ranging from neonatal support to adolescent health.</p>
+                    </div>
+                </div>
+                <div
+                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div
+                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-4xl">home_health</span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">General Surgery</h4>
+                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">State-of-the-art
+                            operating
+                            theaters equipped for complex surgical procedures.</p>
+                    </div>
+                </div>
+                <div
+                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div
+                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-4xl">pregnant_woman</span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">Maternity</h4>
+                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">Providing a safe and
+                            supportive environment for mothers and their newborns.</p>
+                    </div>
+                </div>
+                <div
+                    class="group flex flex-col gap-6 rounded-2xl border border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-background-dark p-8 hover:shadow-2xl hover:border-primary/50 transition-all cursor-pointer">
+                    <div
+                        class="size-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-4xl">biotech</span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <h4 class="text-[#181111] dark:text-white text-2xl font-extrabold">Diagnostics</h4>
+                        <p class="text-[#886364] dark:text-gray-400 text-base leading-relaxed">Full laboratory and
+                            imaging services including X-ray and ultrasound.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+
+        <!-- Information Section -->
+        <section class="bg-background-light dark:bg-[#1a0c0c] px-6 md:px-20 lg:px-40 py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="flex flex-col gap-10">
+                    <div>
+                        <h2 class="text-4xl font-black mb-6">Wau Teaching Hospital Information</h2>
+                        <p class="text-[#886364] dark:text-gray-400 text-xl leading-relaxed">
+                            We are the leading medical facility in Western Bahr el Ghazal, committed to delivering
+                            health
+                            equity and excellence for all citizens.
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-8">
+                        <div class="flex items-start gap-6">
+                            <div class="bg-primary text-white p-4 rounded-xl shadow-lg">
+                                <span class="material-symbols-outlined text-2xl">call</span>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-bold">Contact Number</h5>
+                                <p class="text-2xl font-black text-primary tracking-wide">+211 924 753 381</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="bg-primary text-white p-4 rounded-xl shadow-lg">
+                                <span class="material-symbols-outlined text-2xl">location_on</span>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-bold">Location</h5>
+                                <p class="text-[#886364] dark:text-gray-400 text-lg font-medium">Wau City Center,
+                                    Western Bahr el Ghazal, South Sudan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="bg-primary text-white p-4 rounded-xl shadow-lg">
+                                <span class="material-symbols-outlined text-2xl">schedule</span>
+                            </div>
+                            <div>
+                                <h5 class="text-lg font-bold">Operating Hours</h5>
+                                <p class="text-[#886364] dark:text-gray-400 text-lg font-medium">Emergency: 24/7 |
+                                    Outpatient: 8:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200"
+                    data-location="Wau, South Sudan">
+                    <iframe class="w-full h-full grayscale-[0.2] contrast-[1.1]"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15762.658257053!2d27.9904!3d7.6974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x16dc637a288416ef%3A0xe744e27f6b0f0aef!2sWau%2C%20South%20Sudan!5e0!3m2!1sen!2sus!4v1710123456789!5m2!1sen!2sus"
+                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+                        <span
+                            class="text-white text-[9px] font-black uppercase tracking-[0.4em] bg-primary px-8 py-3 rounded-full border border-white/20 shadow-xl">Hospital
+                            Nexus</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
 {% endblock %}
 
 {% block footer %}
-<footer class="bg-primary text-white pt-24 pb-12 px-8 md:px-20 rounded-t-[4rem] border-t border-white/5">
-    <div class="max-w-7xl mx-auto flex flex-col gap-16">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div class="space-y-8">
-                <span class="font-[900] text-4xl tracking-tight uppercase">Wau Teaching</span>
-                <p class="text-white/80 text-lg font-medium leading-relaxed max-w-md">Setting the regional benchmark for
-                    medical excellence and compassionate clinical care since 1974.</p>
-                <div class="flex gap-4">
-                    <a class="size-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10 hover:bg-accent transition-all"
-                        href="#"><svg class="size-6 fill-current" viewBox="0 0 24 24">
-                            <path
-                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
-                            </path>
-                        </svg></a>
-                    <a class="size-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10 hover:bg-accent transition-all"
-                        href="#"><svg class="size-6 fill-current" viewBox="0 0 24 24">
-                            <path
-                                d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z">
-                            </path>
-                        </svg></a>
+<footer
+    class="bg-white dark:bg-background-dark border-t border-[#e5dcdc] dark:border-[#3d2a2a] px-6 md:px-20 lg:px-40 py-16">
+    <div class="flex flex-col md:flex-row justify-between gap-16 mb-16">
+        <div class="flex flex-col gap-6 max-w-[350px]">
+            <div class="flex items-center gap-3 text-primary">
+                <div class="size-8">
+                    <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
+                    </svg>
                 </div>
+                <h2 class="text-[#181111] dark:text-white text-xl font-bold leading-tight uppercase">Wau Teaching
+                    Hospital</h2>
             </div>
-            <div class="grid grid-cols-2 gap-10">
-                <div class="space-y-6">
-                    <h4 class="font-black text-white/90 uppercase tracking-[0.2em] text-[11px]">Resources</h4>
-                    <ul class="space-y-4">
-                        <li><a class="text-white/60 font-bold hover:text-accent transition-all text-sm" href="#">Medical
-                                Team</a></li>
-                        <li><a class="text-white/60 font-bold hover:text-accent transition-all text-sm"
-                                href="#">Specilaties</a></li>
-                        <li><a class="text-white/60 font-bold hover:text-accent transition-all text-sm"
-                                href="#">Careers</a></li>
-                    </ul>
-                </div>
-                <div class="space-y-6">
-                    <h4 class="font-black text-white/90 uppercase tracking-[0.2em] text-[11px]">Hospital</h4>
-                    <ul class="space-y-4">
-                        <li><a class="text-white/60 font-bold hover:text-accent transition-all text-sm"
-                                href="#">Ethics</a></li>
-                        <li><a class="text-white/60 font-bold hover:text-accent transition-all text-sm"
-                                href="#">Privacy</a></li>
-                        <li><a class="text-white/60 font-bold hover:text-accent transition-all text-sm"
-                                href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <p class="text-white/50 text-[10px] font-black uppercase tracking-[0.3em]">© 2024 WAU TEACHING HOSPITAL hub
+            <p class="text-base text-[#886364] dark:text-gray-400 leading-relaxed">
+                Dedicated to serving the people of South Sudan with healthcare excellence, integrity, and compassionate
+                medical attention since our establishment.
             </p>
-            <div class="flex items-center gap-3 text-white/70 bg-white/5 px-6 py-2 rounded-full border border-white/5">
-                <span class="material-symbols-outlined text-sm">language</span>
-                <span class="text-[10px] font-black uppercase tracking-widest">English (South Sudan)</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-12">
+            <div class="flex flex-col gap-4">
+                <h5 class="font-bold text-sm uppercase text-primary tracking-widest">Services</h5>
+                <a class="text-base hover:text-primary transition-colors font-semibold" href="#">Patient Portal</a>
+                <a class="text-base hover:text-primary transition-colors font-semibold" href="/doctors/">Find a
+                    Doctor</a>
+                <a class="text-base hover:text-primary transition-colors font-semibold"
+                    href="/appointment/">Appointments</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h5 class="font-bold text-sm uppercase text-primary tracking-widest">Legal</h5>
+                <a class="text-base hover:text-primary transition-colors font-semibold" href="#">Privacy Policy</a>
+                <a class="text-base hover:text-primary transition-colors font-semibold" href="#">Terms of Use</a>
+                <a class="text-base hover:text-primary transition-colors font-semibold" href="#">Patient Rights</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <h5 class="font-bold text-sm uppercase text-primary tracking-widest">Connect</h5>
+                <div class="flex gap-5">
+                    <span
+                        class="material-symbols-outlined cursor-pointer hover:text-primary text-2xl transition-colors">public</span>
+                    <span
+                        class="material-symbols-outlined cursor-pointer hover:text-primary text-2xl transition-colors">mail</span>
+                    <span
+                        class="material-symbols-outlined cursor-pointer hover:text-primary text-2xl transition-colors">share</span>
+                </div>
             </div>
         </div>
     </div>
+    <div class="pt-10 border-t border-[#e5dcdc] dark:border-[#3d2a2a] text-center">
+        <p class="text-sm text-[#886364] dark:text-gray-500 font-bold uppercase tracking-[0.2em]">
+            © 2026 Wau Teaching Hospital. All Rights Reserved.
+        </p>
+    </div>
 </footer>
-
-<!-- Chat Hub -->
-<button
-    class="fixed right-6 bottom-8 md:right-10 md:bottom-12 size-16 md:size-20 bg-accent text-white rounded-[2rem] shadow-2xl flex items-center justify-center active:scale-90 transition-all z-40 ring-[6px] md:ring-[10px] ring-white">
-    <span class="material-symbols-outlined text-3xl md:text-4xl">forum</span>
-</button>
 {% endblock %}
