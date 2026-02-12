@@ -12,7 +12,7 @@ flex-col{% endblock %}
         "primary": "#f20d0d",
         "emergency": "#f20d0d",
         "background-light": "#f3f4f6",
-        "background-dark": "#1a0e0e",
+        "background-dark": "#102a43",
     };
 </script>
 <style type="text/tailwindcss">
@@ -132,7 +132,7 @@ flex-col{% endblock %}
                                             <!-- Transparent Selector -->
                                             <select id="country_code"
                                                 onchange="document.getElementById('selected_code').textContent = this.value; document.getElementById('phone').focus();"
-                                                class="absolute left-0 top-0 bottom-0 w-20 opacity-0 z-20 cursor-pointer appearance-none text-[11px] font-sans">
+                                                class="absolute left-0 top-0 bottom-0 w-20 opacity-0 z-20 cursor-pointer appearance-none text-[11px] font-sans bg-transparent text-black dark:text-white dark:bg-slate-800">
                                                 <option value="+211" selected>SS (+211)</option>
                                                 <option value="+213">DZ (+213)</option>
                                                 <option value="+244">AO (+244)</option>
