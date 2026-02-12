@@ -1,479 +1,523 @@
 {% extends 'base.html' %}
 
-{% block title %}Clinical Reservation System | Wau Teaching Hospital{% endblock %}
+{% block title %}Patient Appointment Booking System - Wau Teaching Hospital{% endblock %}
 
-{% block body_class %}theme-light bg-slate-50 dark:bg-[#0A0F14] text-slate-900 dark:text-white antialiased{% endblock %}
-
-{% block nav_appointment_active %}!text-accent{% endblock %}
+{% block body_class %}bg-background-light dark:bg-background-dark text-[#181111] dark:text-white min-h-screen flex
+flex-col{% endblock %}
 
 {% block extra_css %}
+<script>
+    window.tailwind.config.theme.extend.colors = {
+        ...window.tailwind.config.theme.extend.colors,
+        "primary": "#f20d0d",
+        "emergency": "#f20d0d",
+        "background-light": "#f8f6f6",
+        "background-dark": "#211111",
+    };
+</script>
 <style type="text/tailwindcss">
-    .step-node {
-        @apply flex flex-col items-center gap-3 relative z-10;
+    .step-content { display: none; }
+    .step-content.active { display: block; animation: fadeIn 0.5s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .input-field {
+        @apply w-full rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-white dark:bg-[#1a0e0e] 
+               focus:border-primary focus:ring-0 h-14 px-6 font-bold text-slate-900 dark:text-white 
+               transition-all duration-300 placeholder-slate-400;
     }
-    .node-circle {
-        @apply size-12 rounded-full flex items-center justify-center font-black text-sm border-4 transition-all duration-500 bg-white dark:bg-slate-900 shadow-xl;
+    .priority-btn {
+        @apply flex-1 py-4 rounded-2xl border-2 border-slate-100 dark:border-white/5 font-black text-xs 
+               uppercase tracking-widest transition-all cursor-pointer text-center;
     }
-    .node-circle-active {
-        @apply border-primary text-primary scale-110 shadow-primary/20;
-    }
-    .node-circle-inactive {
-        @apply border-slate-100 dark:border-white/5 text-slate-300 dark:text-white/10;
-    }
-    .node-circle-complete {
-        @apply border-emerald-500 bg-emerald-500 text-white;
-    }
-    .form-step {
-        display: none;
-    }
-    .form-step.active {
-        display: flex;
-        animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes slideUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .priority-card {
-        @apply border-2 transition-all p-6 rounded-3xl cursor-pointer flex flex-col gap-3;
-    }
-    .priority-card.active {
-        @apply border-primary bg-primary/5 shadow-2xl shadow-primary/10;
-    }
-    .priority-card.inactive {
-        @apply border-slate-100 dark:border-white/5 bg-white dark:bg-white/5 hover:border-slate-200;
-    }
-    .input-premium {
-        @apply w-full h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-white dark:bg-white/5 px-6 font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary transition-all outline-none;
-    }
-    #success-modal {
-        @apply fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500;
-    }
-    #success-modal.show {
-        @apply opacity-100 pointer-events-auto;
-    }
+    .priority-btn.active { @apply border-primary bg-primary/5 text-primary shadow-lg shadow-primary/10; }
 </style>
 {% endblock %}
 
 {% block content %}
-<main class="flex-grow pt-32 lg:pt-48 pb-32">
-    <div class="max-w-4xl mx-auto px-6">
-        <!-- Header Clinical Context -->
-        <div class="flex flex-col items-center text-center gap-6 mb-16">
-            <div class="flex flex-col items-center gap-2">
-                <span class="text-primary font-black uppercase tracking-[0.4em] text-[10px]">Matrix Reservation
-                    V2</span>
-                <h1 class="text-4xl md:text-7xl font-[900] tracking-tighter leading-none dark:text-white">Clinical
-                    Appointment <br class="hidden md:block" /> Protocol</h1>
-            </div>
-            <p class="text-slate-500 dark:text-white/60 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-                Securely interface with our elite clinical staff. Optimized for clinical precision and rapid patient
-                processing.
-            </p>
-        </div>
-
-        <!-- Progress Tracker Hub -->
-        <div
-            class="bg-white dark:bg-white/5 rounded-[3rem] p-10 md:p-12 mb-10 shadow-2xl shadow-black/5 border border-slate-100 dark:border-white/5">
-            <div class="flex items-center justify-between max-w-2xl mx-auto relative">
-                <div class="absolute top-6 left-0 w-full h-[2px] bg-slate-100 dark:bg-white/5 -z-1"></div>
-                <div class="absolute top-6 left-0 h-[2px] bg-primary transition-all duration-700 -z-1" id="progress-bar"
-                    style="width: 0%"></div>
-
-                <div class="step-node" data-step="1">
-                    <div class="node-circle node-circle-active" id="node-1">
-                        <span class="material-symbols-outlined !text-xl" id="icon-1">person</span>
-                    </div>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-primary"
-                        id="label-1">Patient</span>
-                </div>
-
-                <div class="step-node" data-step="2">
-                    <div class="node-circle node-circle-inactive" id="node-2">
-                        <span class="material-symbols-outlined !text-xl" id="icon-2">stethoscope</span>
-                    </div>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-slate-300 dark:text-white/10"
-                        id="label-2">Clinical</span>
-                </div>
-
-                <div class="step-node" data-step="3">
-                    <div class="node-circle node-circle-inactive" id="node-3">
-                        <span class="material-symbols-outlined !text-xl" id="icon-3">verified</span>
-                    </div>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-slate-300 dark:text-white/10"
-                        id="label-3">Finalize</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Form Interface -->
-        <form id="appointment-form" class="flex flex-col gap-8">
-            <!-- STEP 1: PATIENT IDENTIFICATION -->
-            <div class="form-step active flex-col gap-10" id="step-1">
-                <div
-                    class="bg-white dark:bg-white/5 rounded-[3.5rem] p-10 md:p-16 border border-slate-100 dark:border-white/5 shadow-2xl transition-all">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div class="col-span-full">
-                            <h3 class="text-2xl font-black tracking-tight dark:text-white">Patient Identification</h3>
-                            <p class="text-slate-500 dark:text-white/40 text-sm font-medium mt-1">Provide legal medical
-                                data for clinical indexing.</p>
-                        </div>
-
-                        <div class="flex flex-col gap-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Legal
-                                Full Name</label>
-                            <input type="text" id="full_name" placeholder="Enter patient name..." class="input-premium"
-                                required>
-                        </div>
-
-                        <div class="flex flex-col gap-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Secure
-                                Email Contact</label>
-                            <input type="email" id="email" placeholder="patient@matrix.com" class="input-premium"
-                                required>
-                        </div>
-
-                        <div class="flex flex-col gap-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Phone
-                                Terminal</label>
-                            <div class="relative">
-                                <span
-                                    class="absolute left-6 top-1/2 -translate-y-1/2 text-primary font-black text-sm pr-4 border-r border-slate-100 dark:border-white/10">+211</span>
-                                <input type="tel" id="phone" placeholder="9XX XXX XXX" class="input-premium pl-24"
-                                    required>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col gap-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Patient
-                                Gender</label>
-                            <select id="gender" class="input-premium appearance-none" required>
-                                <option value="" disabled selected>Select Registry Status</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 2: CLINICAL PROTOCOL -->
-            <div class="form-step flex-col gap-10" id="step-2">
-                <div
-                    class="bg-white dark:bg-white/5 rounded-[3.5rem] p-10 md:p-16 border border-slate-100 dark:border-white/5 shadow-2xl">
-                    <div class="flex flex-col gap-12">
-                        <!-- Department Selection -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <div class="flex flex-col gap-3">
-                                <label
-                                    class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Primary
-                                    Department</label>
-                                <select id="department" class="input-premium appearance-none" required>
-                                    <option value="" disabled selected>Select Medical Unit</option>
-                                    <option>Internal Medicine</option>
-                                    <option>Surgical Nexus</option>
-                                    <option>Pediatrics & Neonatal</option>
-                                    <option>Trauma & Emergency</option>
-                                    <option>Diagnostics & Imaging</option>
-                                </select>
-                            </div>
-                            <div class="flex flex-col gap-3">
-                                <label
-                                    class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Clinical
-                                    Priority</label>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="priority-option flex items-center justify-center h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 cursor-pointer font-black text-[10px] uppercase tracking-widest hover:border-primary transition-all active"
-                                        data-value="Regular">Regular</div>
-                                    <div class="priority-option flex items-center justify-center h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 cursor-pointer font-black text-[10px] uppercase tracking-widest hover:border-emergency transition-all text-emergency"
-                                        data-value="Urgent">Urgent</div>
-                                </div>
-                                <input type="hidden" id="priority" value="Regular">
-                            </div>
-                        </div>
-
-                        <!-- Date/Time Selection -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <div class="flex flex-col gap-3">
-                                <label
-                                    class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Preferred
-                                    Matrix Cycle (Date)</label>
-                                <input type="date" id="date" class="input-premium" required>
-                            </div>
-                            <div class="flex flex-col gap-3">
-                                <label
-                                    class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Preferred
-                                    Slot</label>
-                                <select id="time_slot" class="input-premium appearance-none" required>
-                                    <option>Morning (08:00 - 12:00)</option>
-                                    <option>Afternoon (13:00 - 17:00)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Notes -->
-                        <div class="flex flex-col gap-3">
-                            <label class="text-[10px] font-black uppercase tracking-[0.2em] text-primary ml-4">Clinical
-                                Context / Symptoms</label>
-                            <textarea id="notes" placeholder="Describe symptoms or clinical requirements for triage..."
-                                class="input-premium h-40 py-6 resize-none" required></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 3: REVIEW & FINALIZE -->
-            <div class="form-step flex-col gap-10" id="step-3">
-                <div
-                    class="bg-white dark:bg-white/5 rounded-[3.5rem] p-10 md:p-16 border border-slate-100 dark:border-white/5 shadow-2xl">
-                    <div class="flex flex-col gap-10">
-                        <div class="flex items-center gap-6 pb-8 border-b border-slate-100 dark:border-white/5">
-                            <div
-                                class="size-20 rounded-[2rem] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-4xl !fill-1">verified</span>
-                            </div>
-                            <div>
-                                <h3 class="text-3xl font-black tracking-tight dark:text-white">Validation Ready</h3>
-                                <p class="text-slate-500 dark:text-white/40 text-sm font-medium mt-1">Confirm the
-                                    clinical summary before matrix transmission.</p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <div class="p-8 rounded-[2rem] bg-slate-50 dark:bg-white/5 space-y-4">
-                                <p class="text-[10px] font-black uppercase tracking-widest text-primary">Patient Profile
-                                </p>
-                                <div class="space-y-2">
-                                    <p class="text-lg font-black dark:text-white" id="review-name">---</p>
-                                    <p class="text-sm font-medium text-slate-500 dark:text-white/40"
-                                        id="review-contact">---</p>
-                                </div>
-                            </div>
-                            <div class="p-8 rounded-[2rem] bg-slate-50 dark:bg-white/5 space-y-4">
-                                <p class="text-[10px] font-black uppercase tracking-widest text-primary">Clinical
-                                    Details</p>
-                                <div class="space-y-2">
-                                    <p class="text-lg font-black dark:text-white" id="review-clinical">---</p>
-                                    <p class="text-sm font-medium text-slate-500 dark:text-white/40" id="review-time">
-                                        ---</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 bg-primary/5 p-6 rounded-2xl border border-primary/10">
-                            <span class="material-symbols-outlined text-primary">security</span>
-                            <p class="text-sm font-bold text-slate-700 dark:text-white/80">I confirm that all clinical
-                                data provided is accurate for medical indexing.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Global Action Bar -->
-            <div class="flex flex-col md:flex-row gap-6">
-                <button type="button" id="prev-btn"
-                    class="hidden flex-1 h-20 rounded-3xl border-2 border-slate-100 dark:border-white/10 font-black text-xs uppercase tracking-[0.4em] hover:bg-slate-50 dark:hover:bg-white/5 transition-all text-slate-400">
-                    Previous Phase
-                </button>
-                <button type="button" id="next-btn"
-                    class="flex-[3] h-24 rounded-[2.5rem] bg-primary text-white font-black text-lg uppercase tracking-[0.3em] shadow-2xl shadow-primary/20 hover:bg-slate-900 transition-all flex items-center justify-center gap-4 group">
-                    <span id="next-btn-text">Proceed to Clinical</span>
-                    <span class="material-symbols-outlined text-3xl transition-transform group-hover:translate-x-2"
-                        id="next-btn-icon">arrow_forward</span>
-                </button>
-            </div>
-        </form>
-
-        <!-- Emergency Command Bar -->
-        <div
-            class="mt-20 p-10 md:p-14 rounded-[4rem] bg-[#181111] text-white flex flex-col md:flex-row items-center justify-between gap-10 shadow-3xl">
-            <div class="flex items-center gap-8 text-center md:text-left flex-col md:flex-row">
-                <div
-                    class="size-20 rounded-[2.5rem] bg-primary flex items-center justify-center shadow-2xl animate-pulse">
-                    <span class="material-symbols-outlined text-4xl !fill-1">emergency</span>
+<div class="layout-container flex h-full grow flex-col">
+    <main class="flex flex-1 flex-col items-center py-24 md:py-32 px-4 md:px-10 lg:px-40">
+        <div class="max-w-[900px] w-full flex flex-col gap-12">
+            <!-- Header Section -->
+            <div class="flex flex-col items-center text-center gap-6">
+                <div class="size-16 text-primary animate-bounce">
+                    <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
+                    </svg>
                 </div>
                 <div class="space-y-2">
-                    <h4 class="text-3xl font-black tracking-tight">Direct Emergency Triage</h4>
-                    <p class="text-white/40 font-bold text-xs uppercase tracking-widest">Active Bypass for Trauma Cases
+                    <h2 class="text-xs font-black uppercase tracking-[0.4em] text-primary">Precision Care Protocol</h2>
+                    <h1 class="text-4xl md:text-6xl font-[900] tracking-tighter leading-none dark:text-white">Secure
+                        Appointment</h1>
+                    <p class="text-[#886364] dark:text-[#a68e8e] text-lg max-w-xl mx-auto font-medium">
+                        Synchronizing your health data with our specialized medical matrix.
                     </p>
                 </div>
             </div>
-            <div class="flex flex-col items-center md:items-end gap-3">
-                <p class="text-4xl font-[900] text-primary tracking-tighter leading-none">+211 924 753 381</p>
-                <p class="text-[10px] font-black uppercase tracking-[0.4em] text-white/30">Hospital Matrix Secure Line
-                </p>
-            </div>
-        </div>
-    </div>
-</main>
 
-<!-- Success Modal Terminal -->
-<div id="success-modal">
-    <div class="bg-white dark:bg-[#181111] rounded-[4rem] p-16 max-w-xl w-full mx-6 shadow-4xl text-center space-y-10 scale-90 transition-all duration-500 border border-slate-100 dark:border-white/5"
-        id="modal-box">
-        <div
-            class="size-32 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto shadow-inner relative">
+            <!-- Multi-Step Container -->
             <div
-                class="absolute inset-0 rounded-full border-[8px] border-emerald-500/20 border-t-emerald-500 animate-spin">
+                class="bg-white dark:bg-[#2a1a1a] rounded-[3rem] shadow-2xl shadow-black/10 border border-[#e5dcdc] dark:border-[#3d2a2a] overflow-hidden">
+                <!-- Progress Header -->
+                <div class="flex bg-slate-50/50 dark:bg-black/20 border-b border-[#e5dcdc] dark:border-[#3d2a2a]">
+                    <div id="prog-step-1"
+                        class="flex-1 flex items-center justify-center py-4 md:py-8 border-b-4 border-primary transition-all duration-500">
+                        <div class="flex flex-col items-center gap-1 md:gap-2">
+                            <span
+                                class="size-7 md:size-10 rounded-full bg-primary text-white flex items-center justify-center font-black text-[10px] md:text-sm shadow-xl shadow-primary/30">1</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest">Profile</span>
+                        </div>
+                    </div>
+                    <div id="prog-step-2"
+                        class="flex-1 flex items-center justify-center py-4 md:py-8 border-b-4 border-transparent opacity-30 transition-all duration-500">
+                        <div class="flex flex-col items-center gap-1 md:gap-2">
+                            <span
+                                class="size-7 md:size-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center font-black text-[10px] md:text-sm">2</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest">Clinical</span>
+                        </div>
+                    </div>
+                    <div id="prog-step-3"
+                        class="flex-1 flex items-center justify-center py-4 md:py-8 border-b-4 border-transparent opacity-30 transition-all duration-500">
+                        <div class="flex flex-col items-center gap-1 md:gap-2">
+                            <span
+                                class="size-7 md:size-10 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center font-black text-[10px] md:text-sm">3</span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-widest">Verify</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-16">
+                    <form id="appointmentForm" class="space-y-12">
+                        <!-- STEP 1: Patient Information -->
+                        <div id="step-1" class="step-content active">
+                            <div class="flex flex-col gap-10">
+                                <div class="space-y-2">
+                                    <h3 class="text-2xl font-black flex items-center gap-3">
+                                        <span
+                                            class="material-symbols-outlined text-primary !text-4xl">fingerprint</span>
+                                        Personal Identification
+                                    </h3>
+                                    <p class="text-sm text-[#886364] dark:text-[#a68e8e] font-medium">Enter patient's
+                                        core registration details.</p>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                    <div class="flex flex-col gap-2 md:gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Full
+                                            Legal Name</label>
+                                        <input type="text" id="full_name" required class="input-field" placeholder="">
+                                    </div>
+                                    <div class="flex flex-col gap-2 md:gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Secure
+                                            Email</label>
+                                        <input type="email" id="email" required class="input-field" placeholder="">
+                                    </div>
+                                    <div class="flex flex-col gap-2 md:gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Phone
+                                            Terminal</label>
+                                        <div class="relative group">
+                                            <!-- Visible Prefix -->
+                                            <div
+                                                class="absolute left-0 top-0 bottom-0 flex items-center pl-4 pointer-events-none z-10">
+                                                <div
+                                                    class="flex items-center gap-1 border-r border-[#e5dcdc] dark:border-white/10 pr-2">
+                                                    <span id="selected_code"
+                                                        class="text-[11px] font-[900] text-primary tracking-tight font-sans">+211</span>
+                                                    <span
+                                                        class="material-symbols-outlined text-[14px] text-primary opacity-60">keyboard_arrow_down</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Transparent Selector -->
+                                            <select id="country_code"
+                                                onchange="document.getElementById('selected_code').textContent = this.value; document.getElementById('phone').focus();"
+                                                class="absolute left-0 top-0 bottom-0 w-20 opacity-0 z-20 cursor-pointer appearance-none text-[11px] font-sans">
+                                                <option value="+211" selected>SS (+211)</option>
+                                                <option value="+213">DZ (+213)</option>
+                                                <option value="+244">AO (+244)</option>
+                                                <option value="+229">BJ (+229)</option>
+                                                <option value="+267">BW (+267)</option>
+                                                <option value="+226">BF (+226)</option>
+                                                <option value="+257">BI (+257)</option>
+                                                <option value="+237">CM (+237)</option>
+                                                <option value="+238">CV (+238)</option>
+                                                <option value="+236">CF (+236)</option>
+                                                <option value="+235">TD (+235)</option>
+                                                <option value="+242">CG (+242)</option>
+                                                <option value="+243">CD (+243)</option>
+                                                <option value="+253">DJ (+253)</option>
+                                                <option value="+20">EG (+20)</option>
+                                                <option value="+251">ET (+251)</option>
+                                                <option value="+241">GA (+241)</option>
+                                                <option value="+233">GH (+233)</option>
+                                                <option value="+224">GN (+224)</option>
+                                                <option value="+225">CI (+225)</option>
+                                                <option value="+254">KE (+254)</option>
+                                                <option value="+218">LY (+218)</option>
+                                                <option value="+212">MA (+212)</option>
+                                                <option value="+234">NG (+234)</option>
+                                                <option value="+250">RW (+250)</option>
+                                                <option value="+221">SN (+221)</option>
+                                                <option value="+252">SO (+252)</option>
+                                                <option value="+27">ZA (+27)</option>
+                                                <option value="+249">SD (+249)</option>
+                                                <option value="+255">TZ (+255)</option>
+                                                <option value="+216">TN (+216)</option>
+                                                <option value="+256">UG (+256)</option>
+                                                <option value="+260">ZM (+260)</option>
+                                                <option value="+263">ZW (+263)</option>
+                                                <option value="+1">US (+1)</option>
+                                                <option value="+44">UK (+44)</option>
+                                                <option value="+91">IN (+91)</option>
+                                                <option value="+971">AE (+971)</option>
+                                                <option value="+966">SA (+966)</option>
+                                            </select>
+
+                                            <!-- Phone Input with proper padding -->
+                                            <input type="tel" id="phone" required class="input-field !pl-20"
+                                                placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-2 md:gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Patient
+                                            Gender</label>
+                                        <select id="gender" required class="input-field appearance-none">
+                                            <option value="" disabled selected></option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: Clinical Details -->
+                        <div id="step-2" class="step-content">
+                            <div class="flex flex-col gap-10">
+                                <div class="space-y-2">
+                                    <h3 class="text-2xl font-black flex items-center gap-3">
+                                        <span
+                                            class="material-symbols-outlined text-primary !text-4xl">stethoscope</span>
+                                        Clinical Matrix
+                                    </h3>
+                                    <p class="text-sm text-[#886364] dark:text-[#a68e8e] font-medium">Select department
+                                        and priority levels.</p>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="flex flex-col gap-2 md:gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Specialized
+                                            Department</label>
+                                        <select id="department" required class="input-field appearance-none">
+                                            <option value="" disabled selected></option>
+                                            <option>Internal Medicine</option>
+                                            <option>Emergency & Trauma</option>
+                                            <option>Pediatric Care</option>
+                                            <option>General Surgery</option>
+                                            <option>Diagnostics & Imaging</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Triage
+                                            Priority</label>
+                                        <div class="flex gap-4">
+                                            <div onclick="setPriority('Regular', this)" class="priority-btn active">
+                                                Regular</div>
+                                            <div onclick="setPriority('Urgent', this)" class="priority-btn">Urgent</div>
+                                        </div>
+                                        <input type="hidden" id="priority" value="Regular">
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Target
+                                            Date</label>
+                                        <input type="date" id="date" required class="input-field">
+                                    </div>
+                                    <div class="flex flex-col gap-3">
+                                        <label
+                                            class="text-[10px] font-black uppercase tracking-widest text-primary ml-2">Time
+                                            Slot</label>
+                                        <select id="time_slot" required class="input-field appearance-none">
+                                            <option>Morning (08:00 - 12:00)</option>
+                                            <option>Afternoon (13:00 - 17:00)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: Review -->
+                        <div id="step-3" class="step-content">
+                            <div class="flex flex-col gap-10">
+                                <div class="space-y-2">
+                                    <h3 class="text-2xl font-black flex items-center gap-3">
+                                        <span
+                                            class="material-symbols-outlined text-emerald-500 !text-4xl">verified_user</span>
+                                        Summary Validation
+                                    </h3>
+                                    <p class="text-sm text-[#886364] dark:text-[#a68e8e] font-medium">Please review all
+                                        clinical headers before transmission.</p>
+                                </div>
+                                <div
+                                    class="p-6 md:p-14 rounded-[2rem] md:rounded-[2.5rem] bg-slate-50 dark:bg-white/5 border border-[#e5dcdc] dark:border-white/5 space-y-6 md:space-y-10">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+                                        <div class="space-y-1">
+                                            <p
+                                                class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#886364]">
+                                                Patient Name</p>
+                                            <p id="rev-name" class="text-base md:text-xl font-[900] dark:text-white">---
+                                            </p>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <p
+                                                class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#886364]">
+                                                Department</p>
+                                            <p id="rev-dept" class="text-base md:text-xl font-[900] dark:text-white">---
+                                            </p>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <p
+                                                class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#886364]">
+                                                Scheduled For</p>
+                                            <p id="rev-time" class="text-sm md:text-lg font-bold text-primary">---</p>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <p
+                                                class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#886364]">
+                                                Priority Status</p>
+                                            <p id="rev-priority" class="text-sm md:text-lg font-bold">---</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="pt-5 md:pt-8 border-t border-[#e5dcdc] dark:border-white/10 flex items-center gap-3 md:gap-4 text-[10px] md:text-xs font-bold text-[#886364]">
+                                        <span
+                                            class="material-symbols-outlined text-emerald-500 text-sm md:text-base">lock</span>
+                                        Clinical-grade encryption protocol active
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                            <button type="button" id="prevBtn" onclick="changeStep(-1)"
+                                class="hidden flex-1 py-4 md:py-6 rounded-2xl md:rounded-3xl border-2 border-slate-100 dark:border-white/10 font-black text-[10px] uppercase tracking-[0.3em] hover:bg-slate-50 dark:hover:bg-white/5 transition-all text-[#886364]">
+                                Return Phase
+                            </button>
+                            <button type="button" id="nextBtn" onclick="changeStep(1)"
+                                class="flex-[3] py-5 md:py-6 rounded-2xl md:rounded-[2rem] bg-primary text-white font-black text-[11px] md:text-sm uppercase tracking-[0.2em] shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center group relative">
+                                <span id="btnText">Proceed to Clinical</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <span class="material-symbols-outlined text-6xl font-black">check_circle</span>
+
+            <!-- Context Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                <div
+                    class="p-5 md:p-8 bg-white dark:bg-[#2a1a1a] rounded-[2rem] md:rounded-[2.5rem] border border-[#e5dcdc] dark:border-[#3d2a2a] flex items-center gap-4 md:gap-6 group hover:border-primary transition-all">
+                    <div
+                        class="size-12 md:size-16 rounded-xl md:rounded-2xl bg-primary/10 text-primary flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-white">
+                        <span class="material-symbols-outlined text-2xl md:text-3xl">location_on</span>
+                    </div>
+                    <div>
+                        <h4
+                            class="font-[900] text-[10px] md:text-sm uppercase tracking-widest text-[#181111] dark:text-white">
+                            Facility Campus</h4>
+                        <p class="text-xs md:text-sm font-medium text-[#886364] dark:text-[#a68e8e]">Airport Road, Wau
+                            Center</p>
+                    </div>
+                </div>
+                <div
+                    class="p-5 md:p-8 bg-white dark:bg-[#2a1a1a] rounded-[2rem] md:rounded-[2.5rem] border border-[#e5dcdc] dark:border-[#3d2a2a] flex items-center gap-4 md:gap-6 group hover:border-primary transition-all">
+                    <div
+                        class="size-12 md:size-16 rounded-xl md:rounded-2xl bg-primary/10 text-primary flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-white">
+                        <span class="material-symbols-outlined text-2xl md:text-3xl">medical_services</span>
+                    </div>
+                    <div>
+                        <h4
+                            class="font-[900] text-[10px] md:text-sm uppercase tracking-widest text-[#181111] dark:text-white">
+                            Matrix Uptime</h4>
+                        <p class="text-xs md:text-sm font-medium text-[#886364] dark:text-[#a68e8e]">Clinical: 10AM-6PM
+                            | ER: 24/7</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="space-y-4">
-            <h2 class="text-4xl font-[900] tracking-tighter dark:text-white">Protocol Synchronized</h2>
-            <p class="text-slate-500 dark:text-white/40 font-black text-xs uppercase tracking-[0.3em]">Patient ID:
-                WTH-MATRIX-{{ "now"|date:"U"|slice:"-6:" }}</p>
+    </main>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal"
+    class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-xl transition-all duration-700 opacity-0 pointer-events-none">
+    <div class="bg-white dark:bg-[#181111] rounded-[3rem] md:rounded-[4rem] p-8 md:p-24 max-w-2xl w-full mx-6 shadow-4xl text-center space-y-6 md:space-y-12 border border-slate-100 dark:border-white/10 scale-90 transition-all duration-500"
+        id="modalBox">
+        <div
+            class="size-20 md:size-32 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto relative shadow-inner">
+            <span class="material-symbols-outlined text-4xl md:text-6xl font-[900]">check_circle</span>
         </div>
-        <p class="text-slate-600 dark:text-white/60 text-lg font-medium leading-relaxed">
-            Your clinical reservation has been logged into the hospital’s core matrix. An automated confirmation packet
-            will be dispatched to your terminal shortly.
+        <div class="space-y-3 md:space-y-4">
+            <h2 class="text-2xl md:text-5xl font-[900] tracking-tighter dark:text-white leading-tight">Protocol Locked
+            </h2>
+            <p class="text-emerald-500 font-black text-[9px] md:text-xs uppercase tracking-[0.4em]">Matrix ID: WTH-{{
+                'now'|date:'md'
+                }}-{{ 'now'|date:'is' }}</p>
+        </div>
+        <p class="text-[#886364] dark:text-white/60 text-sm md:text-lg font-medium leading-relaxed">
+            Your clinical reservation has been successfully integrated into the hospital’s core matrix.
         </p>
         <button onclick="window.location.href='/home/'"
-            class="w-full h-20 bg-primary text-white font-black text-xs uppercase tracking-[0.4em] rounded-3xl shadow-xl hover:bg-slate-900 transition-all">
+            class="w-full h-16 md:h-24 bg-primary text-white font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] rounded-2xl md:rounded-[2rem] shadow-2xl hover:bg-[#181111] transition-all">
             Return to Command Center
         </button>
     </div>
 </div>
-
-{% block footer %}
-<footer class="py-20 bg-white dark:bg-[#0A0F14] border-t border-slate-100 dark:border-white/5">
-    <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-        <div class="flex items-center justify-center gap-3 text-primary">
-            <div class="size-8">
-                <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
-                </svg>
-            </div>
-            <p class="text-xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">Wau Teaching Matrix
-            </p>
-        </div>
-        <p class="text-slate-500 dark:text-white/20 text-[10px] font-black uppercase tracking-[0.4em]">© 2026 Wau
-            Teaching Hospital Hub | Clinical Excellence Assured</p>
-    </div>
-</footer>
-{% endblock %}
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('appointment-form');
-        const nextBtn = document.getElementById('next-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtnText = document.getElementById('next-btn-text');
-        const nextBtnIcon = document.getElementById('next-btn-icon');
-        const steps = document.querySelectorAll('.form-step');
-        const nodes = document.querySelectorAll('.node-circle');
-        const bar = document.getElementById('progress-bar');
+    let currentStep = 1;
+    const totalSteps = 3;
 
-        let currentStep = 1;
+    function setPriority(val, el) {
+        document.getElementById('priority').value = val;
+        document.querySelectorAll('.priority-btn').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
+    }
 
-        function updateUI() {
-            // Update Steps
-            steps.forEach(s => s.classList.remove('active'));
-            document.getElementById(`step-${currentStep}`).classList.add('active');
+    function changeStep(n) {
+        if (n === 1 && !validateStep()) return;
 
-            // Update Progress Nodes
-            nodes.forEach((node, idx) => {
-                const stepIdx = idx + 1;
-                const label = document.getElementById(`label-${stepIdx}`);
+        currentStep += n;
 
-                node.classList.remove('node-circle-active', 'node-circle-complete', 'node-circle-inactive');
-                label.classList.remove('text-primary', 'text-emerald-500', 'text-slate-300', 'dark:text-white/10');
+        if (currentStep > totalSteps) {
+            submitForm();
+            return;
+        }
 
-                if (stepIdx < currentStep) {
-                    node.classList.add('node-circle-complete');
-                    document.getElementById(`icon-${stepIdx}`).textContent = 'check';
-                    label.classList.add('text-emerald-500');
-                } else if (stepIdx === currentStep) {
-                    node.classList.add('node-circle-active');
-                    label.classList.add('text-primary');
-                } else {
-                    node.classList.add('node-circle-inactive');
-                    label.classList.add('text-slate-300', 'dark:text-white/10');
-                }
-            });
+        updateStepUI();
+    }
 
-            // Update Progress Bar
-            bar.style.width = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
+    function validateStep() {
+        const activeStep = document.getElementById(`step-${currentStep}`);
+        const inputs = activeStep.querySelectorAll('input[required], select[required]');
+        let valid = true;
 
-            // Update Buttons
-            if (currentStep === 1) {
-                prevBtn.classList.add('hidden');
-                nextBtnText.textContent = 'Proceed to Clinical';
-                nextBtnIcon.textContent = 'arrow_forward';
-            } else if (currentStep === steps.length) {
-                prevBtn.classList.remove('hidden');
-                nextBtnText.textContent = 'Synchronize Protocol';
-                nextBtnIcon.textContent = 'sync';
+        inputs.forEach(input => {
+            if (!input.value) {
+                input.classList.add('!border-primary');
+                valid = false;
             } else {
-                prevBtn.classList.remove('hidden');
-                nextBtnText.textContent = 'Verify Information';
-                nextBtnIcon.textContent = 'rate_review';
+                input.classList.remove('!border-primary');
             }
+        });
 
-            // Update Review Data
-            if (currentStep === 3) {
-                document.getElementById('review-name').textContent = document.getElementById('full_name').value || 'Anonymous Patient';
-                document.getElementById('review-contact').textContent = `${document.getElementById('email').value || '---'} | ${document.getElementById('phone').value || '---'}`;
-                document.getElementById('review-clinical').textContent = `${document.getElementById('department').value || 'General'} | Priority: ${document.getElementById('priority').value}`;
-                document.getElementById('review-time').textContent = `Target: ${document.getElementById('date').value || 'TBD'} | ${document.getElementById('time_slot').value}`;
+        return valid;
+    }
+
+    function updateStepUI() {
+        // Content
+        document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+
+        // Progress Headers
+        for (let i = 1; i <= totalSteps; i++) {
+            const head = document.getElementById(`prog-step-${i}`);
+            const circle = head.querySelector('span:first-child');
+
+            if (i < currentStep) {
+                head.classList.remove('opacity-30', 'border-transparent');
+                head.classList.add('border-emerald-500');
+                circle.classList.add('bg-emerald-500');
+                circle.classList.remove('bg-primary', 'bg-slate-200', 'dark:bg-white/10');
+                circle.innerHTML = '<span class="material-symbols-outlined !text-xl">check</span>';
+            } else if (i === currentStep) {
+                head.classList.remove('opacity-30', 'border-transparent', 'border-emerald-500');
+                head.classList.add('border-primary');
+                circle.classList.add('bg-primary');
+                circle.classList.remove('bg-emerald-500', 'bg-slate-200', 'dark:bg-white/10');
+                circle.textContent = i;
+            } else {
+                head.classList.add('opacity-30', 'border-transparent');
+                head.classList.remove('border-primary', 'border-emerald-500');
+                circle.classList.add('bg-slate-200', 'dark:bg-white/10');
+                circle.classList.remove('bg-primary', 'bg-emerald-500');
+                circle.textContent = i;
             }
         }
 
-        nextBtn.addEventListener('click', () => {
-            if (currentStep < steps.length) {
-                // Simple validation
-                const activeInputs = steps[currentStep - 1].querySelectorAll('input[required], select[required], textarea[required]');
-                let valid = true;
-                activeInputs.forEach(i => {
-                    if (!i.value) {
-                        i.classList.add('border-primary');
-                        valid = false;
-                    } else {
-                        i.classList.remove('border-primary');
-                    }
-                });
+        // Buttons
+        document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
+        const btnText = document.getElementById('btnText');
+        if (currentStep === 1) btnText.textContent = "Proceed to Clinical";
+        else if (currentStep === 2) btnText.textContent = "Verify Information";
+        else if (currentStep === 3) {
+            btnText.textContent = "Finalize Reservation";
+            updateReview();
+        }
 
-                if (valid) {
-                    currentStep++;
-                    updateUI();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            } else {
-                // Submit
-                nextBtn.disabled = true;
-                nextBtnText.textContent = 'Processing...';
+        window.scrollTo({ top: 150, behavior: 'smooth' });
+    }
 
-                setTimeout(() => {
-                    document.getElementById('success-modal').classList.add('show');
-                    setTimeout(() => {
-                        document.getElementById('modal-box').classList.remove('scale-90');
-                        document.getElementById('modal-box').classList.add('scale-100');
-                    }, 50);
-                }, 1500);
-            }
-        });
+    function updateReview() {
+        document.getElementById('rev-name').textContent = document.getElementById('full_name').value;
+        document.getElementById('rev-dept').textContent = document.getElementById('department').value;
+        document.getElementById('rev-time').textContent = `${document.getElementById('date').value} | ${document.getElementById('time_slot').value}`;
+        document.getElementById('rev-priority').textContent = document.getElementById('priority').value;
+        document.getElementById('rev-priority').className = `text-lg font-bold ${document.getElementById('priority').value === 'Urgent' ? 'text-emergency' : 'text-emerald-500'}`;
+    }
 
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 1) {
-                currentStep--;
-                updateUI();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
+    function submitForm() {
+        const nextBtn = document.getElementById('nextBtn');
+        nextBtn.innerHTML = '<span class="animate-spin material-symbols-outlined">sync</span> Synchronizing...';
+        nextBtn.disabled = true;
 
-        // Priority Selection
-        document.querySelectorAll('.priority-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                document.querySelectorAll('.priority-option').forEach(p => p.classList.remove('border-primary', 'border-emergency', 'bg-primary/5', 'bg-emergency/5'));
-                document.getElementById('priority').value = opt.dataset.value;
-                if (opt.dataset.value === 'Regular') {
-                    opt.classList.add('border-primary', 'bg-primary/5');
-                } else {
-                    opt.classList.add('border-emergency', 'bg-emergency/5');
-                }
-            });
-        });
-    });
+        setTimeout(() => {
+            const modal = document.getElementById('successModal');
+            const modalBox = document.getElementById('modalBox');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            setTimeout(() => {
+                modalBox.classList.remove('scale-90');
+                modalBox.classList.add('scale-100');
+            }, 100);
+        }, 1500);
+    }
 </script>
+{% endblock %}
+
+{% block footer %}
+<footer class="bg-white dark:bg-[#1a0e0e] border-t border-[#e5dcdc] dark:border-[#3d2a2a] py-16">
+    <div class="max-w-[800px] mx-auto px-6 flex flex-col items-center gap-8">
+        <div
+            class="w-full bg-[#181111] text-white p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div class="flex items-center gap-4">
+                <div class="size-14 rounded-full bg-primary flex items-center justify-center animate-pulse">
+                    <span class="material-symbols-outlined text-3xl">emergency</span>
+                </div>
+                <div>
+                    <h4 class="font-black text-lg text-white">Emergency Hotline</h4>
+                    <p class="text-sm text-gray-400">Call immediately for urgent medical attention</p>
+                </div>
+            </div>
+            <div class="text-3xl font-black text-primary tracking-tight">
+                +211 924 753 381
+            </div>
+        </div>
+        <div class="flex flex-col items-center gap-4">
+            <div class="flex items-center gap-2 opacity-60">
+                <span class="size-2 rounded-full bg-green-500"></span>
+                <p class="text-[10px] font-bold uppercase tracking-widest">System Operational</p>
+            </div>
+            <p class="text-xs text-[#886364] dark:text-[#a68e8e] text-center">
+                © 2026 Wau Teaching Hospital. All medical data is handled under strict confidentiality protocols.
+            </p>
+        </div>
+    </div>
+</footer>
 {% endblock %}
