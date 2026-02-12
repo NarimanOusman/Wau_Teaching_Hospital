@@ -2,31 +2,32 @@
 
 {% block title %}Urgent Care & Emergency Hub | Wau Teaching Hospital{% endblock %}
 
-{% block body_class %}bg-[#f3f4f6] text-[#181111] min-h-screen flex flex-col{% endblock %}
+{% block body_class %}bg-background-light dark:bg-background-dark text-[#181111] dark:text-white min-h-screen flex
+flex-col transition-colors duration-500{% endblock %}
 
 {% block logo_text_class %}text-emergency{% endblock %}
-{% block logo_sub_class %}text-[#181111]/60{% endblock %}
+{% block logo_sub_class %}text-[#181111]/60 dark:text-white/60{% endblock %}
 
 {% block extra_css %}
 <style type="text/tailwindcss">
     .elite-emergency-card {
-        @apply bg-white border border-[#e5dcdc] rounded-[2.5rem] p-5 md:p-8 transition-all duration-500 hover:border-emergency/30 shadow-sm;
+        @apply bg-white dark:bg-white/5 border border-[#e5dcdc] dark:border-white/10 rounded-[2.5rem] p-5 md:p-8 transition-all duration-500 hover:border-emergency/30 shadow-sm;
     }
 
     .input-elite {
-        @apply w-full rounded-2xl border-[#e5dcdc] bg-slate-50 h-14 md:h-16 px-6 font-bold text-[#181111] focus:ring-emergency focus:border-emergency transition-all placeholder:text-[#886364]/40 outline-none border;
+        @apply w-full rounded-2xl border-[#e5dcdc] dark:border-white/10 bg-slate-50 dark:bg-white/5 h-14 md:h-16 px-6 font-bold text-[#181111] dark:text-white focus:ring-emergency focus:border-emergency transition-all placeholder:text-[#886364]/40 outline-none border;
     }
 
     .map-container-interactive {
-        @apply relative w-full h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden border border-[#e5dcdc] shadow-xl bg-white;
+        @apply relative w-full h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden border border-[#e5dcdc] dark:border-white/10 shadow-xl bg-white dark:bg-[#0A0F14];
     }
 
     .map-container-interactive iframe {
-        @apply w-full h-full grayscale-[0.5] hover:grayscale-0 transition-all duration-700;
+        @apply w-full h-full grayscale-[0.5] dark:grayscale hover:grayscale-0 transition-all duration-700;
     }
 
     .glow-sphere {
-        @apply absolute pointer-events-none rounded-full blur-[140px] opacity-[0.08];
+        @apply absolute pointer-events-none rounded-full blur-[140px] opacity-[0.08] dark:opacity-[0.15];
     }
 </style>
 {% endblock %}

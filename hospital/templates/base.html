@@ -22,13 +22,13 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#0A2540",
+                        "primary": "#f20d0d", // Standardized Hospital Red
                         "accent": "#0055D4",
-                        "emergency": "#E11D48",
-                        "smoke-white": "#F8F9FA",
+                        "emergency": "#f20d0d",
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#1a0e0e",
                         "navy-deep": "#0A0F14",
-                        "muted": "#64748b",
-                        "background": "#ffffff"
+                        "muted": "#64748b"
                     },
                     boxShadow: {
                         'glass-surface': '0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 10px 10px -10px rgba(0, 0, 0, 0.04)',
@@ -41,6 +41,25 @@
                     }
                 },
             },
+        }
+    </script>
+
+    <script>
+        // Synchronized Dark Mode Logic
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
         }
     </script>
 
@@ -113,7 +132,8 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="{% block body_class %}theme-dark bg-[#0A0F14] text-white{% endblock %}">
+<body
+    class="{% block body_class %}bg-background-light dark:bg-background-dark text-[#181111] dark:text-white transition-colors duration-500{% endblock %}">
     <nav class="glass-navbar px-6 py-4 md:px-10 md:py-5" id="main-nav">
         <div class="flex items-center justify-between">
             <!-- Brand -->
@@ -129,9 +149,8 @@
                 </div>
             </a>
 
-            <!-- Desktop Navigation -->
             <div class="hidden lg:flex items-center gap-8">
-                <div class="flex items-center gap-6 pr-6 border-r border-slate-200 dark:border-white/10">
+                <div class="flex items-center gap-6 pr-6 border-r border-white/10">
                     <a href="/home/" class="nav-link {% block nav_home_active %}{% endblock %}">Home</a>
                     <a href="/appointment/"
                         class="nav-link {% block nav_appointment_active %}{% endblock %}">Appointment</a>
@@ -142,6 +161,14 @@
                     <a href="/about/" class="nav-link {% block nav_about_active %}{% endblock %}">About Us</a>
                     <a href="/contact/" class="nav-link {% block nav_contact_active %}{% endblock %}">Contact</a>
                 </div>
+
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleTheme()"
+                    class="size-10 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-white transition-all">
+                    <span class="material-symbols-outlined dark:hidden">light_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
+                </button>
+
                 <a href="tel:+211924753381"
                     class="bg-red-600 text-white px-8 py-3.5 rounded-2xl font-[900] text-[10px] uppercase tracking-widest shadow-xl shadow-red-600/20 active:scale-95 transition-all flex items-center gap-2">
                     <span class="material-symbols-outlined text-sm animate-pulse">emergency</span>
@@ -150,15 +177,22 @@
             </div>
 
             <!-- Mobile Controller -->
-            <div class="lg:hidden flex items-center">
+            <div class="lg:hidden flex items-center gap-2">
+                <!-- Mobile Dark Mode Toggle -->
+                <button onclick="toggleTheme()"
+                    class="size-10 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-white transition-all">
+                    <span class="material-symbols-outlined dark:hidden">light_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">dark_mode</span>
+                </button>
+
                 <input class="hidden" id="menu-toggle" type="checkbox" />
                 <label for="menu-toggle" class="mobile-trigger cursor-pointer">
                     <span class="material-symbols-outlined !text-2xl">menu</span>
                 </label>
 
                 <!-- Overlay -->
-                <div class="fixed inset-0 bg-primary/20 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500 z-[110]"
-                    id="menu-overlay"></div>
+                <div class="fixed inset-0 bg-primary/20 dark:bg-black/60 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500 z-[110]"
+                    id="menu-overlay" onclick="document.getElementById('menu-toggle').checked = false"></div>
 
                 <!-- Mobile Drawer -->
                 <div id="mobile-menu">
@@ -179,13 +213,20 @@
                     </div>
 
                     <div class="flex flex-col flex-1 overflow-y-auto pr-2">
-                        <a href="/home/" class="mobile-link">Home</a>
-                        <a href="/appointment/" class="mobile-link">Appointment</a>
-                        <a href="/accident_report/" class="mobile-link">Accident Report</a>
-                        <a href="/services/" class="mobile-link">Services</a>
-                        <a href="/doctors/" class="mobile-link">Doctors</a>
-                        <a href="/about/" class="mobile-link">About Us</a>
-                        <a href="/contact/" class="mobile-link">Contact</a>
+                        <a href="/home/" class="mobile-link">Home <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
+                        <a href="/appointment/" class="mobile-link">Appointment <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
+                        <a href="/accident_report/" class="mobile-link">Accident Report <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
+                        <a href="/services/" class="mobile-link">Services <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
+                        <a href="/doctors/" class="mobile-link">Doctors <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
+                        <a href="/about/" class="mobile-link">About Us <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
+                        <a href="/contact/" class="mobile-link">Contact <span
+                                class="material-symbols-outlined text-sm opacity-30">arrow_forward</span></a>
                     </div>
 
                     <div class="mt-4">
