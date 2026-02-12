@@ -256,15 +256,15 @@
         </div>
     </main>
 
-    <footer class="p-6 md:p-12 pb-12 md:pb-16 flex flex-col gap-8 z-10">
+    <footer class="p-6 md:p-12 pb-24 md:pb-32 flex flex-col gap-8 z-10">
         <div class="flex flex-col sm:flex-row gap-6 w-full items-stretch sm:items-center max-w-2xl">
-            <a class="flex-1 bg-primary hover:bg-red-700 active:scale-95 transition-all h-12 md:h-14 rounded-ios flex items-center justify-center gap-3 shadow-2xl shadow-primary/30"
+            <a class="flex-1 bg-primary hover:bg-red-700 active:scale-95 transition-all h-16 rounded-ios flex items-center justify-center gap-3 shadow-2xl shadow-primary/30"
                 href="tel:+211924753381">
                 <span class="material-symbols-outlined text-xl md:text-2xl">call</span>
                 <span class="font-bold uppercase tracking-tight text-[10px] md:text-xs">Call Ambulance</span>
             </a>
 
-            <button class="sparkle-button flex-1 h-12 md:h-14 rounded-ios">
+            <a href="{% url 'home' %}" class="sparkle-button flex-1 h-16 rounded-ios">
                 <span class="spark"></span>
                 <span class="backdrop"></span>
                 <svg class="sparkle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -273,9 +273,7 @@
                     <path d="M5 2L5.8 4.2L8 5L5.8 5.8L5 8L4.2 5.8L2 5L4.2 4.2L5 2Z" />
                     <path d="M19 14L19.8 16.2L22 17L19.8 17.8L19 20L18.2 17.8L16 17L18.2 16.2L19 14Z" />
                 </svg>
-                <a href="{% url 'home' %}">
-                    <span class="text-sparkle">Access More</span>
-                </a>
+                <span class="text-sparkle">Access More</span>
                 <div class="particle-pen">
                     <svg class="particle" style="--x:10; --y:20; --duration:1.5; --delay:0.1; --size:0.2;"
                         viewBox="0 0 15 15">
@@ -298,7 +296,7 @@
                         <path d="M7.5 0L9.4 5.6L15 7.5L9.4 9.4L7.5 15L5.6 9.4L0 7.5L5.6 5.6L7.5 0Z" />
                     </svg>
                 </div>
-            </button>
+            </a>
         </div>
         <div class="text-center sm:text-left z-10 mt-2">
             <p class="text-[9px] md:text-[10px] text-white/30 uppercase tracking-[0.2em]">Immediate Response Protocol
