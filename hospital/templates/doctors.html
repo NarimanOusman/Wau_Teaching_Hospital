@@ -1,6 +1,65 @@
 {% extends 'base.html' %}
 
-{% block title %}Our Doctors | Wau Teaching Hospital{% endblock %}
+{% block title %}Our Medical Staff | Wau Teaching Hospital{% endblock %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+<style>
+    body {
+        font-family: 'Lexend', sans-serif;
+    }
+
+    .material-symbols-outlined {
+        font-size: 24px;
+        vertical-align: middle;
+    }
+
+    /* Reveal Animation for Cards */
+    @keyframes revealCard {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .doctor-card {
+        opacity: 0;
+        /* Initial state to prevent flash */
+    }
+
+    /* Mobile: Slide from left */
+    @media (max-width: 768px) {
+        .doctor-card.animate-in {
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+    }
+
+    /* Desktop: Slide Up fade */
+    @media (min-width: 769px) {
+        .doctor-card.animate-in {
+            animation: revealCard 0.6s ease-out forwards;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block body_class %}bg-background-light dark:bg-background-dark text-[#181111] dark:text-white min-h-screen flex
 flex-col transition-colors duration-500{% endblock %}
@@ -8,7 +67,579 @@ flex-col transition-colors duration-500{% endblock %}
 {% block nav_doctors_active %}!text-accent{% endblock %}
 
 {% block content %}
-<main class="flex-grow pt-32 lg:pt-40 max-w-4xl mx-auto px-6">
-    <h1 class="text-primary text-4xl font-[900] tracking-tight">Our Doctors</h1>
+<main class="max-w-[1440px] mx-auto px-6 pt-32 lg:pt-48 pb-12">
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-primary p-2 rounded-lg text-white">
+                    <span class="material-symbols-outlined">health_and_safety</span>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-xl font-bold tracking-tight leading-none">Wau Teaching</h1>
+                    <span class="text-sm text-primary font-medium">Hospital</span>
+                </div>
+            </div>
+            <h2 class="text-4xl font-black tracking-tight text-[#181111] dark:text-white mb-2">Medical Staff Directory
+            </h2>
+            <p class="text-gray-600 dark:text-slate-300 max-w-2xl">Find world-class specialists and dedicated medical
+                professionals. Our directory provides direct access to the Bahr el Ghazal region and beyond.</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <a class="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-red-700 transition-all shadow-lg shadow-primary/20"
+                href="tel:+211920000000">
+                <span class="material-symbols-outlined !text-lg">emergency</span>
+                EMERGENCY: +211 920 000 000
+            </a>
+        </div>
+    </div>
+
+    <!-- Search/Filter Bar -->
+    <div
+        class="bg-white dark:bg-[#1e293b] p-4 rounded-2xl shadow-sm border border-[#f4f0f0] dark:border-white/10 mb-8 transition-colors duration-300">
+        <div class="flex flex-col lg:flex-row gap-4 items-center">
+            <div class="relative flex-1 w-full">
+                <span
+                    class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">search</span>
+                <input id="searchInput"
+                    class="w-full pl-12 pr-4 py-3 rounded-xl border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-white/5 focus:ring-2 focus:ring-primary/50 text-sm text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                    placeholder="Search by name, specialty, or department..." type="text" />
+            </div>
+            <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                <select id="deptFilter"
+                    class="flex-1 lg:flex-none min-w-[160px] bg-gray-50 dark:bg-white/5 border-gray-100 dark:border-white/10 rounded-xl py-3 text-sm font-medium focus:ring-primary/50 text-slate-900 dark:text-white">
+                    <option value="all">All Departments</option>
+                    <option value="emergency">Emergency Room</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="maternity">Maternity & OBGYN</option>
+                    <option value="surgery">General Surgery</option>
+                    <option value="orthopedics">Orthopedics</option>
+                </select>
+                <select id="availabilityFilter"
+                    class="flex-1 lg:flex-none min-w-[160px] bg-gray-50 dark:bg-white/5 border-gray-100 dark:border-white/10 rounded-xl py-3 text-sm font-medium focus:ring-primary/50 text-slate-900 dark:text-white">
+                    <option value="all">Availability: All</option>
+                    <option value="available">Available Now</option>
+                    <option value="away">Away / Next Shift</option>
+                </select>
+                <div class="h-10 w-[1px] bg-gray-200 dark:bg-white/10 hidden lg:block mx-2"></div>
+                <div class="flex items-center gap-2 flex-1 lg:flex-none justify-end">
+                    <span class="text-xs font-bold text-gray-400 uppercase whitespace-nowrap">Sort:</span>
+                    <select id="sortFilter"
+                        class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer">
+                        <option value="rating">Highest Rated</option>
+                        <option value="name">Name (A-Z)</option>
+                        <option value="experience">Experience</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-500 dark:text-slate-400 font-medium">Showing <span id="countDisplay"
+                    class="text-[#181111] dark:text-white font-bold">12 Specialists</span> match your search</p>
+        </div>
+
+        <div id="doctorGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards will be populated dynamically -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-12 flex items-center justify-center gap-2" id="paginationControls">
+            <button id="prevPage"
+                class="size-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-white/10 text-gray-400 hover:text-primary transition-colors disabled:opacity-50">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+
+            <div id="pageNumbers" class="flex gap-2">
+                <!-- Page numbers injected here -->
+            </div>
+
+            <button id="nextPage"
+                class="size-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-white/10 text-gray-400 hover:text-primary transition-colors disabled:opacity-50">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </div>
+    </div>
 </main>
+
+<div class="fixed bottom-8 right-8 flex flex-col items-end gap-3 z-50">
+    <div
+        class="hidden md:block bg-white dark:bg-[#1e293b] p-3 rounded-xl shadow-2xl border border-primary/20 max-w-[200px]">
+        <p class="text-xs font-bold text-primary mb-1">ER WAIT TIME</p>
+        <p class="text-2xl font-black text-[#181111] dark:text-white">12 MINS</p>
+        <p class="text-[10px] text-gray-500 dark:text-slate-400">Updated 2m ago</p>
+    </div>
+    <button
+        class="group flex items-center gap-3 bg-primary text-white p-4 rounded-full shadow-2xl hover:scale-105 transition-transform">
+        <span
+            class="font-bold pl-2 max-w-0 overflow-hidden group-hover:max-w-[200px] transition-all duration-300 whitespace-nowrap">URGENT
+            CARE</span>
+        <span class="material-symbols-outlined !text-3xl">emergency_share</span>
+    </button>
+</div>
+
+<!-- Modal for Profile View -->
+<div id="profileModal" class="fixed inset-0 z-[150] hidden">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeProfileModal()"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white dark:bg-[#1e293b] rounded-3xl shadow-2xl overflow-hidden p-8 border border-white/10 transform transition-all scale-95 opacity-0"
+        id="modalContent">
+        <button onclick="closeProfileModal()"
+            class="absolute top-4 right-4 p-2 bg-gray-100 dark:bg-white/5 rounded-full hover:bg-red-50 text-gray-500 hover:text-red-500 transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <div class="flex flex-col items-center text-center">
+            <div id="modalImage"
+                class="size-32 rounded-full bg-gray-200 bg-cover bg-center mb-6 shadow-xl border-4 border-white dark:border-white/5">
+            </div>
+            <h2 id="modalName" class="text-3xl font-black text-[#181111] dark:text-white mb-1"></h2>
+            <p id="modalSpecialty" class="text-primary font-bold uppercase tracking-widest text-xs mb-6"></p>
+
+            <div class="grid grid-cols-2 gap-4 w-full mb-8">
+                <div class="bg-gray-50 dark:bg-white/5 p-4 rounded-2xl">
+                    <p class="text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-1">Experience</p>
+                    <p id="modalExp" class="text-xl font-black text-[#181111] dark:text-white"></p>
+                </div>
+                <div class="bg-gray-50 dark:bg-white/5 p-4 rounded-2xl">
+                    <p class="text-xs text-gray-500 dark:text-slate-400 uppercase font-bold mb-1">Patients</p>
+                    <p class="text-xl font-black text-[#181111] dark:text-white">1.2k+</p>
+                </div>
+            </div>
+
+            <p class="text-gray-600 dark:text-slate-300 text-sm leading-relaxed mb-8">
+                Dr. <span id="modalNameSmall"></span> is a highly skilled specialist at Wau Teaching Hospital, dedicated
+                to providing exceptional care to patients across the Bahr el Ghazal region.
+            </p>
+
+            <a href="/appointment/"
+                class="w-full bg-primary text-white py-4 rounded-xl font-bold text-sm hover:bg-red-700 transition-colors shadow-lg shadow-primary/20">
+                Book Immediate Appointment
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<footer class="mt-20 border-t border-[#f4f0f0] dark:border-white/10 bg-white dark:bg-[#102a43] py-12">
+    <div class="max-w-[1440px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-primary p-1.5 rounded-lg text-white scale-75">
+                    <span class="material-symbols-outlined">health_and_safety</span>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Wau Teaching Hospital</h3>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">Providing high-quality medical
+                education and patient care to the Bahr el Ghazal region and beyond.</p>
+            <div class="flex gap-4">
+                <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                        class="material-symbols-outlined">social_leaderboard</span></a>
+                <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                        class="material-symbols-outlined">mail</span></a>
+                <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span
+                        class="material-symbols-outlined">call</span></a>
+            </div>
+        </div>
+        <div>
+            <h4 class="font-bold mb-6 text-sm uppercase tracking-widest text-gray-400">Quick Links</h4>
+            <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                <li><a class="hover:text-primary transition-colors" href="/home/">Hospital Home</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/services/">Specialized Departments</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/appointment/">Patient Admission</a></li>
+                <li><a class="hover:text-primary transition-colors" href="/services/">Emergency Services</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-bold mb-6 text-sm uppercase tracking-widest text-gray-400">Support</h4>
+            <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                <li><a class="hover:text-primary transition-colors" href="/contact/">Contact Us</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Patient Portal FAQ</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Appointment Guide</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-bold mb-6 text-sm uppercase tracking-widest text-gray-400">Hospital Location</h4>
+            <!-- Zoomable Map Container -->
+            <div class="h-32 w-full rounded-xl bg-gray-200 overflow-hidden relative group mb-4 cursor-pointer">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.561494635848!2d27.995!3d7.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDInMDAuMCJOIDI3wrA1OSc0Mi4wIkU!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
+                    width="100%" height="100%"
+                    style="border:0; filter: grayscale(100%) invert(0%); transition: all 0.5s;" allowfullscreen=""
+                    loading="lazy"
+                    class="group-hover:grayscale-0 group-hover:scale-110 transition-transform duration-700">
+                </iframe>
+                <div
+                    class="absolute inset-0 bg-primary/10 group-hover:bg-transparent pointer-events-none transition-colors">
+                </div>
+            </div>
+            <p class="text-xs text-gray-500">Wau Main Street, Western Bahr el Ghazal, South Sudan</p>
+        </div>
+    </div>
+    <div
+        class="max-w-[1440px] mx-auto px-6 mt-12 pt-8 border-t border-[#f4f0f0] dark:border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs text-gray-400">© 2024 Wau Teaching Hospital. All rights reserved.</p>
+        <div class="flex items-center gap-6">
+            <a class="text-xs text-gray-400 hover:text-primary transition-colors" href="#">Terms of Service</a>
+            <a class="text-xs text-gray-400 hover:text-primary transition-colors" href="#">Staff Login</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Data Source
+    const doctors = [
+        {
+            name: "Dr. Peter Akot",
+            specialty: "Cardiology",
+            role: "Chief Cardiologist",
+            qualifications: "MBChB, MMed (Cardiology)",
+            availability: "available",
+            nextAvailable: "Now",
+            rating: 5,
+            experience: 15,
+            image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400",
+            department: "cardiology"
+        },
+        {
+            name: "Dr. Mary Nyok",
+            specialty: "Pediatrics",
+            role: "Senior Pediatrician",
+            qualifications: "MD, Specialty: Pediatrics",
+            availability: "away",
+            nextAvailable: "2PM",
+            rating: 4.8,
+            experience: 8,
+            image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+            department: "pediatrics"
+        },
+        {
+            name: "Dr. James Lado",
+            specialty: "Orthopedics",
+            role: "Orthopedic Surgeon",
+            qualifications: "MBBS, MRCS (Ortho)",
+            availability: "available",
+            nextAvailable: "Now",
+            rating: 5,
+            experience: 12,
+            image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+            department: "orthopedics"
+        },
+        {
+            name: "Dr. Sarah Malong",
+            specialty: "Emergency Medicine",
+            role: "Trauma Specialist",
+            qualifications: "MD, FACEM",
+            availability: "available",
+            nextAvailable: "Now",
+            rating: 4.9,
+            experience: 10,
+            image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400",
+            department: "emergency"
+        },
+        {
+            name: "Dr. Daniel Deng",
+            specialty: "General Surgery",
+            role: "Consultant Surgeon",
+            qualifications: "MBBS, FCS (ECSA)",
+            availability: "away",
+            nextAvailable: "Tomorrow",
+            rating: 4.7,
+            experience: 18,
+            image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400",
+            department: "surgery"
+        },
+        {
+            name: "Dr. Grace Achol",
+            specialty: "Maternity & OBGYN",
+            role: "Head of Obstetrics",
+            qualifications: "MD, MMed (Obs/Gyn)",
+            availability: "available",
+            nextAvailable: "Now",
+            rating: 5,
+            experience: 20,
+            image: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&q=80&w=400",
+            department: "maternity"
+        },
+        {
+            name: "Dr. John Garang",
+            specialty: "Internal Medicine",
+            role: "Physician",
+            qualifications: "MBChB, MRCP",
+            availability: "available",
+            nextAvailable: "11AM",
+            rating: 4.6,
+            experience: 7,
+            image: "https://images.unsplash.com/photo-1612531386530-97286d97c2d2?auto=format&fit=crop&q=80&w=400",
+            department: "emergency"
+        },
+        {
+            name: "Dr. Rebecca Yar",
+            specialty: "Dermatology",
+            role: "Consultant Dermatologist",
+            qualifications: "MD, DVD",
+            availability: "away",
+            nextAvailable: "Wed",
+            rating: 4.9,
+            experience: 14,
+            image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+            department: "surgery"
+        },
+        {
+            name: "Dr. David Bol",
+            specialty: "Neurology",
+            role: "Neurologist",
+            qualifications: "MD, DM (Neuro)",
+            availability: "available",
+            nextAvailable: "Now",
+            rating: 5.0,
+            experience: 16,
+            image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=400",
+            department: "cardiology"
+        },
+        {
+            name: "Dr. Linda Kiden",
+            specialty: "Psychiatry",
+            role: "Clinical Psychiatrist",
+            qualifications: "MBChB, MMed (Psych)",
+            availability: "available",
+            nextAvailable: "3 PM",
+            rating: 4.8,
+            experience: 9,
+            image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+            department: "pediatrics"
+        }
+
+    ];
+
+    // State
+    let currentPage = 1;
+    let itemsPerPage = 8;
+    let filteredDoctors = [...doctors];
+
+    // Elements
+    const grid = document.getElementById('doctorGrid');
+    const searchInput = document.getElementById('searchInput');
+    const deptFilter = document.getElementById('deptFilter');
+    const availabilityFilter = document.getElementById('availabilityFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const countDisplay = document.getElementById('countDisplay');
+    const prevPageBtn = document.getElementById('prevPage');
+    const nextPageBtn = document.getElementById('nextPage');
+    const pageNumbersContainer = document.getElementById('pageNumbers');
+
+    // Init
+    function init() {
+        renderDoctors();
+        setupEventListeners();
+    }
+
+    function setupEventListeners() {
+        searchInput.addEventListener('input', handleFilter);
+        deptFilter.addEventListener('change', handleFilter);
+        availabilityFilter.addEventListener('change', handleFilter);
+        sortFilter.addEventListener('change', handleSort);
+        prevPageBtn.addEventListener('click', () => changePage(-1));
+        nextPageBtn.addEventListener('click', () => changePage(1));
+    }
+
+    function handleFilter() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const department = deptFilter.value;
+        const status = availabilityFilter.value;
+
+        filteredDoctors = doctors.filter(doc => {
+            const matchesSearch = doc.name.toLowerCase().includes(searchTerm) ||
+                doc.specialty.toLowerCase().includes(searchTerm) ||
+                doc.role.toLowerCase().includes(searchTerm);
+
+            const matchesDept = department === 'all' || doc.department === department;
+
+            const matchesStatus = status === 'all' ||
+                (status === 'available' && doc.availability === 'available') ||
+                (status === 'away' && doc.availability !== 'available');
+
+            return matchesSearch && matchesDept && matchesStatus;
+        });
+
+        currentPage = 1;
+        handleSort(); // Apply sort to filtered list
+    }
+
+    function handleSort() {
+        const criteria = sortFilter.value;
+
+        filteredDoctors.sort((a, b) => {
+            if (criteria === 'rating') return b.rating - a.rating;
+            if (criteria === 'name') return a.name.localeCompare(b.name);
+            if (criteria === 'experience') return b.experience - a.experience;
+            return 0;
+        });
+
+        renderDoctors();
+    }
+
+    function changePage(delta) {
+        const maxPage = Math.ceil(filteredDoctors.length / itemsPerPage);
+        const newPage = currentPage + delta;
+        if (newPage >= 1 && newPage <= maxPage) {
+            currentPage = newPage;
+            renderDoctors();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+    }
+
+    function renderDoctors() {
+        grid.innerHTML = '';
+
+        // Count update
+        countDisplay.textContent = `${filteredDoctors.length} Specialists`;
+
+        // Pagination Logic
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const pageItems = filteredDoctors.slice(startIndex, endIndex);
+
+        if (pageItems.length === 0) {
+            grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500">No specialists found matching your criteria.</div>`;
+            updatePaginationControls(0);
+            return;
+        }
+
+        pageItems.forEach((doc, index) => {
+            const isAvailable = doc.availability === 'available';
+            const statusColor = isAvailable ? 'green' : 'orange';
+            const statusText = isAvailable ? 'Available' : `NEXT: ${doc.nextAvailable}`;
+            const statusIcon = isAvailable ? `
+                <div class="absolute -bottom-1 -right-1 size-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full flex items-center justify-center" title="Available">
+                    <div class="size-1.5 bg-white rounded-full animate-pulse"></div>
+                </div>` : `
+                <div class="absolute -bottom-1 -right-1 size-5 bg-orange-500 border-2 border-white dark:border-gray-800 rounded-full" title="Away"></div>
+            `;
+
+            // Star Rating Generation
+            let starsHtml = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < Math.floor(doc.rating)) {
+                    starsHtml += '<span class="material-symbols-outlined !text-sm">star</span>';
+                } else if (i === Math.floor(doc.rating) && doc.rating % 1 !== 0) {
+                    starsHtml += '<span class="material-symbols-outlined !text-sm">star_half</span>';
+                } else {
+                    starsHtml += '<span class="material-symbols-outlined !text-sm opacity-30">star</span>';
+                }
+            }
+
+            const card = document.createElement('div');
+            // Added md:p-8 to increase padding on desktop, keeping p-5 on mobile
+            card.className = "group bg-white dark:bg-[#1e293b] rounded-2xl p-5 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#f4f0f0] dark:border-white/10 doctor-card";
+
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-4 md:mb-6">
+                    <div class="relative">
+                        <!-- Increased image size on desktop: md:size-24 -->
+                        <div class="size-20 md:size-24 rounded-2xl bg-gray-100 overflow-hidden bg-cover bg-center border-2 border-white dark:border-white/10" 
+                             style="background-image: url('${doc.image}')"></div>
+                        ${statusIcon}
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span class="bg-${statusColor}-100 text-${statusColor}-700 dark:bg-${statusColor}-900/50 dark:text-${statusColor}-400 text-[10px] md:text-xs font-bold px-2 py-1 rounded-full mb-1 uppercase">${statusText}</span>
+                        <div class="flex text-yellow-400">
+                            ${starsHtml}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-5 md:mb-8">
+                    <!-- Increased text sizes: text-xl md:text-2xl for name -->
+                    <h3 class="text-lg md:text-2xl font-bold text-[#181111] dark:text-white leading-tight mb-1">${doc.name}</h3>
+                    <p class="text-xs md:text-sm font-medium text-gray-400 dark:text-slate-400 mb-3">${doc.qualifications}</p>
+                    <span class="inline-block bg-primary/10 text-primary text-[11px] md:text-xs font-bold px-2 py-1 rounded tracking-wide uppercase">${doc.role}</span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <a href="/appointment/" class="flex items-center justify-center w-full bg-primary text-white py-3 md:py-3.5 rounded-xl font-bold text-sm md:text-base hover:bg-red-700 transition-colors">Book Appointment</a>
+                    <button onclick="openProfile('${doc.name}')" class="w-full bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-slate-300 py-3 md:py-3.5 rounded-xl font-bold text-sm md:text-base hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">View Profile</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Initialize IntersectionObserver for scroll-triggered animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay based on visual order
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, index * 100);
+                } else {
+                    entry.target.classList.remove('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.doctor-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        updatePaginationControls(Math.ceil(filteredDoctors.length / itemsPerPage));
+    }
+
+    function updatePaginationControls(totalPages) {
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+        pageNumbersContainer.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            const isActive = i === currentPage;
+            btn.className = `size-10 flex items-center justify-center rounded-lg font-bold transition-colors ${isActive ? 'bg-primary text-white' : 'border border-transparent hover:bg-gray-100 dark:hover:bg-white/5 dark:text-white'}`;
+            btn.textContent = i;
+            btn.onclick = () => { currentPage = i; renderDoctors(); window.scrollTo({ top: 300, behavior: 'smooth' }); };
+            pageNumbersContainer.appendChild(btn);
+        }
+    }
+
+    // Modal Logic
+    function openProfile(doctorName) {
+        const doc = doctors.find(d => d.name === doctorName);
+        if (!doc) return;
+
+        document.getElementById('modalName').textContent = doc.name;
+        document.getElementById('modalNameSmall').textContent = doc.name.split(' ')[1]; // Last name
+        document.getElementById('modalSpecialty').textContent = doc.role;
+        document.getElementById('modalExp').textContent = `${doc.experience} Years`;
+        document.getElementById('modalImage').style.backgroundImage = `url('${doc.image}')`;
+
+        const modal = document.getElementById('profileModal');
+        const content = document.getElementById('modalContent');
+        modal.classList.remove('hidden');
+        // Small delay for animation
+        setTimeout(() => {
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    }
+
+    function closeProfileModal() {
+        const modal = document.getElementById('profileModal');
+        const content = document.getElementById('modalContent');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    // Start
+    init();
+</script>
 {% endblock %}
