@@ -2,23 +2,297 @@
 
 {% block title %}About Us | Wau Teaching Hospital{% endblock %}
 
-{% block body_class %}bg-background-light dark:bg-background-dark text-[#181111] dark:text-white min-h-screen flex
-flex-col transition-colors duration-500{% endblock %}
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+<style>
+    body {
+        font-family: 'Lexend', sans-serif;
+    }
+
+    .hero-gradient {
+        background: linear-gradient(rgba(33, 17, 17, 0.7), rgba(33, 17, 17, 0.4));
+    }
+</style>
+{% endblock %}
+
+{% block body_class %}bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display
+transition-colors duration-500{% endblock %}
 
 {% block nav_about_active %}!text-accent{% endblock %}
 
 {% block content %}
-<main class="flex-grow pt-32 lg:pt-48 pb-24">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col gap-6 max-w-4xl">
-            <p class="text-accent dark:text-blue-400 font-black text-[10px] uppercase tracking-[0.4em]">Our Legacy</p>
-            <h1 class="text-primary text-4xl md:text-7xl font-[900] tracking-tight leading-[0.95] dark:text-white">About
-                Wau Teaching
-                Hospital</h1>
-            <p class="text-[#886364] dark:text-slate-300 text-lg md:text-2xl font-medium leading-relaxed opacity-80">
-                Serving South Sudan with excellence, integrity, and advanced medical expertise since our founding.
-            </p>
+<!-- Hero Section -->
+<section class="relative h-[70vh] flex items-center justify-center overflow-hidden">
+    <img alt="Wau Teaching Hospital Campus" class="absolute inset-0 w-full h-full object-cover"
+        data-alt="Modern hospital building exterior in a sunny campus setting"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMyvb03COhloEjo7_ZHIA8QVFZr7mBwvpORUwD90od_EMwFJIhffrclT9_DLiN7LDGE-XCWRCCTRyub2wnuMmiixKKZT5QyIYD9lwOd1KWjhUMSZp-9-tzPbklhuRC_rUvrvfQ4LyrlfWFEytjy_dbmcDWAs49YHdtgQTk6egteNM-iSciN722eoVEw16r0j_UbJL5wSeqOle-mQBynPbKq8yusJP3HPTCdka75hv32XmcNZr76_Rhi-ug9ycgjYanq_cbO-9hYTE" />
+    <div class="absolute inset-0 hero-gradient"></div>
+    <div class="relative z-10 text-center px-4 max-w-4xl pt-20">
+        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">Serving the Wau Community</h1>
+        <p class="text-xl md:text-2xl text-white/90 leading-relaxed font-light">
+            Dedicated to providing world-class healthcare and medical education for South Sudan's future.
+        </p>
+    </div>
+</section>
+
+<!-- Our History -->
+<section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="order-2 md:order-1">
+            <span class="text-primary font-bold tracking-widest uppercase text-sm">Our Legacy</span>
+            <h2 class="text-4xl font-bold mt-2 mb-6 text-slate-900 dark:text-white">Our History</h2>
+            <div class="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p>Wau Teaching Hospital has stood as a pillar of resilience and hope since its inception. Originally
+                    established as a regional clinic, it has evolved through decades of growth to become one of South
+                    Sudan's premier medical institutions.</p>
+                <p>In the early 2000s, the facility underwent a major transformation, gaining its status as a Teaching
+                    Hospital. This transition empowered us to not only heal but to train the next generation of South
+                    Sudanese doctors, nurses, and specialists.</p>
+                <p>Today, we continue to modernize our infrastructure and expand our services, ensuring that the people
+                    of Western Bahr el Ghazal have access to life-saving care without compromise.</p>
+            </div>
+        </div>
+        <div class="order-1 md:order-2">
+            <div class="rounded-xl overflow-hidden shadow-2xl bg-white dark:bg-white/5 border border-white/20">
+                <img alt="Historical medical care" class="w-full h-[400px] object-cover"
+                    data-alt="Doctors reviewing medical charts in a bright office"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTUtjjlK_S8wZ62cXw-J0Ng3BdAd6gVYOfmF1q7667D19R4TwxzPNKDf7MjsrBkjjYhy0sS6uyTkiSC3UrAkEP24hOO8wIlsnGgXWvU1dRCwLf5nQFPVNvDJMKMf0-eaExQ3yD98h1Flst56l5FuJ2XyGEvT95udbzKbY-TaFi7IVVODrToYUDMEjzuVyvcXWm6vbjIBFIm-8jopnKyDCFe1b0jJEmh8g3-3uIbOvo0NPumgz3SFLMJoxrW68v_j0rjVMhDlI6wK4" />
+            </div>
         </div>
     </div>
-</main>
+</section>
+
+<!-- Mission & Vision -->
+<section class="bg-primary/5 dark:bg-white/5 py-24 px-6 transition-colors duration-500">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-8">
+            <div
+                class="bg-white dark:bg-[#1e293b] p-12 rounded-xl shadow-sm border-l-4 border-primary transition-colors duration-500">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary text-3xl">track_changes</span>
+                </div>
+                <h3 class="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Our Mission</h3>
+                <p class="text-lg text-slate-600 dark:text-slate-400">To deliver compassionate, high-quality healthcare
+                    and excellence in medical education while fostering an environment of clinical innovation and
+                    community service.</p>
+            </div>
+            <div
+                class="bg-white dark:bg-[#1e293b] p-12 rounded-xl shadow-sm border-l-4 border-primary transition-colors duration-500">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-primary text-3xl">visibility</span>
+                </div>
+                <h3 class="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Our Vision</h3>
+                <p class="text-lg text-slate-600 dark:text-slate-400">To be the leading center of medical excellence in
+                    South Sudan, recognized for transformative healthcare delivery and the training of elite medical
+                    professionals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Facilities -->
+<section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-slate-900 dark:text-white">Modern Infrastructure</h2>
+        <p class="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto">Equipped with the latest technology to
+            support specialized medical departments and intensive emergency services.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="group relative overflow-hidden rounded-xl">
+            <img alt="Hospital Ward"
+                class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                data-alt="Clean and modern hospital ward with multiple beds"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0SET619cEPM0A3m1ixRf-niM2I12jzz9wlKqlXhqJshmSyJxB_S1ufTrRGk86qWzP4hHJpixIYJqwh_YxhqJtw9kknv7KykmJ8p1atwCIEpWEeA6s394Mw8e6dxshth5rGhTR3n8hpTrddqvH3cV0yfdSknjirVcpO873SSw3SXeZTLOV_XgxGw8wgazhd28CACQB3ntYVQJFQuzzpgRrqywlo4ouABve8lWrvabK8cm6XXIuxtR0Qmt6JuTo3RHb-HYsOboBGRA" />
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                <h4 class="text-2xl font-bold text-white">500+ Patient Beds</h4>
+                <p class="text-white/80 mt-2">Comprehensive inpatient care units with 24/7 monitoring.</p>
+            </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-xl">
+            <img alt="Operation Room"
+                class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                data-alt="Surgical theatre with high-tech medical equipment"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuArY1lVx7DU0gbWFWMDb0t6DXdbYlHLK6VipDjQpR5zCohbSuHfxR6EwZCIGGPUnY28SGn_nux6lJJ34KrxJE9_IHErsYzjOm0yYFR22P-zMDkg4ojgqGmD6GDj7pT4byigyIMUJKbG54X3OdQ8Hf5SQF3Gd1y3h0nc15d-B5Sc3KRtgc1n6cUIkrppNJy3ESBkajvhpnoWDLi_ETVN2HLCX50GO8fB8M6GdLz2qN0z9l9_zu62EEwD_nRe7vf0PycZXkRLyKMdi9M" />
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                <h4 class="text-2xl font-bold text-white">Surgical Suites</h4>
+                <p class="text-white/80 mt-2">Specialized theaters for emergency and elective surgeries.</p>
+            </div>
+        </div>
+        <div class="group relative overflow-hidden rounded-xl">
+            <img alt="Diagnostic Lab"
+                class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                data-alt="Advanced medical laboratory with diagnostic tools"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY9qlnbPa2W64YDpKKsMx2-FMN0sCkBBzgnr08et_pMOLsPZ8iUGZZ3cPgBCe4HWpjWcfn6DUPF8xRqSqs-jfKZ55aQmsw1ak-nAFqG4Inz-SVxBPWvZx-IPh31LFTmwHjOmY_22U83k3vhP9xiJYD8QLFBOlvOhsodc3zEG93j5s0Sxc9UFBL31BmeFiUunlx6qZgsrHgMiwKX6eYLQ84ytxZkmW3M0TepQiVO6h4CXwExzKGETC0gWgGaEyiEyUgOeu01qkUkoM" />
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                <h4 class="text-2xl font-bold text-white">Diagnostic Center</h4>
+                <p class="text-white/80 mt-2">State-of-the-art imaging and laboratory services.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Leadership -->
+<section class="bg-slate-50 dark:bg-white/5 py-24 px-6 transition-colors duration-500">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div>
+                <h2 class="text-4xl font-bold text-slate-900 dark:text-white">Our Leadership</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-4">The medical professionals guiding our mission of
+                    excellence.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Leader 1 -->
+            <div class="bg-white dark:bg-[#1e293b] p-6 rounded-xl shadow-sm transition-colors duration-500">
+                <img alt="Medical Director" class="w-full h-64 object-cover rounded-lg mb-6"
+                    data-alt="Professional portrait of a male medical doctor"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt4FIqJgYS3AIxXGd6KGZjSvyGmH-8-cC3VcxwJNMTkfTC9WDg1c8H0DOzpN_RlTknMg92qVxquiTNppywQbWXAT-m6OCXcXmmHjel72ynEXjAMbzgHiXp2rqYCgrQGcQzRvj46_IEd_GtZ2LFTXcMGmgbAVKWalvJ4Xt0Enqm2GIDV1XbzNWjZsJ249idB8vUFmG3mSYJpF904KitMstyF-FNYcZCI4std6xkwTdb5B3hXv8heVWAt4qFlvYqV76p6fdhSfQy-KU" />
+                <h5 class="text-xl font-bold text-slate-900 dark:text-white">Dr. James Atem</h5>
+                <p class="text-primary font-medium text-sm">Medical Director</p>
+            </div>
+            <!-- Leader 2 -->
+            <div class="bg-white dark:bg-[#1e293b] p-6 rounded-xl shadow-sm transition-colors duration-500">
+                <img alt="Head of Nursing" class="w-full h-64 object-cover rounded-lg mb-6"
+                    data-alt="Professional portrait of a female nurse leader"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgljmc0ZENlGAqD250WomEXfHtklPpLNfStkf-YHWo-MVf0DgnHPTQl_qRfwPwXTSynOWdRDtwgq_Lk-t9XEiRywwclBXIVrLlAtkYhmSrf8OL7fXfp4EjBbAgzfCiQakpyJfp-osYE3KntGb1IT_fRovVjdgf9SieAg3Ok8UFN93PTbTcimM4SsbWhmqrpYfYlB_UqjSQjBOInCu3LjqXIY08lsu0PvsYOeJf7NGs4xVpiTaMrVg9BFq1r_BZhsHcsrlFH4xnMcU" />
+                <h5 class="text-xl font-bold text-slate-900 dark:text-white">Mary Nyok</h5>
+                <p class="text-primary font-medium text-sm">Head of Nursing</p>
+            </div>
+            <!-- Leader 3 -->
+            <div class="bg-white dark:bg-[#1e293b] p-6 rounded-xl shadow-sm transition-colors duration-500">
+                <img alt="Chief of Surgery" class="w-full h-64 object-cover rounded-lg mb-6"
+                    data-alt="Professional portrait of a male surgeon"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCCc7pIq0xrWRGOSmjlA1mgwaDj6eWAq-Fl05HwkwnwBsmQzw9NE8XD2QAFB0PvBGC7JnA8WFq5eSqRYZEzcKe2m1LoFAMSJSpBcTzoQbp8FMH6nNRlOIpBbwvPHnyoWL7EMxxI_Fp-7-i9EnKgVBdes7pEVzVGoVi9jlm2jzzjW7ibJ_0pypDL98P6FrYCtn5XFn-vVlF5AF9GiyOOJj3KLYf4WrHTE0DLcLv_jRdBS8frjvlHLdH6kqnBxdKrkmw_HIAagrqFVM" />
+                <h5 class="text-xl font-bold text-slate-900 dark:text-white">Dr. Daniel Deng</h5>
+                <p class="text-primary font-medium text-sm">Chief of Surgery</p>
+            </div>
+            <!-- Leader 4 -->
+            <div class="bg-white dark:bg-[#1e293b] p-6 rounded-xl shadow-sm transition-colors duration-500">
+                <img alt="Director of Education" class="w-full h-64 object-cover rounded-lg mb-6"
+                    data-alt="Professional portrait of a female medical academic"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpCoy2wynmS60adG1X3hLLZfPOjzNvFP2CtoOwAHfUaWjgt519IEixo4VIftgGw2OU1xsaRXoaJQT3TxPzTqyH7iKNImpKUZJ95OF-CUMt1opiVh5PXc_z7t8xY9zsTDSJod9t_VRidB_Z_aXfzh-Luns6AX4_F9sZ_uJcwMKAwq3_v_eL7IHDJfqOEIS24GZkyvisH0Zxrft95I11NoINSDB0BLxwhHrHS5TJOz3Jci13efBQ1Ka9-iJ0TX_cmyE4McXpbRCFKyQ" />
+                <h5 class="text-xl font-bold text-slate-900 dark:text-white">Dr. Sarah Lual</h5>
+                <p class="text-primary font-medium text-sm">Director of Education</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map/Location Divider -->
+<div class="h-96 md:h-[550px] w-full relative group overflow-hidden">
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15836.561494635848!2d27.995!3d7.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDInMDAuMCJOIDI3wrA1OSc0Mi4wIkU!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
+        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="w-full h-full grayscale hover:grayscale-0 transition-all duration-1000">
+    </iframe>
+
+    <div
+        class="absolute inset-0 bg-primary/5 dark:bg-black/10 pointer-events-none flex items-center justify-center p-4">
+        <div
+            class="bg-white/95 dark:bg-[#1e293b]/95 backdrop-blur-md p-8 md:p-10 rounded-2xl shadow-2xl max-w-md text-center border border-white/20 pointer-events-auto transform transition-transform duration-300 hover:-translate-y-2">
+            <span class="material-symbols-outlined text-primary text-5xl mb-4">location_on</span>
+            <h3 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white">Find Us</h3>
+            <p class="text-slate-600 dark:text-slate-400 font-medium mb-6">Hospital Road, Wau Center, South Sudan</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Wau+Teaching+Hospital+South+Sudan" target="_blank"
+                class="inline-flex items-center gap-2 text-primary font-black uppercase tracking-wider text-sm hover:underline decoration-2 underline-offset-4 transition-all">
+                Get Directions <span class="material-symbols-outlined text-lg">arrow_outward</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="fixed bottom-8 right-8 z-50">
+    <a class="group relative flex items-center justify-center" href="tel:123">
+        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-20"></span>
+        <button
+            class="bg-primary text-white font-bold px-8 py-4 rounded-full shadow-2xl flex items-center gap-3 hover:scale-105 active:scale-95 transition-all">
+            <span class="material-symbols-outlined">medical_services</span>
+            <span class="text-lg tracking-wide uppercase">Call Ambulance</span>
+        </button>
+    </a>
+</div>
+{% endblock %}
+
+{% block footer %}
+<footer
+    class="bg-slate-900 dark:bg-[#102a43] text-white pt-20 pb-12 border-t-8 border-primary transition-colors duration-500">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+        <!-- Brand Column -->
+        <div>
+            <h4 class="text-2xl font-bold flex items-center mb-6">
+                <span class="material-symbols-outlined text-primary mr-2">local_hospital</span>
+                Wau Teaching
+            </h4>
+            <p class="text-slate-400 mb-6 leading-relaxed">
+                Providing essential healthcare and teaching excellence for the community of Wau and beyond.
+            </p>
+            <div class="flex space-x-4">
+                <a class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined text-xl">facebook</span>
+                </a>
+                <a class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined text-xl">public</span>
+                </a>
+            </div>
+        </div>
+        <!-- Quick Links -->
+        <div>
+            <h5 class="text-lg font-bold mb-6">Patient Services</h5>
+            <ul class="space-y-4 text-slate-400">
+                <li><a class="hover:text-primary transition-colors" href="#">Outpatient Care</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Emergency Department</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Maternity & Pediatric</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Laboratory Services</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Pharmacy</a></li>
+            </ul>
+        </div>
+        <!-- More Links -->
+        <div>
+            <h5 class="text-lg font-bold mb-6">About & Careers</h5>
+            <ul class="space-y-4 text-slate-400">
+                <li><a class="hover:text-primary transition-colors" href="#">Our Story</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Leadership</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Medical School</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Job Openings</a></li>
+                <li><a class="hover:text-primary transition-colors" href="#">Volunteer Programs</a></li>
+            </ul>
+        </div>
+        <!-- Contact -->
+        <div>
+            <h5 class="text-lg font-bold mb-6">Opening Hours</h5>
+            <ul class="space-y-3 text-slate-400">
+                <li class="flex justify-between">
+                    <span>Emergency:</span>
+                    <span class="text-white font-medium">24/7</span>
+                </li>
+                <li class="flex justify-between border-b border-slate-800 pb-2">
+                    <span>General:</span>
+                    <span class="text-white font-medium">08:00 - 20:00</span>
+                </li>
+            </ul>
+            <div class="mt-8">
+                <h5 class="text-lg font-bold mb-4">Contact</h5>
+                <p class="text-slate-400">info@wauteachinghospital.org</p>
+                <p class="text-slate-400">+211 (0) 123 456 789</p>
+            </div>
+        </div>
+    </div>
+    <div
+        class="max-w-7xl mx-auto px-6 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <p class="text-slate-500 text-sm">
+            © 2024 Wau Teaching Hospital. All rights reserved.
+        </p>
+        <div class="flex gap-6 text-sm text-slate-500">
+            <a class="hover:text-white" href="#">Privacy Policy</a>
+            <a class="hover:text-white" href="#">Terms of Use</a>
+        </div>
+    </div>
+</footer>
 {% endblock %}
